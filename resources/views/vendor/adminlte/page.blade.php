@@ -12,7 +12,6 @@
 @section('body_data', $layoutHelper->makeBodyData())
 
 @section('body')
-    <x-notification-component />
     <div class="wrapper">
 
         {{-- Top Navbar --}}
@@ -43,7 +42,7 @@
         @if (config('adminlte.right_sidebar'))
             @include('adminlte::partials.sidebar.right-sidebar')
         @endif
-
+        <x-notification-component />
     </div>
 @stop
 
