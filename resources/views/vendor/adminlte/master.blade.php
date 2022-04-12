@@ -49,6 +49,8 @@
     {{-- Custom Stylesheets (post AdminLTE) --}}
     @yield('adminlte_css')
 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+
     {{-- Favicon --}}
     @if (config('adminlte.use_ico_only'))
         <link rel="shortcut icon" href="{{ asset('favicons/favicon.ico') }}" />

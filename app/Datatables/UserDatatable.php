@@ -14,6 +14,8 @@ class UserDatatable extends Datatable
             ['label' => 'Actions', 'no-export' => true],
         ];
 
+        $this->route = "users";
+
         $tableData = [];
         foreach ($users as $user) {
             $tableData[] = [
@@ -21,6 +23,7 @@ class UserDatatable extends Datatable
                 $user->name,
                 $user->email,
                 'a',
+                $this->buttonColumn($user->id),
             ];
         }
         $this->tableData = $tableData;

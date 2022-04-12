@@ -22,18 +22,31 @@
         </div>
     </div>
 @stop
+
 @push('js')
-    <form action="" id="delete-form" method="post">
-        @method('delete')
-        @csrf
-    </form>
+    <x-adminlte-modal id="delete-modal" title="User Deletion" icon="fas fa-trash">
+        <div>Are you sure you want to delete this user?</div>
+        <x-slot name="footerSlot">
+            <x-adminlte-button theme="danger" label="Dismiss" data-dismiss="modal" />
+            <form action="" id="delete-form" method="post">
+                @method('delete')
+                @csrf
+                <x-adminlte-button theme="success" label="Accept" onclick="deleteModel(event)" />
+            </form>
+        </x-slot>
+    </x-adminlte-modal>
+
     <script>
-        function notificationBeforeDelete(event, el) {
+        button = null;
+
+        function setButton(event, el) {
+            button = $(el);
+        }
+
+        function deleteModel(event) {
             event.preventDefault();
-            if (confirm('Apakah anda yakin akan menghapus data ? ')) {
-                $("#delete-form").attr('action', $(el).attr('href'));
-                $("#delete-form").submit();
-            }
+            $("#delete-form").attr('action', button.attr('href'));
+            $("#delete-form").submit();
         }
     </script>
 @endpush

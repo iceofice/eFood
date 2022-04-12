@@ -12,7 +12,7 @@ class Datatable
     /** 
      * @var array $tableData The data of the table.
      */
-    protected $tableData = [];
+    public $tableData = [];
 
     /** 
      * @var array $config The configuration of the table.
@@ -20,46 +20,43 @@ class Datatable
     public $config = [];
 
     /**
+     * Route of the model.
+     *
+     * @var string
+     */
+    public $route = "";
+
+    /**
      * Datatable constructor.
      *
      * @param integer $orderColumn (optional) The column the table is sorted. Defaults to 1
      * @param string $orderDirection (optional) The direction the table is sorted. Defaults to 'asc'
+     * @return void
      */
-    public function __construct($orderColumn = 1, $orderDirection = 'asc')
+    public function __construct(int $orderColumn = 1, String $orderDirection = 'asc')
     {
-        $this->prepareTableData();
         $this->prepareConfig($orderColumn, $orderDirection);
     }
 
     /**
-     * Combine edit and delete buttons.
+     * Combine edit and delete buttons into a single column.
      *
-     * @return string
-     */
-    protected function buttonColumn()
-    {
-        return '<nobr>' . $this->btnEdit . $this->btnDelete . '</nobr>';
-    }
-
-    /**
-     * Add buttons to the every rows.
-     *
+     * @param integer $id
      * @return void
      */
-    protected function prepareTableData()
+    public function buttonColumn(int $id)
     {
-        foreach ($this->tableData as $key => $row) {
-            $row[] = $this->buttonColumn();
-            $this->tableData[$key] = $row;
-        }
+        return '<nobr>' . $this->btnEdit($id) . $this->btnDelete($id) . '</nobr>';
     }
 
     /**
      * Prepare the configuration of the table.
      *
+     * @param integer $orderColumn The column the table is sorted.
+     * @param string $orderDirection The direction the table is sorted.
      * @return void
      */
-    protected function prepareConfig($orderColumn, $orderDirection)
+    private function prepareConfig(int $orderColumn, String $orderDirection)
     {
         $columnsCount = count($this->tableData[0]);
         foreach (array_keys($this->tableData[0]) as $key) {
@@ -76,20 +73,35 @@ class Datatable
     }
 
     /**
-     * @var string $btnEdit The edit button on the table.
+     * Prepare the edit button.
+     * 
+     * @param integer $id The id of the model.
+     * @return string HTML of the edit button
      */
-    private $btnEdit = '
-        <button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-            <i class="fa fa-lg fa-fw fa-pen"></i>
-        </button>
-    ';
+    private function btnEdit(int $id)
+    {
+        $link = route($this->route . '.edit', $id);
+        return "
+            <a class='btn btn-xs btn-default text-primary mx-1 shadow' title='Edit' href=$link>
+                <i class='fa fa-lg fa-fw fa-pen'></i>
+            </a>
+        ";
+    }
 
     /**
-     * @var string $btnDelete The delete button on the table.
+     * Prepare the delete button.
+     * 
+     * @param integer $id The id of the model.
+     * @return string HTML of the delete button
      */
-    private $btnDelete = '
-        <button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-            <i class="fa fa-lg fa-fw fa-trash"></i>
-        </button>
-    ';
+    private function btnDelete(int $id)
+    {
+        $link = route($this->route . '.destroy', $id);
+        return "
+            <a class='btn btn-xs btn-default text-danger mx-1 shadow' title='Delete' href='$link'
+                data-toggle='modal' data-target='#delete-modal' onclick='setButton(event, this)'>
+                <i class='fa fa-lg fa-fw fa-trash'></i>
+            </a>
+        ";
+    }
 }
