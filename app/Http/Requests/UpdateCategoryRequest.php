@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,11 @@ class UpdateUserRequest extends FormRequest
     {
         //TODO: Move to model
         return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->user->id,
-            (isset($this->password) ? 'password' : '') => (isset($this->password) ? 'required|confirmed' : ''),
+            'name'          => 'required',
+            'slug'          => 'required|alpha_dash|unique:categories,slug,' . $this->category->id,
+            'description'   => '',
+            'image'         => 'image',
+            'type'          => 'required|numeric',
         ];
     }
 }

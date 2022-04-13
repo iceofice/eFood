@@ -23,6 +23,7 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
+        //TODO: Move to model
         return [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',

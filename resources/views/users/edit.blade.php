@@ -13,6 +13,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        {{-- TODO: Refactor using blade component <x-adminlte-input /> --}}
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
@@ -47,7 +48,7 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
                         <a href="{{ route('users.index') }}" class="btn btn-default">
                             Cancel
                         </a>

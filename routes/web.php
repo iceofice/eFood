@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// TODO: Move to group
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
+Route::middleware('auth')->group(function () {
+    //TODO: Check how to make every resource exclude show method
+    Route::resource('users', UserController::class)->except('show');
+    Route::resource('categories', CategoryController::class)->except('show');
 
-Route::resource('users', UserController::class)->except('show')->middleware('auth');
+    Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug');
+});

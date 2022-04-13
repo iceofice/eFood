@@ -232,6 +232,17 @@ return [
             'url'  => '/users',
             'icon'  => 'fa fa-users',
         ],
+        ['header' => 'Chef'],
+        [
+            'text' => 'Category',
+            'url'  => '/categories',
+            'icon'  => 'fa fa-utensils',
+        ],
+        [
+            'text' => 'Menu',
+            'url'  => '/menu',
+            'icon'  => 'fa fa-hamburger',
+        ],
     ],
 
     /*
@@ -336,6 +347,16 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'bsCustomFileInput' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.js',
                 ],
             ],
         ],
