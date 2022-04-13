@@ -228,15 +228,17 @@ return [
         // Sidebar items:
         ['header' => 'Manager'],
         [
-            'text' => 'Users',
-            'url'  => '/users',
-            'icon'  => 'fa fa-users',
+            'text'      => 'Users',
+            'url'       => '/admin/users',
+            'active'    => ['/admin/users/*'],
+            'icon'      => 'fa fa-users',
         ],
         ['header' => 'Chef'],
         [
-            'text' => 'Category',
-            'url'  => '/categories',
-            'icon'  => 'fa fa-utensils',
+            'text'      => 'Category',
+            'url'       => '/admin/categories',
+            'active'    => ['/admin/categories/*'],
+            'icon'      => 'fa fa-utensils',
         ],
         [
             'text' => 'Menu',

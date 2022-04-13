@@ -22,8 +22,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::middleware('auth')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::group([
+    'middleware'    => 'auth',
+    'prefix'        => 'admin',
+], function () {
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
     Route::resources([
         'users'         => UserController::class,
