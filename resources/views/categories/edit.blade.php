@@ -1,51 +1,27 @@
-@extends('adminlte::page')
+@extends('crud.edit')
 
-@section('title', 'Edit Category')
+@php
+$modelName = 'Category';
+$route = 'categories';
+$id = $category->id;
+@endphp
 
-@section('content_header')
-    <h1 class="m-0 text-dark">Edit Category</h1>
-@stop
-@section('content')
-    <form action="{{ route('categories.update', $category->id) }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @method('put')
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <x-adminlte-select name="type" label="Type" enable-old-support>
-                            <x-adminlte-options :options="['Category', 'Filter']" selected="{{ $category->type }}" />
-                        </x-adminlte-select>
+@section('form')
+    <x-adminlte-select name="type" label="Type" enable-old-support>
+        <x-adminlte-options :options="['Category', 'Filter']" selected="{{ $category->type }}" />
+    </x-adminlte-select>
 
-                        <x-adminlte-input id="name" name="name" label="Name" value="{{ $category->name }}" />
-                        <x-adminlte-input id="slug" name="slug" label="Slug" value="{{ $category->slug }}" />
-                        <x-adminlte-textarea id="description" name="description" label="Description">
-                            {{ $category->description }}
-                        </x-adminlte-textarea>
+    <x-adminlte-input id="name" name="name" label="Name" value="{{ $category->name }}" />
+    <x-adminlte-input id="slug" name="slug" label="Slug" value="{{ $category->slug }}" />
+    <x-adminlte-textarea id="description" name="description" label="Description">
+        {{ $category->description }}
+    </x-adminlte-textarea>
 
-                        <img id="image-preview" src="{{ url('storage/' . $category->image) }}" class="form-image-preview"
-                            style="display: {{ $category->image ? 'block' : 'none' }};">
-                        <x-adminlte-input-file id="image" name="image" label="Image" placeholder="Choose an image..." />
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                        <a href="{{ route('categories.index') }}" class="btn btn-default">
-                            Cancel
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-    <script>
-        $('#image').change(function(e) {
-            var file = e.target.files[0];
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#image-preview').attr('src', e.target.result);
-                $('#image-preview').show();
-            };
-            reader.readAsDataURL(file);
-        });
-    </script>
-@stop
+    <img id="image-preview" src="{{ url('storage/' . $category->image) }}" class="form-image-preview"
+        style="display: {{ $category->image ? 'block' : 'none' }};">
+    <x-adminlte-input-file id="image" name="image" label="Image" placeholder="Choose an image..." />
+@endsection
+
+@section('js')
+    @include('partials.preview-image-script')
+@endsection
