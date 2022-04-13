@@ -16,30 +16,14 @@
                         <x-adminlte-select name="type" label="Type" enable-old-support>
                             <x-adminlte-options :options="['Category', 'Filter']" />
                         </x-adminlte-select>
-                        {{-- TODO: Refactor using blade component <x-adminlte-input /> --}}
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                                value="{{ old('name') }}">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="slug">Slug</label>
-                            <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
-                                value="{{ old('slug') }}">
-                            @error('slug')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea row="50" class="form-control @error('description') is-invalid @enderror" id="description"
-                                name="description">{{ old('description') }}</textarea>
-                        </div>
-                        {{-- TODO: CSS --}}
-                        <img id="image-preview" style="height: 100px; width: 150px; object-fit:contain; display:none;">
+
+                        <x-adminlte-input id="name" name="name" label="Name" value="{{ old('name') }}" />
+                        <x-adminlte-input id="slug" name="slug" label="Slug" value="{{ old('slug') }}" />
+                        <x-adminlte-textarea id="description" name="description" label="Description">
+                            {{ old('description') }}
+                        </x-adminlte-textarea>
+
+                        <img id="image-preview" class="form-image-preview" style="display:none;">
                         <x-adminlte-input-file id="image" name="image" label="Image" placeholder="Choose an image..." />
                     </div>
                     <div class="card-footer">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCategoryRequest extends FormRequest
@@ -23,13 +24,9 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        //TODO: Move to model
-        return [
-            'name'          => 'required',
-            'slug'          => 'required|alpha_dash|unique:categories,slug,' . $this->category->id,
-            'description'   => '',
-            'image'         => 'image',
-            'type'          => 'required|numeric',
-        ];
+        $rules = Category::$rules;
+        $rules['slug'] = 'required|alpha_dash|unique:categories,slug,' . $this->category->id;
+
+        return $rules;
     }
 }

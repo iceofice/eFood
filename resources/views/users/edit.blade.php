@@ -13,39 +13,23 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        {{-- TODO: Refactor using blade component <x-adminlte-input /> --}}
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
-                                value="{{ $user->name }}">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                                name="email" value="{{ $user->email }}">
-                            @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password">New Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                id="password" name="password">
-                            <div class="form-text">
-                                Fill if you want to change the password.
-                            </div>
-                            @error('password')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="password"> Password Confirmation</label>
-                            <input type="password" class="form-control" id="password_confirmation"
-                                name="password_confirmation">
-                        </div>
+                        <x-adminlte-input id="name" name="name" label="Name" value="{{ $user->name }}" />
+                        <x-adminlte-input id="email" name="email" label="Email" type="email" value="{{ $user->email }}" />
+                        <x-adminlte-input id="password" name="password" label="Password" type="password">
+                            <x-slot name="bottomSlot">
+                                <div class="form-text">
+                                    Fill only if you want to change the password.
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+                        <x-adminlte-input id="password_confirmation" name="password_confirmation"
+                            label="Password Confirmation" type="password">
+                            <x-slot name="bottomSlot">
+                                <div class="form-text">
+                                    Fill only if you want to change the password.
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Edit</button>

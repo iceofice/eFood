@@ -22,15 +22,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// TODO: Move to group
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
 Route::middleware('auth')->group(function () {
-    //TODO: Check how to make every resource exclude show method
-    Route::resource('users', UserController::class)->except('show');
-    Route::resource('categories', CategoryController::class)->except('show');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::resources([
+        'users'         => UserController::class,
+        'categories'    => CategoryController::class,
+    ], [
+        'except' => ['show']
+    ]);
 
     Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug');
 });

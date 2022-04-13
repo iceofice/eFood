@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateUserRequest extends FormRequest
@@ -23,11 +24,6 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
-        //TODO: Move to model
-        return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed'
-        ];
+        return User::$rules;
     }
 }

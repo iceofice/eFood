@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCategoryRequest extends FormRequest
@@ -23,13 +24,6 @@ class CreateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        //TODO: Move to model
-        return [
-            'name'          => 'required',
-            'slug'          => 'required|alpha_dash|unique:categories,slug',
-            'description'   => '',
-            'image'         => 'image',
-            'type'          => 'required|numeric',
-        ];
+        return Category::$rules;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -23,11 +24,13 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        //TODO: Move to model
-        return [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $this->user->id,
-            (isset($this->password) ? 'password' : '') => (isset($this->password) ? 'required|confirmed' : ''),
-        ];
+        $rules = User::$rules;
+        $rules['email'] = 'required|email|unique:users,email,' . $this->user->id;
+
+        // Remove password validation if the user is not changing their password
+        if (!isset($this->password))
+            unset($rules['password']);
+
+        return $rules;
     }
 }

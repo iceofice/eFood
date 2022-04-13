@@ -19,9 +19,8 @@ class CategoryDatatable extends Datatable
 
         $tableData = [];
         foreach ($categories as $category) {
-            //TODO: Make css style
             $image = (isset($category->image))
-                ? '<img src=" ' . url('storage/' . $category->image) . '" style="height: 50px; width: 50px; object-fit: contain;">'
+                ? '<img class="table-image" src=" ' . url('storage/' . $category->image) . '">'
                 : 'No image';
 
             $tableData[] = [

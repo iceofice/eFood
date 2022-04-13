@@ -99,12 +99,15 @@ class CategoryController extends Controller
             ->with('success_message', 'Category deleted successfully');
     }
 
-    // TODO: Doc Block
+    /**
+     * Generate a slug for the given category name.
+     *
+     * @param Request $request
+     * @return Response an unique slug
+     */
     public function checkSlug(Request $request)
     {
         $slug = SlugService::createSlug(Category::class, 'slug', $request->name);
-
-
         return response()->json(['slug' => $slug]);
     }
 }

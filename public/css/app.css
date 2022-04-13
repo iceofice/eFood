@@ -2,3 +2,15 @@
     color: #808080;
     font-size: 0.9rem;
 }
+
+.form-image-preview {
+    height: 200px;
+    width: 200px;
+    object-fit: contain;
+}
+
+.table-image {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+}
