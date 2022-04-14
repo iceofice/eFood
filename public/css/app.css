@@ -10,7 +10,11 @@
 }
 
 .table-image {
-    height: 50px;
-    width: 50px;
+    max-height: 100%;
+    width: 100%;
     object-fit: contain;
+}
+
+td.image {
+    padding: 0;
 }
