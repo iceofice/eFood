@@ -41,9 +41,12 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
         $validatedRequest = $request->validated();
+        unset($validatedRequest['role']);
         $validatedRequest['password'] = bcrypt($validatedRequest['password']);
 
-        User::create($validatedRequest);
+        $user = User::create($validatedRequest);
+        $user->syncRoles($request->role);
+
         return redirect()->route('users.index')
             ->with('success_message', 'User added successfully');
     }
@@ -55,6 +58,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $user->role = $user->getRoleNames()->first();
         return view('users.edit', compact('user'));
     }
 
@@ -68,11 +72,15 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $validatedRequest = $request->validated();
+        unset($validatedRequest['role']);
 
         if (isset($validatedRequest['password'])) {
             $validatedRequest['password'] = bcrypt($validatedRequest['password']);
         }
+
         $user->update($validatedRequest);
+        $user->syncRoles($request->role);
+
         return redirect()->route('users.index')
             ->with('success_message', 'User modified successfully');
     }

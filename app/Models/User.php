@@ -50,6 +50,7 @@ class User extends Authenticatable
     public static $rules = [
         'name'      => 'required',
         'email'     => 'required|email|unique:users,email',
-        'password'  => 'required|confirmed'
+        'password'  => 'required|confirmed',
+        'role'      => 'required|in:Admin,Cashier,Kitchen Staff,Waiter',
     ];
 }
