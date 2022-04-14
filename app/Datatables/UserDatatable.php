@@ -22,7 +22,7 @@ class UserDatatable extends Datatable
                 $user->id,
                 $user->name,
                 $user->email,
-                'a',
+                $user->getRoleNames(),
                 $this->buttonColumn($user->id),
             ];
         }

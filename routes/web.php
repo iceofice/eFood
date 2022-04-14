@@ -28,12 +28,8 @@ Route::group([
 ], function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
-    Route::resources([
-        'users'         => UserController::class,
-        'categories'    => CategoryController::class,
-    ], [
-        'except' => ['show']
-    ]);
+    Route::resource('users', UserController::class)->except('show')->middleware('can:manage users');
+    Route::resource('categories', CategoryController::class)->except('show')->middleware('can:manage menus');
 
     Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug');
 });

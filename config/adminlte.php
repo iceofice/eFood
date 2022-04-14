@@ -226,12 +226,16 @@ return [
 
     'menu' => [
         // Sidebar items:
-        ['header' => 'Manager'],
+        [
+            'header'    => 'Manager',
+            'can'       => 'manage users',
+        ],
         [
             'text'      => 'Users',
             'url'       => '/admin/users',
             'active'    => ['/admin/users/*'],
             'icon'      => 'fa fa-users',
+            'can'       => 'manage users',
         ],
         ['header' => 'Chef'],
         [
@@ -239,6 +243,7 @@ return [
             'url'       => '/admin/categories',
             'active'    => ['/admin/categories/*'],
             'icon'      => 'fa fa-utensils',
+            'can'       => 'manage menus',
         ],
         [
             'text' => 'Menu',
