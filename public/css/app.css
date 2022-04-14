@@ -10,9 +10,9 @@
 }
 
 .table-image {
-    max-height: 100%;
+    height: 100px;
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 td.image {
