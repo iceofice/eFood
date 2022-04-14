@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use View;
 use App\Models\User;
 use App\Datatables\UserDatatable;
 use App\Http\Requests\CreateUserRequest;
@@ -9,6 +10,23 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
+
+    /**
+     * Share the some variables with the view
+     */
+    public function __construct()
+    {
+        $modelName = 'User';
+        $route = 'users';
+        $options = [
+            'Admin' => 'Admin',
+            'Cashier' => 'Cashier',
+            'Kitchen Staff' => 'Kitchen Staff',
+            'Waiter' => 'Waiter',
+        ];
+        View::share(compact('modelName', 'route', 'options'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +37,7 @@ class UserController extends Controller
         $users = User::all();
         $table = new UserDatatable($users);
 
-        return view('users.index', compact('table'));
+        return view('crud.index', compact('table'));
     }
 
     /**
@@ -58,8 +76,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if ($this->isSuperAdmin($user->id)) {
+            return $this->superAdminRedirect();
+        }
+
+        $id = $user->id;
         $user->role = $user->getRoleNames()->first();
-        return view('users.edit', compact('user'));
+        return view('users.edit', compact('user', 'id'));
     }
 
     /**
@@ -71,6 +94,10 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
+        if ($this->isSuperAdmin($user->id)) {
+            return $this->superAdminRedirect();
+        }
+
         $validatedRequest = $request->validated();
         unset($validatedRequest['role']);
 
@@ -93,8 +120,34 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if ($this->isSuperAdmin($user->id)) {
+            return $this->superAdminRedirect();
+        }
+
         $user->delete();
         return redirect()->route('users.index')
             ->with('success_message', 'User deleted successfully');
+    }
+
+    /**
+     * Check if the user is a super admin
+     *
+     * @param int $id
+     * @return bool
+     */
+    private function isSuperAdmin(int $id)
+    {
+        return $id == 1;
+    }
+
+    /**
+     * Redirect with an error message
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function superAdminRedirect()
+    {
+        return redirect()->route('users.index')
+            ->with('error_message', 'You cannot modify the Super Admin');
     }
 }

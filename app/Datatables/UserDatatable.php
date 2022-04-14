@@ -18,6 +18,9 @@ class UserDatatable extends Datatable
 
         $tableData = [];
         foreach ($users as $user) {
+            if ($user->id == 1) {
+                continue;
+            }
             $tableData[] = [
                 $user->id,
                 $user->name,

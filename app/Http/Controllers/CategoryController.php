@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use View;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Datatables\CategoryDatatable;
@@ -12,6 +13,16 @@ use Cviebrock\EloquentSluggable\Services\SlugService;
 class CategoryController extends Controller
 {
     /**
+     * Share the model name and route with the view
+     */
+    public function __construct()
+    {
+        $modelName = 'Category';
+        $route = 'categories';
+        View::share(compact('modelName', 'route'));
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -21,7 +32,7 @@ class CategoryController extends Controller
         $categories = Category::all();
         $table = new CategoryDatatable($categories);
 
-        return view('categories.index', compact('table'));
+        return view('crud.index', compact('table'));
     }
 
     /**
@@ -62,7 +73,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        $id = $category->id;
+        return view('categories.edit', compact('category', 'id'));
     }
 
     /**

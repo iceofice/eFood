@@ -1,10 +1,5 @@
 @extends('crud.create')
 
-@php
-$modelName = 'Category';
-$route = 'categories';
-@endphp
-
 @section('form')
     <x-adminlte-select name="type" label="Type" enable-old-support>
         <x-adminlte-options :options="['Category', 'Filter']" />

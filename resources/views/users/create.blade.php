@@ -1,16 +1,5 @@
 @extends('crud.create')
 
-@php
-$modelName = 'User';
-$route = 'users';
-$options = [
-    'Admin' => 'Admin',
-    'Cashier' => 'Cashier',
-    'Kitchen Staff' => 'Kitchen Staff',
-    'Waiter' => 'Waiter',
-];
-@endphp
-
 @section('form')
     <x-adminlte-input id="name" name="name" label="Name" value="{{ old('name') }}" />
     <x-adminlte-input id="email" name="email" label="Email" type="email" value="{{ old('email') }}" />
