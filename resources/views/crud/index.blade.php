@@ -14,15 +14,13 @@
                     <a href="{{ route($route . '.create') }}" class="btn btn-primary mb-4">
                         Add New {{ $modelName }}
                     </a>
+                    @yield('filter')
                     <x-adminlte-datatable id="table2" :heads="$table->heads" head-theme="dark" :config="$table->config" striped
                         hoverable bordered />
                 </div>
             </div>
         </div>
     </div>
-@stop
-
-@push('js')
     <x-adminlte-modal id="delete-modal" title="{{ $modelName }} Deletion" icon="fas fa-trash">
         <div>Are you sure you want to delete this {{ $modelName }}?</div>
         <x-slot name="footerSlot">
@@ -34,7 +32,9 @@
             </form>
         </x-slot>
     </x-adminlte-modal>
+@stop
 
+@push('js')
     <script>
         button = null;
 

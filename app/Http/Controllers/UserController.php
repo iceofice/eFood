@@ -6,6 +6,7 @@ use View;
 use App\Models\User;
 use App\Datatables\UserDatatable;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\FilterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
@@ -37,7 +38,7 @@ class UserController extends Controller
         $users = User::all();
         $table = new UserDatatable($users);
 
-        return view('crud.index', compact('table'));
+        return view('users.index', compact('table'));
     }
 
     /**
@@ -76,7 +77,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if ($this->isSuperAdmin($user->id)) {
+        if ($user->isSuperAdmin) {
             return $this->superAdminRedirect();
         }
 
@@ -94,7 +95,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        if ($this->isSuperAdmin($user->id)) {
+        if ($user->isSuperAdmin) {
             return $this->superAdminRedirect();
         }
 
@@ -120,7 +121,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        if ($this->isSuperAdmin($user->id)) {
+        if ($user->isSuperAdmin) {
             return $this->superAdminRedirect();
         }
 
@@ -129,15 +130,13 @@ class UserController extends Controller
             ->with('success_message', 'User deleted successfully');
     }
 
-    /**
-     * Check if the user is a super admin
-     *
-     * @param int $id
-     * @return bool
-     */
-    private function isSuperAdmin(int $id)
+    //TODO:REF
+    public function filter(FilterUserRequest $request)
     {
-        return $id == 1;
+        $users = User::role($request->role)->get();
+        $table = new UserDatatable($users);
+
+        return $table->config;
     }
 
     /**

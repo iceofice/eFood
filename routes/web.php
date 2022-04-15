@@ -31,5 +31,6 @@ Route::group([
     Route::resource('users', UserController::class)->except('show')->middleware('can:manage users');
     Route::resource('categories', CategoryController::class)->except('show')->middleware('can:manage menus');
 
+    Route::post('/users/filter', [UserController::class, 'filter'])->name('users.filter');
     Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug');
 });

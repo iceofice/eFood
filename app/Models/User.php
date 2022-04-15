@@ -53,4 +53,10 @@ class User extends Authenticatable
         'password'  => 'required|confirmed',
         'role'      => 'required|in:Admin,Cashier,Kitchen Staff,Waiter',
     ];
+
+    //TODO: Doc
+    public function getIsSuperAdminAttribute()
+    {
+        return $this->hasRole('Super Admin');
+    }
 }
