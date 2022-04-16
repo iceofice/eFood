@@ -11,7 +11,7 @@
         {{ $category->description }}
     </x-adminlte-textarea>
 
-    <img id="image-preview" src="{{ url('storage/' . $category->image) }}" class="form-image-preview"
+    <img id="image-preview" src="{{ url('storage/images/' . $category->image) }}" class="form-image-preview"
         style="display: {{ $category->image ? 'block' : 'none' }};">
     <x-adminlte-input-file id="image" name="image" label="Image" placeholder="Choose an image..." />
 @endsection
