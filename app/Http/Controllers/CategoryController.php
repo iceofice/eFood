@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use View;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\ImageService;
 use App\Datatables\CategoryDatatable;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
@@ -54,11 +55,7 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $validatedRequest = $request->validated();
-        if ($request->image) {
-            unset($validatedRequest['image']);
-            $request->image->store('public');
-            $validatedRequest['image'] = $request->image->hashName();
-        }
+        $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
 
         Category::create($validatedRequest);
         return redirect()->route('categories.index')
@@ -87,11 +84,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $validatedRequest = $request->validated();
-        if ($request->image) {
-            unset($validatedRequest['image']);
-            $request->image->store('public');
-            $validatedRequest['image'] = $request->image->hashName();
-        }
+        $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
 
         $category->update($validatedRequest);
         return redirect()->route('categories.index')
