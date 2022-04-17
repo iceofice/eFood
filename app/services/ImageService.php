@@ -6,7 +6,12 @@ use Illuminate\Http\UploadedFile;
 
 class ImageService
 {
-    //TODO: Bloc
+    /**
+     * Store image into the storage.
+     *
+     * @param UploadedFile|null $image
+     * @return string|null Image path
+     */
     public function prepareImage(UploadedFile $image = null)
     {
         if ($image) {

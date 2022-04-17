@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 
@@ -28,9 +29,17 @@ Route::group([
 ], function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
+    // Users
     Route::resource('users', UserController::class)->except('show')->middleware('can:manage users');
-    Route::resource('categories', CategoryController::class)->except('show')->middleware('can:manage menus');
-
     Route::post('/users/filter', [UserController::class, 'filter'])->name('users.filter');
-    Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug');
+
+    //TODO: Group properly
+
+    // Categories
+    Route::resource('categories', CategoryController::class)->except('show')->middleware('can:manage menus');
+    Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug')->middleware('can:manage menus');
+
+    // Menus
+    Route::resource('menus', MenuController::class)->except('show')->middleware('can:manage menus');
+    Route::get('menus/check_slug', [MenuController::class, 'checkSlug'])->name('menus.checkSlug')->middleware('can:manage menus');
 });

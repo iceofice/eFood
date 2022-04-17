@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class Menu extends Model
 {
     use HasFactory, Sluggable;
 
@@ -20,7 +20,7 @@ class Category extends Model
         'slug',
         'description',
         'image',
-        'type'
+        'price',
     ];
 
     /**
@@ -30,10 +30,12 @@ class Category extends Model
      */
     public static $rules = [
         'name'          => 'required',
-        'slug'          => 'required|alpha_dash|unique:categories,slug',
+        'slug'          => 'required|alpha_dash|unique:menus,slug',
         'description'   => '',
         'image'         => 'image',
-        'type'          => 'required|numeric',
+        'price'         => 'required|numeric',
+        'categories'    => 'array',
+        'categories.*'  => 'exists:categories,id',
     ];
 
     /**
@@ -51,12 +53,32 @@ class Category extends Model
     }
 
     /**
-     * The menus that belongs to the category.
+     * The categories that belongs to the menu.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function menus()
+    public function categories()
     {
-        return $this->belongsToMany(Menu::class);
+        return $this->belongsToMany(Category::class);
+    }
+
+    /**
+     * Array of categories ids.
+     *
+     * @return array<int, int>
+     */
+    public function getCategoryIdListAttribute()
+    {
+        return $this->categories->pluck('id')->toArray();
+    }
+
+    /**
+     * Array of categories names.
+     *
+     * @return array<int, String>
+     */
+    public function getCategoryNameListAttribute()
+    {
+        return $this->categories->pluck('name')->toArray();
     }
 }

@@ -130,7 +130,12 @@ class UserController extends Controller
             ->with('success_message', 'User deleted successfully');
     }
 
-    //TODO:REF
+    /**
+     * Filter the specified resource from storage.
+     *
+     * @param  FilterUserRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function filter(FilterUserRequest $request)
     {
         $users = User::role($request->role)->get();

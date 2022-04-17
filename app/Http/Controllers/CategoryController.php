@@ -9,6 +9,7 @@ use App\Services\ImageService;
 use App\Datatables\CategoryDatatable;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\CheckSlugRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CategoryController extends Controller
@@ -99,6 +100,12 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // Prevent deletion of a category that has menus
+        if ($category->menus->count() > 0) {
+            return redirect()->route('categories.index')
+                ->with('error_message', 'Category cannot be deleted because it has menus');
+        }
+
         $category->delete();
         return redirect()->route('categories.index')
             ->with('success_message', 'Category deleted successfully');
@@ -110,9 +117,8 @@ class CategoryController extends Controller
      * @param Request $request
      * @return Response an unique slug
      */
-    public function checkSlug(Request $request)
+    public function checkSlug(CheckSlugRequest $request)
     {
-        //TODO: VALIDATE
         //TODO: MOVE Requests to corresponding folder
         $slug = SlugService::createSlug(Category::class, 'slug', $request->name);
         return response()->json(['slug' => $slug]);

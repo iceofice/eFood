@@ -58,14 +58,12 @@ class Datatable
      */
     private function prepareConfig(int $orderColumn, String $orderDirection)
     {
-        if (empty($this->config['columns'])) {
-            if (count($this->tableData) > 0) {
-                $columnsCount = count($this->tableData[0]);
-                foreach (array_keys($this->tableData[0]) as $key) {
-                    $this->config['columns'][] = $columnsCount - 1 == $key
-                        ? ['orderable' => false, 'searchable' => false]
-                        : null;
-                }
+        if (count($this->tableData) > 0) {
+            $columnsCount = count($this->tableData[0]);
+            foreach (array_keys($this->tableData[0]) as $key) {
+                $this->config['columns'][] = $columnsCount - 1 == $key
+                    ? ['orderable' => false, 'searchable' => false]
+                    : null;
             }
         }
 

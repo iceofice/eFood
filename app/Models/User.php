@@ -54,7 +54,11 @@ class User extends Authenticatable
         'role'      => 'required|in:Admin,Cashier,Kitchen Staff,Waiter',
     ];
 
-    //TODO: Doc
+    /**
+     * Check if the user is super admin.
+     *
+     * @return Boolean
+     */
     public function getIsSuperAdminAttribute()
     {
         return $this->hasRole('Super Admin');

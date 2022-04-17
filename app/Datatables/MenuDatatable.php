@@ -2,35 +2,36 @@
 
 namespace App\Datatables;
 
-class CategoryDatatable extends Datatable
+class MenuDatatable extends Datatable
 {
-    public function __construct($categories)
+    public function __construct($menus)
     {
         $this->heads = [
             ['label' => 'ID', 'width' => 1],
             ['label' => 'Image', 'width' => 1],
             ['label' => 'Name', 'width' => 3],
-            ['label' => 'Type', 'width' => 1],
+            ['label' => 'Price', 'width' => 3],
+            ['label' => 'Categories', 'width' => 3],
             ['label' => 'Description', 'width' => 15],
             ['label' => 'Actions', 'no-export' => true, 'width' => 1],
         ];
 
-        $this->route = "categories";
+        $this->route = "menus";
 
         $tableData = [];
-        foreach ($categories as $category) {
-            //TODO: Add dummy image
-            $image = (isset($category->image))
-                ? '<img class="table-image" src=" ' . url('storage/images/' . $category->image) . '">'
+        foreach ($menus as $menu) {
+            $image = (isset($menu->image))
+                ? '<img class="table-image" src=" ' . url('storage/images/' . $menu->image) . '">'
                 : 'No image';
 
             $tableData[] = [
-                $category->id,
+                $menu->id,
                 $image,
-                $category->name,
-                ($category->type == 0) ? 'Category' : 'Filter',
-                $category->description,
-                $this->buttonColumn($category->id),
+                $menu->name,
+                number_format($menu->price, 2),
+                $menu->category_name_list ?: 'No categories',
+                $menu->description,
+                $this->buttonColumn($menu->id),
             ];
         }
         $this->tableData = $tableData;
