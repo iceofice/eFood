@@ -237,6 +237,13 @@ return [
             'icon'      => 'fa fa-users',
             'can'       => 'manage users',
         ],
+        [
+            'text'      => 'Customers',
+            'url'       => '/admin/customers',
+            'active'    => ['/admin/customers/*'],
+            'icon'      => 'fa fa-address-book',
+            'can'       => 'manage customers',
+        ],
         ['header' => 'Chef'],
         [
             'text'      => 'Category',

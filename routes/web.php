@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\{
+    HomeController,
+    MenuController,
+    UserController,
+    CategoryController,
+    CustomerController
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +45,7 @@ Route::group([
     // Menus
     Route::resource('menus', MenuController::class)->except('show')->middleware('can:manage menus');
     Route::get('menus/check_slug', [MenuController::class, 'checkSlug'])->name('menus.checkSlug')->middleware('can:manage menus');
+
+    // Customers
+    Route::resource('customers', CustomerController::class)->except('show')->middleware('can:manage customers');
 });
