@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use View;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Services\ImageService;
 use App\Datatables\CategoryDatatable;
+use App\Http\Requests\CheckSlugRequest;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Http\Requests\CheckSlugRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CategoryController extends Controller
@@ -114,7 +113,7 @@ class CategoryController extends Controller
     /**
      * Generate a slug for the given category name.
      *
-     * @param Request $request
+     * @param CheckSlugRequest $request
      * @return Response an unique slug
      */
     public function checkSlug(CheckSlugRequest $request)
