@@ -38,7 +38,7 @@
             return (input === 0) ? "" : input.toLocaleString("en-US");
         });
 
-        var addedComma = new_cursor - cursor;
+        var addedComma = currentCursor - newCursor;
         if (event != null && addedComma > 0) {
             // Move the cursor to the correct position
             cursorStart = cursorStart + addedComma;

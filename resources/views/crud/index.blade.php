@@ -38,7 +38,7 @@
     <script>
         button = null;
 
-        function setButton(event, el) {
+        function onDeleteButtonPressed(event, el) {
             button = $(el);
         }
 

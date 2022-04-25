@@ -244,6 +244,13 @@ return [
             'icon'      => 'fa fa-address-book',
             'can'       => 'manage customers',
         ],
+        [
+            'text'      => 'Orders',
+            'url'       => '/admin/orders',
+            'active'    => ['/admin/orders/*'],
+            'icon'      => 'fa fa-pen',
+            'can'       => 'manage orders',
+        ],
         ['header' => 'Chef'],
         [
             'text'      => 'Category',

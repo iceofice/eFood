@@ -63,6 +63,19 @@ class Menu extends Model
     }
 
     /**
+     * The orders that belongs to the menu.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class)
+            ->using(MenuOrder::class)
+            ->withPivot('qty', 'price')
+            ->withTimestamps();
+    }
+
+    /**
      * Array of categories ids.
      *
      * @return array<int, int>

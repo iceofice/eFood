@@ -107,6 +107,12 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        // Prevent deletion of the menu that belongs to orders
+        if ($menu->orders->count() > 0) {
+            return redirect()->route('menus.index')
+                ->with('error_message', 'Menu cannot be deleted because it has orders');
+        }
+
         $menu->delete();
         return redirect()->route('menus.index')
             ->with('success_message', 'Menu deleted successfully');

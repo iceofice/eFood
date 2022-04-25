@@ -6,7 +6,8 @@ use App\Http\Controllers\{
     MenuController,
     UserController,
     CategoryController,
-    CustomerController
+    CustomerController,
+    OrderController
 };
 
 /*
@@ -48,4 +49,10 @@ Route::group([
 
     // Customers
     Route::resource('customers', CustomerController::class)->except('show')->middleware('can:manage customers');
+
+    // Orders
+    Route::resource('orders', OrderController::class)->except('show')->middleware('can:manage orders');
+    Route::post('orders/{order}/add_menu', [OrderController::class, 'addMenu'])->name('orders.addMenu')->middleware('can:manage orders');
+    Route::put('orders/{order}/update_menu/{menu_id}', [OrderController::class, 'updateMenu'])->name('orders.updateMenu')->middleware('can:manage orders');
+    Route::post('orders/{order}/remove_menu/{menu_id}', [OrderController::class, 'removeMenu'])->name('orders.removeMenu')->middleware('can:manage orders');
 });

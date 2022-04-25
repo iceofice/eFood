@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::where('id', '!=', 1)->get();
         $table = new UserDatatable($users);
 
         return view('users.index', compact('table'));

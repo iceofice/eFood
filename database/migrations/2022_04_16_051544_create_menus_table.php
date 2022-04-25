@@ -20,6 +20,7 @@ class CreateMenusTable extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
+            //TODO: Add bool for active or not (hiden unhiden)
             $table->timestamps();
         });
     }

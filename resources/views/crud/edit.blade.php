@@ -17,7 +17,7 @@
                         @yield('form')
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Edit</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                         <a href="{{ route($route . '.index') }}" class="btn btn-default">
                             Cancel
                         </a>
@@ -26,4 +26,5 @@
             </div>
         </div>
     </form>
+    @yield('additional')
 @stop

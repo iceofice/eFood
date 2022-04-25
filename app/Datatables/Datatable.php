@@ -46,7 +46,18 @@ class Datatable
      */
     public function buttonColumn(int $id)
     {
-        return '<nobr>' . $this->btnEdit($id) . $this->btnDelete($id) . '</nobr>';
+        return  $this->btnEdit($id) . $this->btnDelete($id);
+    }
+
+    /**
+     * Combine edit and remove relation buttons into a single column.
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function relationButtonColumn(int $id)
+    {
+        return  $this->btnEditRelation($id) . $this->btnRemoveRelation($id);
     }
 
     /**
@@ -58,13 +69,11 @@ class Datatable
      */
     private function prepareConfig(int $orderColumn, String $orderDirection)
     {
-        if (count($this->tableData) > 0) {
-            $columnsCount = count($this->tableData[0]);
-            foreach (array_keys($this->tableData[0]) as $key) {
-                $this->config['columns'][] = $columnsCount - 1 == $key
-                    ? ['orderable' => false, 'searchable' => false]
-                    : null;
-            }
+        $columnsCount = count($this->heads);
+        foreach (array_keys($this->heads) as $key) {
+            $this->config['columns'][] = $columnsCount - 1 == $key
+                ? ['orderable' => false, 'searchable' => false]
+                : null;
         }
 
         $this->config['data'] = $this->tableData;
@@ -98,7 +107,43 @@ class Datatable
         $link = route($this->route . '.destroy', $id);
         return "
             <a class='btn btn-xs btn-default text-danger mx-1 shadow' title='Delete' href='$link'
-                data-toggle='modal' data-target='#delete-modal' onclick='setButton(event, this)'>
+                data-toggle='modal' data-target='#delete-modal' onclick='onDeleteButtonPressed(event, this)'>
+                <i class='fa fa-lg fa-fw fa-trash'></i>
+            </a>
+        ";
+    }
+
+    /**
+     * Prepare the edit relation button.
+     * 
+     * @param integer $id The id of the model.
+     * @return string HTML of the edit relation button
+     */
+    private function btnEditRelation(int $id)
+    {
+        return "
+            <a class='btn btn-xs btn-default text-primary mx-1 shadow' title='Delete' 
+                data-toggle='modal' data-target='#edit-modal' data-id='$id'
+                onclick='onEditButtonPressed(event, this)' 
+            >
+                <i class='fa fa-lg fa-fw fa-pen'></i>
+            </a>
+        ";
+    }
+
+    /**
+     * Prepare the remove relation button.
+     * 
+     * @param integer $id The id of the model.
+     * @return string HTML of the remove relation button
+     */
+    private function btnRemoveRelation(int $id)
+    {
+        return "
+            <a class='btn btn-xs btn-default text-danger mx-1 shadow' title='Delete' 
+                data-toggle='modal' data-target='#remove-modal' data-id='$id'
+                onclick='onRemoveButtonPressed(event, this)' 
+            >
                 <i class='fa fa-lg fa-fw fa-trash'></i>
             </a>
         ";

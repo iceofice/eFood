@@ -43,5 +43,13 @@ class Customer extends Model
         'password'  => 'nullable|confirmed',
     ];
 
+    /**
+     * Get the orders for the customer.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     //TODO: Custom messages for required_without validation rule
 }
