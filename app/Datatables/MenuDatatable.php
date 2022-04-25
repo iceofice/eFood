@@ -20,13 +20,13 @@ class MenuDatatable extends Datatable
 
         $tableData = [];
         foreach ($menus as $menu) {
-            $image = (isset($menu->image))
-                ? '<img class="table-image" src=" ' . url('storage/images/' . $menu->image) . '">'
-                : 'No image';
+            $imagePath = (isset($menu->image))
+                ? 'storage/images/' . $menu->image
+                : 'images/placeholder-image.png';
 
             $tableData[] = [
                 $menu->id,
-                $image,
+                '<img class="table-image" src=" ' . url($imagePath) . '">',
                 $menu->name,
                 number_format($menu->price, 2),
                 $menu->category_name_list ?: 'No categories',

@@ -19,14 +19,13 @@ class CategoryDatatable extends Datatable
 
         $tableData = [];
         foreach ($categories as $category) {
-            //TODO: Add dummy image
-            $image = (isset($category->image))
-                ? '<img class="table-image" src=" ' . url('storage/images/' . $category->image) . '">'
-                : 'No image';
+            $imagePath = (isset($category->image))
+                ? 'storage/images/' . $category->image
+                : 'images/placeholder-image.png';
 
             $tableData[] = [
                 $category->id,
-                $image,
+                '<img class="table-image" src=" ' . url($imagePath) . '">',
                 $category->name,
                 ($category->type == 0) ? 'Category' : 'Filter',
                 $category->description,
