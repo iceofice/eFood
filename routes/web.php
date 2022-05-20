@@ -31,7 +31,7 @@ Route::group([
     'middleware'    => 'auth',
     'prefix'        => 'admin',
 ], function () {
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     // Users
     Route::resource('users', UserController::class)->except('show')->middleware('can:manage users');
