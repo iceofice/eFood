@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     UserController,
     CategoryController,
     CustomerController,
+    FrontController,
     OrderController
 };
 
@@ -21,9 +22,7 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontController::class, 'index'])->name('home');
 
 Auth::routes();
 
