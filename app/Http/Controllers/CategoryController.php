@@ -55,7 +55,9 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        if ($request->image) {
+            $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        }
 
         Category::create($validatedRequest);
         return redirect()->route('categories.index')
@@ -84,7 +86,9 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        if ($request->image) {
+            $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        }
 
         $category->update($validatedRequest);
         return redirect()->route('categories.index')

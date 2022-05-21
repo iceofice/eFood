@@ -59,7 +59,9 @@ class MenuController extends Controller
     public function store(CreateMenuRequest $request)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        if ($request->image) {
+            $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        }
 
         $menu = Menu::create($validatedRequest);
         $menu->categories()->sync($request->categories);
@@ -90,7 +92,9 @@ class MenuController extends Controller
     public function update(UpdateMenuRequest $request, Menu $menu)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        if ($request->image) {
+            $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
+        }
 
         $menu->update($validatedRequest);
         $menu->categories()->sync($request->categories);
