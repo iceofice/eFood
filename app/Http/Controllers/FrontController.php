@@ -12,8 +12,11 @@ class FrontController extends Controller
 
     public function index()
     {
-        $menus = Menu::all();
-        $categories = Category::all();
-        return view('index', compact('menus'));
+        $menus = Menu::with('categories')->get()->groupBy('categories.*.slug')->all();
+        foreach ($menus as $key => $menu) {
+            $menus[$key] = array_chunk($menu->all(), ceil(count($menu) / 2));
+        }
+        $categories = Category::all()->pluck('name', 'slug');
+        return view('index', compact('menus', 'categories'));
     }
 }
