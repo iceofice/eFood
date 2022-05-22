@@ -21,6 +21,7 @@ class Menu extends Model
         'description',
         'image',
         'price',
+        'featured',
     ];
 
     /**
@@ -36,6 +37,7 @@ class Menu extends Model
         'price'         => 'required|numeric',
         'categories'    => 'array',
         'categories.*'  => 'exists:categories,id',
+        'featured'      => 'boolean',
     ];
 
     /**

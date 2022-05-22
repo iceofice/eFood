@@ -1,6 +1,7 @@
 @extends('crud.create')
 
 @section('form')
+    <x-adminlte-input-switch name="featured" data-on-text="Yes" data-off-text="No" label="Featured" enable-old-support />
     <x-adminlte-input id="name" name="name" label="Name" value="{{ old('name') }}" />
     <x-adminlte-input id="slug" name="slug" label="Slug" value="{{ old('slug') }}" />
     <x-adminlte-input id="price" name="price" label="Price" value="{{ old('price') }}" />

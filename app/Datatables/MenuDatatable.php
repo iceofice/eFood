@@ -12,7 +12,8 @@ class MenuDatatable extends Datatable
             ['label' => 'Name', 'width' => 3],
             ['label' => 'Price', 'width' => 3],
             ['label' => 'Categories', 'width' => 3],
-            ['label' => 'Description', 'width' => 15],
+            ['label' => 'Description', 'width' => 14],
+            ['label' => 'Featured', 'width' => 1],
             ['label' => 'Actions', 'no-export' => true, 'width' => 1],
         ];
 
@@ -31,6 +32,7 @@ class MenuDatatable extends Datatable
                 number_format($menu->price, 2),
                 $menu->category_name_list ?: 'No categories',
                 $menu->description,
+                $menu->featured ? "Yes" : "No",
                 $this->buttonColumn($menu->id),
             ];
         }

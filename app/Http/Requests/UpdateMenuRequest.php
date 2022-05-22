@@ -39,6 +39,7 @@ class UpdateMenuRequest extends FormRequest
     public function getValidatorInstance()
     {
         $this->cleanPrice();
+        $this->request->set('featured', $this->boolean('featured'));
         return parent::getValidatorInstance();
     }
 
