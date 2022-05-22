@@ -17,6 +17,8 @@ class FrontController extends Controller
             $menus[$key] = array_chunk($menu->all(), ceil(count($menu) / 2));
         }
         $categories = Category::all()->pluck('name', 'slug');
-        return view('index', compact('menus', 'categories'));
+        $featured = Menu::where('featured', 1)->get()->take(3);
+
+        return view('index', compact('menus', 'categories', 'featured'));
     }
 }
