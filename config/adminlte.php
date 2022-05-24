@@ -234,7 +234,7 @@ return [
             'text'      => 'Users',
             'url'       => '/admin/users',
             'active'    => ['/admin/users/*'],
-            'icon'      => 'fa fa-users',
+            'icon'      => 'fa fa-user',
             'can'       => 'manage users',
         ],
         [
@@ -243,6 +243,13 @@ return [
             'active'    => ['/admin/customers/*'],
             'icon'      => 'fa fa-address-book',
             'can'       => 'manage customers',
+        ],
+        [
+            'text'      => 'Tables',
+            'url'       => '/admin/tables',
+            'active'    => ['/admin/tables/*'],
+            'icon'      => 'fa fa-users',
+            'can'       => 'manage tables',
         ],
         [
             'text'      => 'Orders',

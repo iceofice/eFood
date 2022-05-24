@@ -8,7 +8,8 @@ use App\Http\Controllers\{
     CategoryController,
     CustomerController,
     FrontController,
-    OrderController
+    OrderController,
+    TableController
 };
 
 /*
@@ -48,6 +49,9 @@ Route::group([
 
     // Customers
     Route::resource('customers', CustomerController::class)->except('show')->middleware('can:manage customers');
+
+    // Tables
+    Route::resource('tables', TableController::class)->except('show')->middleware('can:manage tables');
 
     // Orders
     Route::resource('orders', OrderController::class)->except('show')->middleware('can:manage orders');
