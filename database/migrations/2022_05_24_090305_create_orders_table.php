@@ -16,8 +16,10 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->decimal('total', 10, 2)->nullable();
+            $table->dateTime('reserved_at');
             $table->tinyInteger('status')->default(0);
             $table->foreignId('customer_id')->constrained();
+            $table->foreignId('table_id')->constrained();
             $table->timestamps();
         });
     }

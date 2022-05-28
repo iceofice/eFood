@@ -2,6 +2,7 @@
 
 namespace App\View\Composers;
 
+use App\Models\Table;
 use App\Models\Customer;
 use Illuminate\View\View;
 
@@ -25,8 +26,10 @@ class OrderComposer
             'Delivered',
             'Completed',
         ];
+        $tables = Table::pluck('name', 'id')->toArray();
         $view
             ->with('customers', $customers)
-            ->with('status', $status);
+            ->with('status', $status)
+            ->with('tables', $tables);
     }
 }

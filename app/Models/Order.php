@@ -17,7 +17,9 @@ class Order extends Model
     protected $fillable = [
         'total',
         'status',
+        'reserved_at',
         'customer_id',
+        'table_id',
     ];
 
     /**
@@ -27,7 +29,9 @@ class Order extends Model
      */
     public static $rules = [
         'status'        => 'required|integer|between:0,5',
+        'reserved_at'   => 'required|date',
         'customer_id'   => 'required|exists:customers,id',
+        'table_id'      => 'required|exists:tables,id',
     ];
 
     /**
@@ -49,6 +53,14 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the table that owns the order.
+     */
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
     }
 
     /**

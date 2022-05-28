@@ -2,6 +2,8 @@
 
 namespace App\Datatables;
 
+use Carbon\Carbon;
+
 class OrderDatatable extends Datatable
 {
     public function __construct($orders)
@@ -9,8 +11,10 @@ class OrderDatatable extends Datatable
         $this->heads = [
             'ID',
             'Total',
-            'Status',
             'Customer',
+            'Table',
+            'Reservation Time',
+            'Status',
             ['label' => 'Actions', 'no-export' => true],
         ];
 
@@ -21,8 +25,10 @@ class OrderDatatable extends Datatable
             $tableData[] = [
                 $order->id,
                 $order->total ?: 'No Items', //TODO: format price
-                $order->statusName,
                 $order->customerName,
+                $order->table->name,
+                Carbon::create($order->reserved_at)->format('D, d M Y, H:i'),
+                $order->statusName,
                 $this->buttonColumn($order->id),
             ];
         }
