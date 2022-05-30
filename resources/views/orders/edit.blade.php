@@ -16,11 +16,19 @@
     <div class="row">
         <div class="col-6">
             @php
-                $config = ['format' => 'YYYY-MM-DD HH.mm'];
+                $config = [
+                    'format' => 'L',
+                ];
             @endphp
-            <x-adminlte-input-date name="reserved_at" label="Reservation Time" enable-old-support :config="$config"
-                value="{{ $order->reserved_at }}" />
+            <x-adminlte-input-date name="date" label="Reservation date" enable-old-support :config="$config"
+                value="{{ $order->date }}" />
         </div>
+        <div class="col-6">
+            <x-adminlte-select2 name="time" label="Time" enable-old-support>
+            </x-adminlte-select2>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-6">
             <x-adminlte-select2 name="status" label="Status" enable-old-support>
                 <x-adminlte-options :options="$status" selected="{{ $order->status }}" />
@@ -60,4 +68,47 @@
     @include('orders.add-item-modal')
     @include('orders.remove-item-modal')
     @include('orders.edit-item-modal')
+@endsection
+
+@section('js')
+    <script>
+        let time = {{ $order->date }};
+        let table = {{ $order->table_id }};
+        let id = {{ $order->id }};
+        var first = true;
+
+        $("#date").on("change.datetimepicker", ({
+            date,
+            oldDate
+        }) => {
+            time = date.format("YYYY-MM-DD");
+            checkTime(first);
+            first = false;
+        });
+
+        $('#table_id').on('select2:select', function(e) {
+            table = e.params.data.id;
+            checkTime();
+        });
+
+        function checkTime(first = false) {
+            if (time && table) {
+                $.get('{{ route('orders.checkTime') }}', {
+                        'time': time,
+                        'table': table,
+                        'id': id
+                    },
+                    function(data) {
+                        $('#time').find('option').remove();
+                        $.each(data, function(i, item) {
+                            $('#time').append($('<option>', {
+                                value: i,
+                                text: item,
+                                selected: first && i == '{{ $order->time }}'
+                            }));
+                        });
+                    });
+            }
+        }
+    </script>
 @endsection

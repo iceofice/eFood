@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -86,5 +87,21 @@ class Order extends Model
     public function getCustomerNameAttribute()
     {
         return $this->customer->name;
+    }
+
+    /**
+     * Get the hour of the order.
+     */
+    public function getTimeAttribute()
+    {
+        return Carbon::parse($this->reserved_at)->format('G:i');
+    }
+
+    /**
+     * Get the date of the order.
+     */
+    public function getDateAttribute()
+    {
+        return Carbon::parse($this->reserved_at)->format('m/d/Y');
     }
 }

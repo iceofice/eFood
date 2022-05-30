@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,5 +26,17 @@ class CreateOrderRequest extends FormRequest
     public function rules()
     {
         return Order::$rules;
+    }
+
+    /**
+     * Modify request and get the validator instance for the request.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getValidatorInstance()
+    {
+        $date = Carbon::createFromFormat('m/d/Y H:i', $this->request->get('date') . ' ' . $this->request->get('time'));
+        $this->request->set('reserved_at', $date);
+        return parent::getValidatorInstance();
     }
 }

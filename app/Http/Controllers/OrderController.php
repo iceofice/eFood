@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use View;
+use Carbon\Carbon;
 use App\Models\Menu;
 use App\Models\Order;
 use App\Datatables\OrderDatatable;
 use App\Datatables\MenuOrderDatatable;
+use App\Http\Requests\CheckTimeRequest;
 use App\Http\Requests\CreateOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Requests\AddMenuToOrderRequest;
@@ -164,5 +166,39 @@ class OrderController extends Controller
 
         return redirect()->route('orders.edit', $order)
             ->with('success_message', 'Item removed from the order successfully');
+    }
+
+    /**
+     * Check if the order is open
+     *
+     * @param CheckTimeRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function checkTime(CheckTimeRequest $request)
+    {
+        $orders = Order::where([
+            ['table_id', $request->table],
+            ['status', '<>', 5],
+        ])->when($request->id, function ($query) use ($request) {
+            return $query->where('id', '<>', $request->id);
+        })
+            ->whereDate('reserved_at', $request->time)
+            ->get();
+
+        //TODO: Option page to set operating hours
+        for ($i = 9; $i <= 23; $i++) {
+            $times[$i . ':00'] = $i . ':00';
+            $times[$i . ':30'] = $i . ':30';
+        }
+
+        foreach ($orders as $order) {
+            unset($times[Carbon::parse($order->reserved_at)->subHour()->format('G:i')]);
+            unset($times[Carbon::parse($order->reserved_at)->subMinutes(30)->format('G:i')]);
+            unset($times[Carbon::parse($order->reserved_at)->format('G:i')]);
+            unset($times[Carbon::parse($order->reserved_at)->addMinutes(30)->format('G:i')]);
+            unset($times[Carbon::parse($order->reserved_at)->addHour()->format('G:i')]);
+        }
+
+        return $times;
     }
 }
