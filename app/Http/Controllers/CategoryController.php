@@ -122,7 +122,6 @@ class CategoryController extends Controller
      */
     public function checkSlug(CheckSlugRequest $request)
     {
-        //TODO: MOVE Requests to corresponding folder
         $slug = SlugService::createSlug(Category::class, 'slug', $request->name);
         return response()->json(['slug' => $slug]);
     }

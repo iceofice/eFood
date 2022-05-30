@@ -1,9 +1,9 @@
 @extends('crud.create')
 
 @section('form')
-    <x-adminlte-select name="type" label="Type" enable-old-support>
+    <x-adminlte-select2 name="type" label="Type" enable-old-support>
         <x-adminlte-options :options="['Category', 'Filter']" />
-    </x-adminlte-select>
+    </x-adminlte-select2>
 
     <x-adminlte-input id="name" name="name" label="Name" value="{{ old('name') }}" />
     <x-adminlte-input id="slug" name="slug" label="Slug" value="{{ old('slug') }}" />

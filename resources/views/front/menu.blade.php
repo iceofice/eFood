@@ -48,7 +48,6 @@
                                                 </li>
                                             @endforeach
                                         @else
-                                            {{-- TODO: Empry Category --}}
                                             No menu under this category
                                         @endif
                                     </ul>

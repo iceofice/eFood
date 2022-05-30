@@ -2,9 +2,9 @@
 
 @section('filter')
     <div class="col-xs-12 col-sm-6 col-md-3">
-        <x-adminlte-select id="role" name="role" label="Role">
-            <x-adminlte-options :options="$options" placeholder="--select a role--" />
-        </x-adminlte-select>
+        <x-adminlte-select2 id="role" name="role" label="Role">
+            <x-adminlte-options :options="$options" empty-option="--select a role--" />
+        </x-adminlte-select2>
     </div>
 @endsection
 
