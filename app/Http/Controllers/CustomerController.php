@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use View;
 use App\Models\Customer;
 use App\Datatables\CustomerDatatable;
+use App\Http\Requests\AddCustomerRequest;
 use App\Http\Requests\CreateCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 
@@ -106,5 +107,29 @@ class CustomerController extends Controller
         $customer->delete();
         return redirect()->route('customers.index')
             ->with('success_message', 'Customer deleted successfully');
+    }
+
+    /**
+     * Get or creaste a new customer
+     * 
+     * @param  AddCustomerRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function add(AddCustomerRequest $request)
+    {
+        if (isset($request->validated()['email'])) {
+            $customer = Customer::where('email', $request->validated()['email'])->first();
+        } else {
+            $customer = Customer::where('phone', $request->validated()['phone'])->first();
+        }
+
+        if (is_null($customer)) {
+            $customer = Customer::create($request->validated());
+        } else {
+            $customer->update([
+                'name' => $request->validated()['name'],
+            ]);
+        }
+        return view('order', compact('customer'));
     }
 }

@@ -39,7 +39,7 @@ class Customer extends Model
     public static $rules = [
         'name'      => 'required',
         'email'     => 'required_without:phone|nullable|email|unique:customers,email',
-        'phone'     => 'required_without:email|nullable|numeric',
+        'phone'     => 'required_without:email|nullable|numeric|unique:customers,phone',
         'password'  => 'nullable|confirmed',
     ];
 

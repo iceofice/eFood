@@ -60,3 +60,5 @@ Route::group([
     Route::put('orders/{order}/update_menu/{menu_id}', [OrderController::class, 'updateMenu'])->name('orders.updateMenu')->middleware('can:manage orders');
     Route::post('orders/{order}/remove_menu/{menu_id}', [OrderController::class, 'removeMenu'])->name('orders.removeMenu')->middleware('can:manage orders');
 });
+
+Route::post('reserve', [CustomerController::class, 'add'])->name('customers.add');
