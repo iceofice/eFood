@@ -2,5 +2,12 @@
 
 @section('form')
     <x-adminlte-input id="name" name="name" label="Name" value="{{ old('name') }}" />
-    <x-adminlte-input id="qty" name="qty" label="Number Of Person" value="{{ old('qty') }}" />
+    @php
+    $config = [
+        'range' => true,
+        'ticks' => [0, 15],
+    ];
+    @endphp
+    <x-adminlte-input-slider name="range" label="Number Of People" color="orange" :config="$config" value="3,8">
+    </x-adminlte-input-slider>
 @endsection

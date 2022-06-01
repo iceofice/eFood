@@ -16,7 +16,8 @@ class Table extends Model
      */
     protected $fillable = [
         'name',
-        'qty',
+        'min',
+        'max'
     ];
 
     /**
@@ -26,7 +27,7 @@ class Table extends Model
      */
     public static $rules = [
         'name'      => 'required',
-        'qty'       => 'required|integer',
-
+        'min'       => 'required|integer',
+        'max'       => 'required|integer',
     ];
 }

@@ -16,7 +16,8 @@ class CreateTablesTable extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('qty');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
         });
     }

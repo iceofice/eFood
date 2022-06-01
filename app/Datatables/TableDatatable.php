@@ -9,7 +9,7 @@ class TableDatatable extends Datatable
         $this->heads = [
             'ID',
             'Name',
-            'Qty',
+            'Number Of People',
             ['label' => 'Actions', 'no-export' => true],
         ];
 
@@ -20,7 +20,7 @@ class TableDatatable extends Datatable
             $tableData[] = [
                 $table->id,
                 $table->name,
-                $table->qty,
+                $table->min . ' - ' . $table->max,
                 $this->buttonColumn($table->id),
             ];
         }

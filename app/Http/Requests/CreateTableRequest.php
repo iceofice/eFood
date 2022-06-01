@@ -26,4 +26,18 @@ class CreateTableRequest extends FormRequest
     {
         return Table::$rules;
     }
+
+    /**
+     * Modify request and get the validator instance for the request.
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function getValidatorInstance()
+    {
+        $range = explode(',', $this->request->get('range'));
+        $this->request->set('min', (int)$range[0]);
+        $this->request->set('max', (int)$range[1]);
+
+        return parent::getValidatorInstance();
+    }
 }
