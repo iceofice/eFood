@@ -23,7 +23,7 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/', [FrontController::class, 'index'])->name('home');
+Route::get('/', [FrontController::class, 'index'])->name('front');
 
 Auth::routes();
 

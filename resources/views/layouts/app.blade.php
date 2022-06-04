@@ -40,16 +40,19 @@
             <div class="fh5co-main-nav">
                 <div class="container-fluid">
                     <div class="fh5co-menu-1">
-                        <!-- <a href="#" data-nav-section="home">Home</a> -->
-                        <a href="#" data-nav-section="features">Featured</a>
-                        <a href="#" data-nav-section="menu">Menu</a>
+                        @if (Illuminate\Support\Facades\Route::is('front'))
+                            <a href="#" data-nav-section="features">Featured</a>
+                            <a href="#" data-nav-section="menu">Menu</a>
+                        @endif
                     </div>
                     <div class="fh5co-logo">
-                        <a href="index.html">foodee</a>
+                        <a class="external" href="{{ route('front') }}">foodee</a>
                     </div>
                     <div class="fh5co-menu-2">
-                        <a href="#" data-nav-section="reservation">Reservation</a>
-                        <a href="#" data-nav-section="profile">Profile</a>
+                        @if (Illuminate\Support\Facades\Route::is('front'))
+                            <a href="#" data-nav-section="reservation">Reservation</a>
+                            <a href="#" data-nav-section="profile">Profile</a>
+                        @endif
                     </div>
                 </div>
             </div>
