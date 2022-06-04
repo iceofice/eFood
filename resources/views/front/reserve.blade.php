@@ -11,40 +11,85 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 to-animate-2">
-                <h3>Contact Info</h3>
-                <ul class="fh5co-contact-info">
-                    <li class="fh5co-contact-address">
-                        <i class="icon-home"></i>
-                        5555 Love Paradise 56 New Clity 5655, <br />Excel Tower United Kingdom
-                    </li>
-                    <li><i class="icon-phone"></i> (123) 465-6789</li>
-                    <li><i class="icon-envelope"></i>info@freehtml5.co</li>
-                    <li>
-                        <i class="icon-globe"></i>
-                        <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-6 to-animate-2">
+            <div class="col-md-12 to-animate-2">
                 <h3>Reservation Form</h3>
-                @if ($errors->any())
-                    <div class="error">{{ $errors->first() }}</div>
-                @endif
-                <form action="{{ route('customers.add') }}" method="post">
+                <form action="{{ route('front.reserve') }}" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <input id="name" name="name" class="form-control" placeholder="Name" type="text" required />
-                    </div>
-                    <div class="form-group">
-                        <input id="email-phone" name="email-phone" class="form-control" placeholder="Email/Phone"
-                            type="text" required />
-                    </div>
-                    <div class="form-group">
-                        <input class="btn btn-primary btn-outline" value="Check Avaibility" type="submit" />
-                    </div>
+                    <x-adminlte-input type="number" class="form-control" id="pax" name="pax"
+                        placeholder="Number Of People" />
+                    @php
+                        $config = [
+                            'format' => 'L',
+                        ];
+                    @endphp
+                    <x-adminlte-input-date name="date" placeholder="Reservation date" enable-old-support
+                        :config="$config" />
+                    <span id="message">Fill both date and table to see available time.</span>
+                    {{-- TODO: Fix Sizing on different windows size --}}
+                    <x-adminlte-select2 class="form-control" name="time" placeholder="Time" enable-old-support>
+                    </x-adminlte-select2>
+                    <input type="hidden" name="table_id" id="table_id" />
+                    <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
+                    <input class="btn btn-primary btn-outline" value="Reserve" type="submit" />
                 </form>
+
             </div>
         </div>
     </div>
 </div>
+
+@section('js')
+    <script>
+        let time;
+        let pax;
+        let timedata;
+        $('#time').prop("disabled", true);
+
+        $("#date").on("change.datetimepicker", ({
+            date,
+            oldDate
+        }) => {
+            time = date.format("YYYY-MM-DD");
+            checkTime();
+        });
+
+        $('#pax').on("input", function() {
+            pax = $(this).val();
+            checkTime();
+        });
+
+        $('#time').on('change.select2', function(e) {
+            var x = $('#time').select2('data')[0].text
+            var obj = timedata.data[x];
+            var table_id = obj[Object.keys(obj)[0]]
+            $('#table_id').val(table_id);
+        });
+
+        function checkTime() {
+            if (time && pax) {
+                $.get('{{ route('front.checkTable') }}', {
+                        'time': time,
+                        'pax': pax
+                    },
+                    function(data) {
+                        timedata = data
+                        $('#time').find('option').remove();
+                        if (data.error) {
+                            $('#time').prop("disabled", true);
+                            $('#message').html(data.message);
+                        } else {
+                            $('#time').prop("disabled", false);
+                            $('#message').html('Available time');
+                            $.each(data.data, function(i, item) {
+                                $('#time').append($('<option>', {
+                                    value: i,
+                                    text: i
+                                }));
+                            });
+                        }
+                        $('#time').val(Object.keys(timedata.data)[0]).trigger('change.select2');
+                    });
+            }
+        }
+    </script>
+@endsection

@@ -17,12 +17,16 @@
     <link rel="stylesheet" href="css/icomoon.css" />
     <!-- Simple Line Icons -->
     <link rel="stylesheet" href="css/simple-line-icons.css" />
-    <!-- Datetimepicker -->
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
     <!-- Flexslider -->
     <link rel="stylesheet" href="css/flexslider.css" />
     <!-- Bootstrap  -->
     <link rel="stylesheet" href="css/bootstrap.css" />
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="vendor/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+    <!-- Tempus Dominus -->
+    <link rel="stylesheet" href="vendor/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css" />
 
@@ -59,20 +63,21 @@
     <script src="js/jquery.easing.1.3.js"></script>
     <!-- Bootstrap -->
     <script src="js/bootstrap.min.js"></script>
-    <!-- Bootstrap DateTimePicker -->
-    <script src="js/moment.js"></script>
-    <script src="js/bootstrap-datetimepicker.min.js"></script>
     <!-- Waypoints -->
     <script src="js/jquery.waypoints.min.js"></script>
     <!-- Stellar Parallax -->
     <script src="js/jquery.stellar.min.js"></script>
 
+    <!-- Tempus Dominus -->
+    <script src="vendor/moment/moment.min.js"></script>
+    <script src="vendor/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Select 2 -->
+    <script src="vendor/select2/js/select2.full.min.js"></script>
+
     <!-- Flexslider -->
     <script src="js/jquery.flexslider-min.js"></script>
     <script>
-        $(function() {
-            $("#date").datetimepicker();
-        });
         $("#myTabs a").click(function(e) {
             e.preventDefault();
             $(this).tab("show");
@@ -80,6 +85,8 @@
     </script>
     <!-- Main JS -->
     <script src="js/main.js"></script>
+    @stack('js')
+    @yield('js')
 </body>
 
 </html>

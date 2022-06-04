@@ -31,7 +31,7 @@
                 @if ($errors->any())
                     <div class="error">{{ $errors->first() }}</div>
                 @endif
-                <form action="{{ route('customers.add') }}" method="post">
+                <form action="{{ route('front.findCustomer') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <input id="name" name="name" class="form-control" placeholder="Name" type="text" required />

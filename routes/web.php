@@ -61,4 +61,6 @@ Route::group([
     Route::post('orders/{order}/remove_menu/{menu_id}', [OrderController::class, 'removeMenu'])->name('orders.removeMenu')->middleware('can:manage orders');
 });
 
-Route::post('reserve', [CustomerController::class, 'add'])->name('customers.add');
+Route::post('order', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
+Route::get('check_table', [FrontController::class, 'checkTable'])->name('front.checkTable');
+Route::post('reserve', [FrontController::class, 'reserve'])->name('front.reserve');
