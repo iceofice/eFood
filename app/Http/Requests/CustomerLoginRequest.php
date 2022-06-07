@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Customer;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddCustomerRequest extends FormRequest
+class CustomerLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +23,11 @@ class AddCustomerRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = Customer::$rules;
-        $rules['email'] = 'required_without:phone|nullable|email';
-        $rules['phone'] = 'required_without:email|nullable|numeric';
+        $rules = [
+            'email'     => 'required_without:phone|nullable|email',
+            'phone'     => 'required_without:email|nullable|numeric',
+            'password'  => 'required',
+        ];
 
         return $rules;
     }
@@ -52,8 +53,10 @@ class AddCustomerRequest extends FormRequest
             $this->request->set('phone', $this->request->get('email-phone'));
         } elseif (filter_var($this->request->get('email-phone'), FILTER_VALIDATE_EMAIL)) {
             $this->request->set('email', $this->request->get('email-phone'));
+        } else {
+            $this->redirect = route('front') . '/#profile-section';
+            $this->errorBag = 'login';
         }
-        $this->redirect = route('front') . '/#reserve-section';
 
         return parent::getValidatorInstance();
     }

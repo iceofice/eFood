@@ -1,4 +1,4 @@
-<div id="fh5co-contact" data-section="reservation">
+<div id="reserve-section" data-section="reservation">
     <div class="container">
         <div class="row text-center fh5co-heading row-padded">
             <div class="col-md-8 col-md-offset-2">

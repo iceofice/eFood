@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Carbon\Carbon;
 use App\Models\Menu;
 use App\Models\Order;
@@ -9,9 +10,9 @@ use App\Models\Table;
 use App\Models\Category;
 use App\Models\Customer;
 use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
 use App\Http\Requests\ReserveRequest;
 use App\Http\Requests\AddCustomerRequest;
+use Illuminate\Support\Facades\Session;
 
 class FrontController extends Controller
 {
@@ -124,5 +125,17 @@ class FrontController extends Controller
     {
         Order::create($request->validated());
         return view('thankyou');
+    }
+
+    public function profile()
+    {
+        return view('profile');
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect()->route('front');
     }
 }

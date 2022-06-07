@@ -26,6 +26,7 @@ class UpdateCustomerRequest extends FormRequest
     {
         $rules = Customer::$rules;
         $rules['email'] = 'required_without:phone|nullable|email|unique:customers,email,' . $this->customer->id;
+        $rules['phone'] = 'required_without:email|nullable|numeric|unique:customers,phone,' . $this->customer->id;
 
         // Remove password validation if the customer is not changing their password
         if (!isset($this->password))

@@ -1,4 +1,4 @@
-<div id="fh5co-events" data-section="profile" style="background-image: url(images/slide_2.jpg)"
+<div id="profile-section" data-section="profile" style="background-image: url(images/slide_2.jpg)"
     data-stellar-background-ratio="0.5">
     <div class="fh5co-overlay"></div>
     <div class="container">
@@ -17,14 +17,20 @@
                 <div class="fh5co-event to-animate-2">
                     <h3>Login</h3>
                     <span class="fh5co-event-meta">Login to your account below</span>
-                    <form action="" class="dark-form">
+                    <form action="{{ route('customer.login') }}" class="dark-form" method="POST">
+                        @csrf
                         <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input id="email" class="form-control" placeholder="Email" type="email" />
+                            @if ($errors->login && $errors->login->first() != '')
+                                <label class="text-warning">{{ $errors->login->first() }}</label>
+                            @endif
+                            <label for="email-phone" class="sr-only">Email/Phone</label>
+                            <input id="email-phone" class="form-control" placeholder="Email/Phone" name="email-phone"
+                                required />
                         </div>
                         <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input id="password" class="form-control" placeholder="Password" type="password" />
+                            <input id="password" class="form-control" placeholder="Password" type="password"
+                                name="password" required />
                         </div>
                         <div class="form-group">
                             <input class="btn btn-primary btn-outline" value="Login" type="submit" />

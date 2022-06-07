@@ -9,7 +9,8 @@ use App\Http\Controllers\{
     CustomerController,
     FrontController,
     OrderController,
-    TableController
+    TableController,
+    Auth\CustomerLoginController
 };
 
 /*
@@ -27,8 +28,10 @@ Route::get('/', [FrontController::class, 'index'])->name('front');
 
 Auth::routes();
 
+Route::post('customer/login', [CustomerLoginController::class, 'login'])->name('customer.login');
+
 Route::group([
-    'middleware'    => 'auth',
+    'middleware'    => 'auth:web',
     'prefix'        => 'admin',
 ], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -64,3 +67,5 @@ Route::group([
 Route::post('order', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
 Route::get('check_table', [FrontController::class, 'checkTable'])->name('front.checkTable');
 Route::post('reserve', [FrontController::class, 'reserve'])->name('front.reserve');
+Route::get('profile', [FrontController::class, 'profile'])->middleware('auth:customer')->name('front.profile');
+Route::get('logout', [FrontController::class, 'logout'])->name('front.logout');

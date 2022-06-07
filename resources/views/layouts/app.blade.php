@@ -54,6 +54,12 @@
                             <a href="#" data-nav-section="profile">Profile</a>
                         @endif
                     </div>
+                    @if (Illuminate\Support\Facades\Route::is('front.profile'))
+                        <div class="logout">
+                            <a class="external" href="{{ route('front.logout') }}">Logout</a>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

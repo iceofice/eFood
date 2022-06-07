@@ -51,7 +51,9 @@ class CustomerController extends Controller
      */
     public function store(CreateCustomerRequest $request)
     {
-        Customer::create($request->validated());
+        $validatedRequest = $request->validated();
+        $validatedRequest['password'] = bcrypt($validatedRequest['password']);
+        Customer::create($validatedRequest);
 
         return redirect()->route('customers.index')
             ->with('success_message', 'Customer added successfully');

@@ -1,4 +1,4 @@
-<div id="fh5co-contact" data-section="reservation">
+<div id="reserve-section" data-section="reservation">
     <div class="container">
         <div class="row text-center fh5co-heading row-padded">
             <div class="col-md-8 col-md-offset-2">
@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-md-6 to-animate-2">
                 <h3>Contact Info</h3>
-                <ul class="fh5co-contact-info">
-                    <li class="fh5co-contact-address">
+                <ul class="reserve-section-info">
+                    <li class="reserve-section-address">
                         <i class="icon-home"></i>
                         5555 Love Paradise 56 New Clity 5655, <br />Excel Tower United Kingdom
                     </li>
@@ -28,8 +28,8 @@
             </div>
             <div class="col-md-6 to-animate-2">
                 <h3>Reservation Form</h3>
-                @if ($errors->any())
-                    <div class="error">{{ $errors->first() }}</div>
+                @if ($errors->any() && !$errors->has('login'))
+                    <div class="text-warning">{{ $errors->first() }}</div>
                 @endif
                 <form action="{{ route('front.findCustomer') }}" method="post">
                     @csrf
