@@ -12,11 +12,14 @@
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="fh5co-event to-animate-2">
-                    <h3>Login</h3>
-                    <span class="fh5co-event-meta">Login to your account below</span>
+        <div class="row" style="display: flex;">
+            <div class="col-md-6" style="flex: 1;">
+                <div class="fh5co-event to-animate-2"
+                    style="height: 100%; display: flex; justify-content: space-evenly; flex-direction: column">
+                    <div>
+                        <h3>Login</h3>
+                        <span class="fh5co-event-meta">Login to your account below</span>
+                    </div>
                     <form action="{{ route('customer.login') }}" class="dark-form" method="POST">
                         @csrf
                         <div class="form-group">
@@ -38,18 +41,32 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="fh5co-event to-animate-2">
-                    <h3>Register</h3>
-                    <span class="fh5co-event-meta">Fill the form below to register</span>
+            <div class="col-md-6" style="flex: 1;">
+                <div class="fh5co-event to-animate-2"
+                    style="height: 100%; display: flex; justify-content: space-evenly; flex-direction: column">
+                    <div>
+                        <h3>Register</h3>
+                        <span class="fh5co-event-meta">Fill the form below to register</span>
+                    </div>
                     <form action="" class="dark-form">
                         <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input id="email" class="form-control" placeholder="Email" type="email" />
+                            <label for="name" class="sr-only">Name</label>
+                            <input id="name" name="name" class="form-control" placeholder="Name" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email-phone" class="sr-only">Email/Phone</label>
+                            <input id="email-phone" name="email-phone" class="form-control" placeholder="Email/Phone"
+                                type="text" />
                         </div>
                         <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input id="password" class="form-control" placeholder="Password" type="password" />
+                            <input id="password" name="password" class="form-control" placeholder="Password"
+                                type="password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password-confirmation" class="sr-only">Confirm Password</label>
+                            <input id="password-confirmation" name="password-confirmation" class="form-control"
+                                placeholder="Confirm Password" type="password" />
                         </div>
                         <div class="form-group">
                             <input class="btn btn-primary btn-outline" value="Register" type="submit" />

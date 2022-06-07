@@ -127,15 +127,22 @@ class FrontController extends Controller
         return view('thankyou');
     }
 
+    //TODO:DOCS
     public function profile()
     {
         return view('profile');
     }
 
+    //TODO:DOCS
     public function logout()
     {
         Session::flush();
         Auth::logout();
         return redirect()->route('front');
+    }
+
+    //TODO:DOCS
+    public function register()
+    {
     }
 }
