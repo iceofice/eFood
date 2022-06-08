@@ -11,8 +11,9 @@ use App\Models\Category;
 use App\Models\Customer;
 use Illuminate\Support\Arr;
 use App\Http\Requests\ReserveRequest;
-use App\Http\Requests\AddCustomerRequest;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\AddCustomerRequest;
+use App\Http\Requests\RegisterCustomerRequest;
 
 class FrontController extends Controller
 {
@@ -142,7 +143,13 @@ class FrontController extends Controller
     }
 
     //TODO:DOCS
-    public function register()
+    public function register(RegisterCustomerRequest $request)
     {
+        $validatedRequest = $request->validated();
+        $validatedRequest['password'] = bcrypt($validatedRequest['password']);
+        Customer::create($validatedRequest);
+
+        return redirect(route('front') . '/#profile-section')
+            ->with('success_message', 'You are registered successfully');
     }
 }

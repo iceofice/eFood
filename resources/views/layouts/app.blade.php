@@ -63,6 +63,7 @@
                 </div>
             </div>
         </div>
+        <x-notification-component />
         @yield('content')
     </div>
 
@@ -86,6 +87,10 @@
 
     <!-- Flexslider -->
     <script src="js/jquery.flexslider-min.js"></script>
+
+    <!-- Sweet Alert 2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
     <script>
         $("#myTabs a").click(function(e) {
             e.preventDefault();

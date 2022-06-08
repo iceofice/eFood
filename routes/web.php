@@ -29,6 +29,7 @@ Route::get('/', [FrontController::class, 'index'])->name('front');
 Auth::routes();
 
 Route::post('customer/login', [CustomerLoginController::class, 'login'])->name('customer.login');
+Route::post('customer/register', [FrontController::class, 'register'])->name('customer.register');
 
 Route::group([
     'middleware'    => 'auth:web',

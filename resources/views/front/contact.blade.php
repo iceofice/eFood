@@ -28,8 +28,8 @@
             </div>
             <div class="col-md-6 to-animate-2">
                 <h3>Reservation Form</h3>
-                @if ($errors->any() && !$errors->has('login'))
-                    <div class="text-warning">{{ $errors->first() }}</div>
+                @if ($errors->reserve && $errors->reserve->first() != '')
+                    <div class="text-warning">{{ $errors->reserve->first() }}</div>
                 @endif
                 <form action="{{ route('front.findCustomer') }}" method="post">
                     @csrf

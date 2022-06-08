@@ -1579,3 +1579,7 @@ p {
     float: right;
     padding: 20px 10px;
 }
+
+.swal2-popup {
+    font-size: 16px !important;
+}
