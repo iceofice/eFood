@@ -56,9 +56,9 @@
         $("body").prepend(
             '<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>'
         );
-
+        $("#fh5co-offcanvas").append('<a class="external" href="/">Home</a>');
         $(
-            ".fh5co-main-nav .fh5co-menu-1 a, .fh5co-main-nav .fh5co-menu-2 a"
+            ".fh5co-main-nav .fh5co-menu-1 a, .fh5co-main-nav .fh5co-menu-2 a, .fh5co-main-nav .logout a "
         ).each(function () {
             var $this = $(this);
 
