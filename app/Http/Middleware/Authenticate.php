@@ -15,9 +15,9 @@ class Authenticate extends Middleware
      */
     protected function redirectToRoute($request, $guards)
     {
-        $login = $guards[0] == 'web' ? 'login' : 'front';
+        $url = $guards[0] == 'web' ? route('login') : route('front') . '/#profile-section';
         if (!$request->expectsJson()) {
-            return route($login);
+            return $url;
         }
     }
 

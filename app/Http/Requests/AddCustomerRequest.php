@@ -53,6 +53,8 @@ class AddCustomerRequest extends FormRequest
         } elseif (filter_var($this->request->get('email-phone'), FILTER_VALIDATE_EMAIL)) {
             $this->request->set('email', $this->request->get('email-phone'));
         }
+        $this->redirect = route('front') . '/#reserve-section';
+        $this->errorBag = 'reserve';
 
         return parent::getValidatorInstance();
     }

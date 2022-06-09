@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @if (Auth::guard('customer')->check())
+        @include('front.cta')
+    @endif
     @include('front.featured')
     @include('front.menu')
-    @include('front.contact')
-    @include('front.profile')
+    @if (!Auth::guard('customer')->check())
+        @include('front.contact')
+        @include('front.profile')
+    @endif
 @endsection

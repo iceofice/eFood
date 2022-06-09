@@ -1404,6 +1404,7 @@ p {
     background-size: cover;
     background-attachment: fixed;
     position: relative;
+    text-align: center;
 }
 #fh5co-type > .fh5co-overlay {
     position: absolute;
@@ -1434,7 +1435,6 @@ p {
     color: #fff;
     font-size: 40px;
     text-align: center;
-    padding-top: 110px;
 }
 #fh5co-type h3.with-icon {
     position: relative;

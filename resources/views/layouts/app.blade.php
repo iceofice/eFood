@@ -36,33 +36,7 @@
 
 <body>
     <div id="fh5co-container">
-        <div class="js-sticky">
-            <div class="fh5co-main-nav">
-                <div class="container-fluid">
-                    <div class="fh5co-menu-1">
-                        @if (Illuminate\Support\Facades\Route::is('front'))
-                            <a href="#" data-nav-section="features">Featured</a>
-                            <a href="#" data-nav-section="menu">Menu</a>
-                        @endif
-                    </div>
-                    <div class="fh5co-logo">
-                        <a class="external" href="{{ route('front') }}">foodee</a>
-                    </div>
-                    <div class="fh5co-menu-2">
-                        @if (Illuminate\Support\Facades\Route::is('front'))
-                            <a href="#" data-nav-section="reservation">Reservation</a>
-                            <a href="#" data-nav-section="profile">Profile</a>
-                        @endif
-                    </div>
-                    @if (Illuminate\Support\Facades\Route::is('front.profile'))
-                        <div class="logout">
-                            <a class="external" href="{{ route('front.logout') }}">Logout</a>
-                        </div>
-                    @endif
-
-                </div>
-            </div>
-        </div>
+        @include('front.partial.header')
         <x-notification-component />
         @yield('content')
     </div>

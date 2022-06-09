@@ -24,9 +24,6 @@ class RegisterCustomerRequest extends FormRequest
      */
     public function rules()
     {
-        $this->errorBag = 'register';
-        $this->redirect = route('front') . '/#profile-section';
-
         return Customer::$rules;
     }
 
@@ -42,8 +39,9 @@ class RegisterCustomerRequest extends FormRequest
         } elseif (filter_var($this->request->get('email-phone'), FILTER_VALIDATE_EMAIL)) {
             $this->request->set('email', $this->request->get('email-phone'));
         }
-        $this->redirect = route('front') . '/#reserve-section';
-        $this->errorBag = 'reserve';
+
+        $this->errorBag = 'register';
+        $this->redirect = route('front') . '/#profile-section';
 
         return parent::getValidatorInstance();
     }
