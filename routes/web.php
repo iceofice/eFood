@@ -66,6 +66,7 @@ Route::group([
 });
 
 Route::post('order', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
+Route::get('order', [FrontController::class, 'order'])->name('front.order');
 Route::get('check_table', [FrontController::class, 'checkTable'])->name('front.checkTable');
 Route::post('reserve', [FrontController::class, 'reserve'])->name('front.reserve');
 Route::get('profile', [FrontController::class, 'profile'])->middleware('auth:customer')->name('front.profile');

@@ -34,7 +34,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with('customer')->get();
+        $orders = Order::with(['customer', 'table'])->get();
         $table = new OrderDatatable($orders);
 
         return view('crud.index', compact('table'));

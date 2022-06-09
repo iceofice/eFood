@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use App\Http\Requests\ReserveRequest;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\AddCustomerRequest;
+use App\Http\Requests\CheckTableRequest;
 use App\Http\Requests\RegisterCustomerRequest;
 
 class FrontController extends Controller
@@ -57,7 +58,9 @@ class FrontController extends Controller
                 'name' => $request->validated()['name'],
             ]);
         }
-        return view('order', compact('customer'));
+
+        $customerID = $customer->id;
+        return view('order', compact('customerID'));
     }
 
 
@@ -151,5 +154,11 @@ class FrontController extends Controller
 
         return redirect(route('front') . '/#profile-section')
             ->with('success_message', 'You are registered successfully');
+    }
+
+    public function order()
+    {
+        $customerID = Auth()->guard('customer')->user()->id;
+        return view('order', compact('customerID'));
     }
 }

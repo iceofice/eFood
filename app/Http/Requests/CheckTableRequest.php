@@ -25,7 +25,7 @@ class CheckTableRequest extends FormRequest
     {
         return [
             'pax'   => 'required|integer|min:1',
-            'date'  => 'required|date',
+            'time'  => 'required|date',
         ];
     }
 }

@@ -29,7 +29,7 @@
                     <x-adminlte-select2 class="form-control" name="time" placeholder="Time" enable-old-support>
                     </x-adminlte-select2>
                     <input type="hidden" name="table_id" id="table_id" />
-                    <input type="hidden" name="customer_id" value="{{ $customer->id }}" />
+                    <input type="hidden" name="customer_id" value="{{ $customerID }}" />
                     <input class="btn btn-primary btn-outline" value="Reserve" type="submit" />
                 </form>
 
