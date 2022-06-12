@@ -930,18 +930,21 @@ p {
     float: left;
     width: 100%;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-desc {
+#fh5co-menus .fh5co-food-menu ul li.active {
+    border-bottom: 2px solid #fb6e14;
+}
+.fh5co-food-desc {
     clear: both;
     float: left;
     width: 70%;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-desc > figure {
+.fh5co-food-desc > figure {
     width: 20%;
     float: left;
     position: relative;
     margin-right: 4%;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-desc > figure img {
+.fh5co-food-desc > figure img {
     max-width: 100%;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -951,28 +954,37 @@ p {
     object-fit: cover;
     aspect-ratio: 7/5;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-desc > div {
+.fh5co-food-desc > div {
     width: 75%;
     float: left;
     position: relative;
     font-size: 14px;
     line-height: 1.5;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-desc > div p {
+.fh5co-food-desc > div p {
     margin: 0;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-desc > div h3 {
+.fh5co-food-desc > div h3 {
     margin: 0 0 10px 0;
     padding: 0;
     font-size: 20px;
     color: #000;
 }
-#fh5co-menus .fh5co-food-menu ul li .fh5co-food-pricing {
+.fh5co-food-desc > div h3 span {
+    color: #fb6e14;
+}
+
+.fh5co-food-pricing {
     float: right;
     width: 30%;
     text-align: right;
     font-size: 20px;
     color: #fb6e14;
+}
+
+.fh5co-food-pricing > span {
+    color: #222;
+    font-size: 14px;
 }
 
 #profile-section {
@@ -1582,4 +1594,26 @@ p {
 
 .swal2-popup {
     font-size: 16px !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.add-button {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.modal-header {
+    display: flex;
+}
+
+.modal-header .close {
+    margin-left: auto;
+}
+
+.error {
+    color: #fb4f59;
+    margin-bottom: 0;
 }

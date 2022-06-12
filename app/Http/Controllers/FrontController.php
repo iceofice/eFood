@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\AddCustomerRequest;
 use App\Http\Requests\CheckTableRequest;
 use App\Http\Requests\RegisterCustomerRequest;
+use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
@@ -127,8 +128,10 @@ class FrontController extends Controller
      */
     public function reserve(ReserveRequest $request)
     {
-        Order::create($request->validated());
-        return view('thankyou');
+        $order = Order::create($request->validated());
+        $customer = $order->customer->name;
+
+        return view('thankyou', compact('customer', 'order'));
     }
 
     //TODO:DOCS
@@ -156,9 +159,60 @@ class FrontController extends Controller
             ->with('success_message', 'You are registered successfully');
     }
 
-    public function order()
+    //TODO:DOCS
+    public function book()
     {
         $customerID = Auth()->guard('customer')->user()->id;
         return view('order', compact('customerID'));
+    }
+
+    //TODO:DOCS
+    public function order(Request $request)
+    {
+        $menus = Menu::with('categories')->get()->groupBy('categories.*.slug')->all();
+        $uncategorized = Menu::doesntHave('categories')->get();
+        $categories = Category::all()->pluck('name', 'slug');
+
+        if (!$uncategorized->isEmpty()) {
+            $menus['uncategorized'] = $uncategorized;
+            $categories['uncategorized'] = 'Others';
+        }
+
+        foreach ($menus as $key => $menu) {
+            $menus[$key] = array_chunk($menu->all(), ceil(count($menu) / 2));
+        }
+
+        $order = Order::find(request()->orderID);
+        $items = $order->menus;
+
+        return view('front.order', compact('menus', 'categories', 'order', 'items'));
+    }
+
+    //TODO: DOCS
+    public function addOrderItem()
+    {
+        $order = Order::find(request()->orderID);
+        $menu = Menu::find(request()->menuID);
+
+        $order->menus()->syncWithoutDetaching([request()->menuID => ['qty' => request()->qty, 'price' => $menu->price]]);
+
+        return response()->json(['success' => true]);
+    }
+
+    //TODO: DOCS
+    public function removeOrderItem()
+    {
+        $order = Order::find(request()->orderID);
+        $menu = Menu::find(request()->menuID);
+        $order->menus()->detach($menu);
+        return response()->json(['success' => true]);
+    }
+
+    public function finishOrder()
+    {
+        $order = Order::find(request()->orderID);
+        $customer = $order->customer->name;
+
+        return view('thankyou', compact('customer', 'order'));
     }
 }

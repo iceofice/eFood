@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <h3 class="to-animate">Welcome Back {{ Auth::guard('customer')->user()->name }}</h3>
-                <a href="{{ route('front.order') }}" class="btn btn-primary">Order Now</a>
+                <a href="{{ route('front.book') }}" class="btn btn-primary">Reserve Now</a>
                 <a href="{{ route('front.profile') }}" class="btn btn-primary btn-outline">Check Profile</a>
             </div>
         </div>

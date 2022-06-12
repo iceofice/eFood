@@ -13,7 +13,7 @@
             <div class="fh5co-menu-2">
                 @if (Illuminate\Support\Facades\Route::is('front'))
                     @if (Auth::guard('customer')->check())
-                        <a class="external" href="{{ route('front.order') }}">Reserve</a>
+                        <a class="external" href="{{ route('front.book') }}">Reserve</a>
                         <a class="external" href="{{ route('front.profile') }}">Profile</a>
                     @else
                         <a href="#" data-nav-section="reservation">Reserve</a>

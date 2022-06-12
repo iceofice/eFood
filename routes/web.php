@@ -65,9 +65,13 @@ Route::group([
     Route::post('orders/{order}/remove_menu/{menu_id}', [OrderController::class, 'removeMenu'])->name('orders.removeMenu')->middleware('can:manage orders');
 });
 
-Route::post('order', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
-Route::get('order', [FrontController::class, 'order'])->middleware('auth:customer')->name('front.order');
+Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
+Route::get('book', [FrontController::class, 'book'])->middleware('auth:customer')->name('front.book');
 Route::get('check_table', [FrontController::class, 'checkTable'])->name('front.checkTable');
 Route::post('reserve', [FrontController::class, 'reserve'])->name('front.reserve');
 Route::get('profile', [FrontController::class, 'profile'])->middleware('auth:customer')->name('front.profile');
 Route::get('logout', [FrontController::class, 'logout'])->name('front.logout');
+Route::post('order', [FrontController::class, 'order'])->name('front.order');
+Route::post('add-order-item', [FrontController::class, 'addOrderItem'])->name('front.order.add');
+Route::post('remove-order-item', [FrontController::class, 'removeOrderItem'])->name('front.order.remove');
+Route::post('thankyou', [FrontController::class, 'finishOrder'])->name('front.order.finish');
