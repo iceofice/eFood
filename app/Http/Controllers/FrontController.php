@@ -137,7 +137,11 @@ class FrontController extends Controller
     //TODO:DOCS
     public function profile()
     {
-        return view('profile');
+        $orders = Order::with('menus')
+            ->where('customer_id', Auth::user()->id)
+            ->orderBy('reserved_at', 'desc')
+            ->get();
+        return view('profile', compact('orders'));
     }
 
     //TODO:DOCS

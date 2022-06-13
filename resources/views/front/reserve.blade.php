@@ -20,6 +20,8 @@
                     @php
                         $config = [
                             'format' => 'L',
+                            'minDate' => 'js:moment()',
+                            'maxDate' => 'js:moment().add(30, "days")',
                         ];
                     @endphp
                     <x-adminlte-input-date name="date" placeholder="Reservation date" enable-old-support
