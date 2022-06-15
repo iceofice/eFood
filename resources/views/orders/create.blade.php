@@ -20,7 +20,7 @@
                     'format' => 'L',
                 ];
             @endphp
-            <x-adminlte-input-date id="date" name="date" label="Reservation Date" enable-old-support :config="$config" />
+            <x-adminlte-input-date id="reserved_at" name="reserved_at" label="Reservation Date" :config="$config" />
         </div>
         <div class="col-6">
             <x-adminlte-select2 name="time" label="Time" enable-old-support>
@@ -33,15 +33,20 @@
                 <x-adminlte-options :options="$status" />
             </x-adminlte-select2>
         </div>
+        <div class="col-6">
+            <x-adminlte-select2 name="user_id" label="Waiter" enable-old-support>
+                <x-adminlte-options :options="$waiters" empty-option="--select a waiter--" />
+            </x-adminlte-select2>
+        </div>
     </div>
 @endsection
 
 @section('js')
     <script>
         let time;
-        let table;
+        let table = {{ old('table_id') ?? 0 }};
 
-        $("#date").on("change.datetimepicker", ({
+        $("#reserved_at").on("change.datetimepicker", ({
             date,
             oldDate
         }) => {

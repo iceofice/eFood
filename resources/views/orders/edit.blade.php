@@ -34,6 +34,12 @@
                 <x-adminlte-options :options="$status" selected="{{ $order->status }}" />
             </x-adminlte-select2>
         </div>
+        <div class="col-6">
+            <x-adminlte-select2 name="user_id" label="Waiter" enable-old-support>
+                <x-adminlte-options :options="$waiters" empty-option="--select a waiter--"
+                    selected="{{ $order->user_id }}" />
+            </x-adminlte-select2>
+        </div>
     </div>
     <div class="row">
         <div class="col-12">

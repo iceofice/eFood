@@ -15,6 +15,7 @@ class OrderDatatable extends Datatable
             'Table',
             'Reservation Time',
             'Status',
+            'Staff',
             ['label' => 'Actions', 'no-export' => true],
         ];
 
@@ -29,6 +30,7 @@ class OrderDatatable extends Datatable
                 $order->table->name,
                 Carbon::create($order->reserved_at)->format('D, d M Y, H:i'),
                 $order->statusName,
+                $order->user ? $order->waiterName : 'Not Assigned',
                 $this->buttonColumn($order->id),
             ];
         }

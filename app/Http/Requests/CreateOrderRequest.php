@@ -25,7 +25,10 @@ class CreateOrderRequest extends FormRequest
      */
     public function rules()
     {
-        return Order::$rules;
+        $rules = Order::$rules;
+        $rules['time'] = 'required';
+
+        return $rules;
     }
 
     /**
@@ -35,7 +38,10 @@ class CreateOrderRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
-        $date = Carbon::createFromFormat('m/d/Y H:i', $this->request->get('date') . ' ' . $this->request->get('time'));
+        if (is_null($this->request->get('reserved_at')) || is_null($this->request->get('time'))) {
+            return parent::getValidatorInstance();
+        }
+        $date = Carbon::createFromFormat('m/d/Y H:i', $this->request->get('reserved_at') . ' ' . $this->request->get('time'));
         $this->request->set('reserved_at', $date);
         return parent::getValidatorInstance();
     }

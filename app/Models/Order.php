@@ -21,6 +21,7 @@ class Order extends Model
         'reserved_at',
         'customer_id',
         'table_id',
+        'user_id'
     ];
 
     /**
@@ -33,6 +34,7 @@ class Order extends Model
         'reserved_at'   => 'required|date',
         'customer_id'   => 'required|exists:customers,id',
         'table_id'      => 'required|exists:tables,id',
+        'user_id'       => 'exists:users,id',
     ];
 
     /**
@@ -54,6 +56,14 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get the customer that owns the order.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -87,6 +97,14 @@ class Order extends Model
     public function getCustomerNameAttribute()
     {
         return $this->customer->name;
+    }
+
+    /**
+     * Get the waiter name of the order.
+     */
+    public function getWaiterNameAttribute()
+    {
+        return $this->user->name;
     }
 
     /**
