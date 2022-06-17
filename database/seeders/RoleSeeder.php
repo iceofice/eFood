@@ -24,7 +24,8 @@ class RoleSeeder extends Seeder
     {
         Permission::create(['name' => 'manage users']);
         Permission::create(['name' => 'manage menus']);
-        Permission::create(['name' => 'update menus']);
+        Permission::create(['name' => 'manage customers']);
+        Permission::create(['name' => 'manage orders']);
     }
 
     private function createRoles()
@@ -38,7 +39,8 @@ class RoleSeeder extends Seeder
         $admin->givePermissionTo([
             'manage users',
             'manage menus',
-            'update menus',
+            'manage customers',
+            'manage orders',
         ]);
 
         // Cashier
@@ -52,5 +54,11 @@ class RoleSeeder extends Seeder
 
         // Waiter
         $waiter = Role::create(['name' => 'Waiter']);
+        User::find(2)->assignRole($waiter);
+        User::find(3)->assignRole($waiter);
+        $waiter->givePermissionTo([
+            'manage customers',
+            'manage orders',
+        ]);
     }
 }

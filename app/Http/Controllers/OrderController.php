@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use View;
 use Carbon\Carbon;
 use App\Models\Menu;
@@ -34,7 +35,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['customer', 'table'])->get();
+        $orders = Order::with(['customer', 'table'])
+            ->when(Auth::user()->hasRole('Waiter'), function ($query) {
+                return $query->where('user_id', Auth::user()->id);
+            })
+            ->get();
         $table = new OrderDatatable($orders);
 
         return view('crud.index', compact('table'));
@@ -72,6 +77,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $this->authorize('handle', $order);
         $id = $order->id;
 
         $order->load('menus');
@@ -94,6 +100,8 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
+        $this->authorize('handle', $order);
+
         $validatedRequest = $request->validated();
 
         if (isset($validatedRequest['password'])) {
@@ -113,6 +121,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        $this->authorize('handle', $order);
+
         // Remove all the menus from the order before deleting
         $order->menus()->detach();
 
@@ -130,6 +140,8 @@ class OrderController extends Controller
      */
     public function addMenu(AddMenuToOrderRequest $request, Order $order)
     {
+        $this->authorize('handle', $order);
+
         $menuPrice = Menu::find($request->menu_id, ['price'])->price;
         $order->menus()->attach($request->menu_id, ['qty' => $request->qty, 'price' => $menuPrice]);
 
@@ -147,6 +159,8 @@ class OrderController extends Controller
      */
     public function updateMenu(UpdateMenuToOrderRequest $request, Order $order, int $menuId)
     {
+        $this->authorize('handle', $order);
+
         $order->menus()->updateExistingPivot($menuId, ['qty' => $request->qty]);
 
         return redirect()->route('orders.edit', $order)
@@ -162,6 +176,8 @@ class OrderController extends Controller
      */
     public function removeMenu(Order $order, int $menuId)
     {
+        $this->authorize('handle', $order);
+
         $order->menus()->detach($menuId);
 
         return redirect()->route('orders.edit', $order)

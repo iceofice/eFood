@@ -238,18 +238,14 @@ return [
             'can'       => 'manage users',
         ],
         [
-            'text'      => 'Customers',
-            'url'       => '/admin/customers',
-            'active'    => ['/admin/customers/*'],
-            'icon'      => 'fa fa-address-book',
-            'can'       => 'manage customers',
-        ],
-        [
             'text'      => 'Tables',
             'url'       => '/admin/tables',
             'active'    => ['/admin/tables/*'],
             'icon'      => 'fa fa-users',
             'can'       => 'manage tables',
+        ],
+        [
+            'header'    => 'Staff',
         ],
         [
             'text'      => 'Orders',
@@ -258,7 +254,17 @@ return [
             'icon'      => 'fa fa-pen',
             'can'       => 'manage orders',
         ],
-        ['header' => 'Chef'],
+        [
+            'text'      => 'Customers',
+            'url'       => '/admin/customers',
+            'active'    => ['/admin/customers/*'],
+            'icon'      => 'fa fa-address-book',
+            'can'       => 'manage customers',
+        ],
+        [
+            'header'    => 'Kitchen Staff',
+            'can'       => 'manage menus',
+        ],
         [
             'text'      => 'Category',
             'url'       => '/admin/categories',

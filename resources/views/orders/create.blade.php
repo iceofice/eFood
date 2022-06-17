@@ -9,7 +9,7 @@
         </div>
         <div class="col-6">
             <x-adminlte-select2 id="table_id" name="table_id" label="Table" enable-old-support>
-                <x-adminlte-options :options="$tables" empty-option="Select a table" />
+                <x-adminlte-options :options="$tables" empty-option="--select a table--" />
             </x-adminlte-select2>
         </div>
     </div>
@@ -18,6 +18,8 @@
             @php
                 $config = [
                     'format' => 'L',
+                    'minDate' => 'js:moment()',
+                    'maxDate' => 'js:moment().add(30, "days")',
                 ];
             @endphp
             <x-adminlte-input-date id="reserved_at" name="reserved_at" label="Reservation Date" :config="$config" />
@@ -35,7 +37,7 @@
         </div>
         <div class="col-6">
             <x-adminlte-select2 name="user_id" label="Waiter" enable-old-support>
-                <x-adminlte-options :options="$waiters" empty-option="--select a waiter--" />
+                <x-adminlte-options :options="$waiters" :empty-option="$isWaiter ? null : '--select a waiter--'" />
             </x-adminlte-select2>
         </div>
     </div>
@@ -67,12 +69,16 @@
                     },
                     function(data) {
                         $('#time').find('option').remove();
-                        $.each(data, function(i, item) {
-                            $('#time').append($('<option>', {
-                                value: i,
-                                text: item
-                            }));
-                        });
+                        if (data.length == 0) {
+                            $('#time').append('<option value="">No time available</option>');
+                        } else {
+                            $.each(data, function(i, item) {
+                                $('#time').append($('<option>', {
+                                    value: i,
+                                    text: item
+                                }));
+                            });
+                        }
                     });
             }
         }

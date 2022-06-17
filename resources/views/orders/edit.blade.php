@@ -18,6 +18,8 @@
             @php
                 $config = [
                     'format' => 'L',
+                    'minDate' => 'js:moment()',
+                    'maxDate' => 'js:moment().add(30, "days")',
                 ];
             @endphp
             <x-adminlte-input-date name="date" label="Reservation date" enable-old-support :config="$config"
@@ -36,8 +38,7 @@
         </div>
         <div class="col-6">
             <x-adminlte-select2 name="user_id" label="Waiter" enable-old-support>
-                <x-adminlte-options :options="$waiters" empty-option="--select a waiter--"
-                    selected="{{ $order->user_id }}" />
+                <x-adminlte-options :options="$waiters" :empty-option="$isWaiter ? null : '--select a waiter--'" selected="{{ $order->user_id }}" />
             </x-adminlte-select2>
         </div>
     </div>
@@ -62,6 +63,9 @@
                     <a data-toggle='modal' data-target='#add-modal' class="btn btn-primary mb-4">
                         Add New Items
                     </a>
+                    <a data-toggle='modal' data-target='#order-summary' class="btn btn-dark mb-4">
+                        Order Summary
+                    </a>
                     <x-adminlte-datatable id="table2" :heads="$table->heads" head-theme="dark" :config="$table->config" striped
                         hoverable bordered />
                 </div>
@@ -74,22 +78,54 @@
     @include('orders.add-item-modal')
     @include('orders.remove-item-modal')
     @include('orders.edit-item-modal')
+    <x-adminlte-modal id="order-summary" title="Order Summary" icon="fas fa-list">
+        @foreach ($order->menus as $item)
+            <div class="row">
+                <div class="col-3">
+                    <figure>
+                        <img class="order-summary-image img-thumbnail"
+                            src="{{ url('storage/images/' . $item->image) }}" />
+                    </figure>
+                </div>
+                <div class="col-9">
+                    <span>{{ $item->pivot->qty }}x </span>
+                    {{ $item->name }}
+                    <div class="float-right">
+                        RM{{ number_format($item->pivot->price * $item->pivot->qty, 2, '.', ',') }}
+                    </div>
+                    <br />
+                    @RM{{ $item->pivot->price }}
+                </div>
+            </div>
+        @endforeach
+        <div class="row">
+            <div class="col-12">
+                <div class="float-right">
+                    <p>Total:
+                        <span class="text-primary">RM{{ number_format($order->total, 2, '.', ',') }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <x-slot name="footerSlot">
+            <x-adminlte-button label="Close" data-dismiss="modal" />
+        </x-slot>
+    </x-adminlte-modal>
 @endsection
 
 @section('js')
     <script>
-        let time = {{ $order->date }};
+        let time = $("#date")[0].value;
         let table = {{ $order->table_id }};
         let id = {{ $order->id }};
-        var first = true;
+
+        checkTime(true);
 
         $("#date").on("change.datetimepicker", ({
             date,
             oldDate
         }) => {
             time = date.format("YYYY-MM-DD");
-            checkTime(first);
-            first = false;
         });
 
         $('#table_id').on('select2:select', function(e) {
@@ -106,13 +142,17 @@
                     },
                     function(data) {
                         $('#time').find('option').remove();
-                        $.each(data, function(i, item) {
-                            $('#time').append($('<option>', {
-                                value: i,
-                                text: item,
-                                selected: first && i == '{{ $order->time }}'
-                            }));
-                        });
+                        if (data.length == 0) {
+                            $('#time').append('<option value="">No time available</option>');
+                        } else {
+                            $.each(data, function(i, item) {
+                                $('#time').append($('<option>', {
+                                    value: i,
+                                    text: item,
+                                    selected: first && i == '{{ $order->time }}'
+                                }));
+                            });
+                        }
                     });
             }
         }
