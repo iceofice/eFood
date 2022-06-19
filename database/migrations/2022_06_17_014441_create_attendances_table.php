@@ -16,7 +16,7 @@ class CreateAttendancesTable extends Migration
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->dateTime('clock_in');
-            $table->dateTime('clock_out');
+            $table->dateTime('clock_out')->nullable();
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

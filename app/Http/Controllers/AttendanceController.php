@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use View;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\AttendanceCode;
+use App\Http\Requests\ClockinRequest;
+use App\Http\Requests\ClockoutRequest;
 use App\Datatables\AttendanceDatatable;
 use App\Http\Requests\CreateAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
@@ -98,13 +102,13 @@ class AttendanceController extends Controller
     {
         $attendance->delete();
         return redirect()->route('attendances.index')
-            ->with('success_message', 'Menu deleted successfully');
+            ->with('success_message', 'Attendance deleted successfully');
     }
 
     //TODO: Docs
     public function code()
     {
-        $code = sprintf("%03s", AttendanceCode::first()->code);
+        $code = AttendanceCode::first()->attendanceCode;
         return view('attendances.code', compact('code'));
     }
 
@@ -115,8 +119,40 @@ class AttendanceController extends Controller
     }
 
     //TODO: Docs
-    public function clockin()
+    public function clockin(ClockinRequest $request)
     {
-        return view('attendances.staff');
+        $att = Attendance::where('user_id', Auth()->user()->id)->whereNull('clock_out')->exists();
+
+        if ($att) {
+            return redirect()->route('attendances.staff')
+                ->with('error_message', 'Please Check Out First!');
+        }
+
+        Attendance::create([
+            'user_id' => Auth::user()->id,
+            'clock_in' => Carbon::now()->addHours(8),
+            'clock_out' => null,
+        ]);
+
+        return redirect()->route('attendances.staff')
+            ->with('success_message', 'Clock In successful');
+    }
+
+    //TODO: Docs
+    public function clockout(ClockoutRequest $request)
+    {
+        $att = Attendance::where('user_id', Auth()->user()->id)->whereNull('clock_out')->first();
+
+        if (is_null($att)) {
+            return redirect()->route('attendances.staff')
+                ->with('error_message', 'Please Check In First!');
+        }
+
+        $att->update([
+            'clock_out' => Carbon::now()->addHours(8),
+        ]);
+
+        return redirect()->route('attendances.staff')
+            ->with('success_message', 'Clock Out successful');
     }
 }

@@ -27,7 +27,7 @@ class Attendance extends Model
      */
     public static $rules = [
         'clock_in'  => 'required|date',
-        'clock_out' => 'required|date',
+        'clock_out' => 'date',
         'user_id'   => 'required|exists:users,id',
     ];
 

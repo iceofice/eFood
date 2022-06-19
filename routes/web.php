@@ -70,6 +70,7 @@ Route::group([
     Route::get('attendances/code', [AttendanceController::class, 'code'])->name('attendances.code');
     Route::get('staff/attendance', [AttendanceController::class, 'staff'])->name('attendances.staff');
     Route::post('staff/attendance/clockin', [AttendanceController::class, 'clockin'])->name('attendances.staff.clockin');
+    Route::post('staff/attendance/clockout', [AttendanceController::class, 'clockout'])->name('attendances.staff.clockout');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');

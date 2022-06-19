@@ -23,7 +23,7 @@ class AttendanceDatatable extends Datatable
             $tableData[] = [
                 $attendance->id,
                 Carbon::create($attendance->clock_in)->format('D, d M Y, H:i'),
-                Carbon::create($attendance->clock_out)->format('D, d M Y, H:i'),
+                $attendance->clock_out ? Carbon::create($attendance->clock_out)->format('D, d M Y, H:i') : "On work.",
                 $attendance->user->name,
                 $this->buttonColumn($attendance->id),
             ];

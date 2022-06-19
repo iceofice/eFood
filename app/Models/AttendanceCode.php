@@ -19,4 +19,9 @@ class AttendanceCode extends Model
     protected $fillable = [
         'code'
     ];
+
+    public function getAttendanceCodeAttribute()
+    {
+        return sprintf("%03s", $this->code);
+    }
 }

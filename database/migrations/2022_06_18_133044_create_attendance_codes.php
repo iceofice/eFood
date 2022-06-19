@@ -26,6 +26,6 @@ class CreateAttendanceCodes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendance_code');
+        Schema::dropIfExists('attendance_codes');
     }
 }
