@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    AttendanceController,
     HomeController,
     MenuController,
     UserController,
@@ -63,6 +64,12 @@ Route::group([
     Route::post('orders/{order}/add_menu', [OrderController::class, 'addMenu'])->name('orders.addMenu')->middleware('can:manage orders');
     Route::put('orders/{order}/update_menu/{menu_id}', [OrderController::class, 'updateMenu'])->name('orders.updateMenu')->middleware('can:manage orders');
     Route::post('orders/{order}/remove_menu/{menu_id}', [OrderController::class, 'removeMenu'])->name('orders.removeMenu')->middleware('can:manage orders');
+
+    // Attendance
+    Route::resource('attendances', AttendanceController::class)->except('show')->middleware('can:manage attendances');
+    Route::get('attendances/code', [AttendanceController::class, 'code'])->name('attendances.code');
+    Route::get('staff/attendance', [AttendanceController::class, 'staff'])->name('attendances.staff');
+    Route::post('staff/attendance/clockin', [AttendanceController::class, 'clockin'])->name('attendances.staff.clockin');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');

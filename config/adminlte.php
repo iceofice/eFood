@@ -245,6 +245,12 @@ return [
             'can'       => 'manage tables',
         ],
         [
+            'text'      => 'Attendance Log',
+            'url'       => '/admin/attendances',
+            'active'    => ['/admin/attendances/*'],
+            'icon'      => 'fa fa-clock',
+        ],
+        [
             'header'    => 'Staff',
         ],
         [
@@ -260,6 +266,12 @@ return [
             'active'    => ['/admin/customers/*'],
             'icon'      => 'fa fa-address-book',
             'can'       => 'manage customers',
+        ],
+        [
+            'text'      => 'Attendance',
+            'url'       => '/admin/staff/attendance',
+            'active'    => ['/admin/staff/attendance'],
+            'icon'      => 'fa fa-clock',
         ],
         [
             'header'    => 'Kitchen Staff',
