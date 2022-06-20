@@ -37,7 +37,7 @@ class OrderController extends Controller
     {
         $orders = Order::with(['customer', 'table'])
             ->when(Auth::user()->hasRole('Waiter'), function ($query) {
-                return $query->where('user_id', Auth::user()->id);
+                return $query->where('user_id', Auth::user()->id)->orWhereNull('user_id');
             })
             ->get();
         $table = new OrderDatatable($orders);

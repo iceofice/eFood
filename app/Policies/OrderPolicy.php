@@ -19,6 +19,6 @@ class OrderPolicy
      */
     public function handle(User $user, Order $order)
     {
-        return $user->id === $order->user_id;
+        return $user->id === $order->user_id || $order->user_id === null;
     }
 }
