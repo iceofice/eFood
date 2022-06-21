@@ -46,11 +46,14 @@ class Order extends Model
 
         static::created(function ($order) {
             if (is_null($order->user_id)) {
-                $users = User::role('Waiter')->get();
-                Notification::send($users, new OrderCreated($order->id));
+                $waiters = User::role('Waiter')->get();
+                Notification::send($waiters, new OrderCreated($order->id));
             } else {
                 $order->user->notify(new OrderCreated($order->id));
             }
+
+            $kitchenStaff = User::role('Kitchen Staff')->get();
+            Notification::send($kitchenStaff, new OrderCreated($order->id));
         });
 
         static::updated(function ($order) {

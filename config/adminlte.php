@@ -249,6 +249,7 @@ return [
             'url'       => '/admin/attendances',
             'active'    => ['/admin/attendances/*'],
             'icon'      => 'fa fa-clock',
+            'can'       => 'manage attendances',
         ],
         [
             'header'    => 'Staff',

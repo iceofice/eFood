@@ -39,8 +39,10 @@ class OrderController extends Controller
             ->when(Auth::user()->hasRole('Waiter'), function ($query) {
                 return $query->where('user_id', Auth::user()->id)->orWhereNull('user_id');
             })
+            ->when(Auth::user()->hasRole('Kitchen Staff'), function ($query) {
+                return $query->where('status', '<>', 5);
+            })
             ->get();
-
         $userNotifications = Auth::user()->unreadNotifications->pluck('data.message', 'data.orderID');
         $table = new OrderDatatable($orders, $userNotifications);
 
@@ -54,6 +56,7 @@ class OrderController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Order::class);
         return view('orders.create');
     }
 
@@ -65,6 +68,7 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request)
     {
+        $this->authorize('create', Order::class);
         $order = Order::create($request->validated());
 
         return redirect()->route('orders.edit', $order)
@@ -79,13 +83,13 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $this->authorize('handle', $order);
         $userNotifications = Auth::user()->unreadNotifications->where('data.orderID', $order->id)->first();
 
         if ($userNotifications) {
             $userNotifications->markAsRead();
         }
 
-        $this->authorize('handle', $order);
         $id = $order->id;
 
         $order->load('menus');
@@ -155,6 +159,7 @@ class OrderController extends Controller
      */
     public function addMenu(AddMenuToOrderRequest $request, Order $order)
     {
+        $this->authorize('create', Order::class);
         $this->authorize('handle', $order);
 
         $menuPrice = Menu::find($request->menu_id, ['price'])->price;
@@ -174,6 +179,7 @@ class OrderController extends Controller
      */
     public function updateMenu(UpdateMenuToOrderRequest $request, Order $order, int $menuId)
     {
+        $this->authorize('create', Order::class);
         $this->authorize('handle', $order);
 
         $order->menus()->updateExistingPivot($menuId, ['qty' => $request->qty]);
@@ -191,6 +197,7 @@ class OrderController extends Controller
      */
     public function removeMenu(Order $order, int $menuId)
     {
+        $this->authorize('create', Order::class);
         $this->authorize('handle', $order);
 
         $order->menus()->detach($menuId);

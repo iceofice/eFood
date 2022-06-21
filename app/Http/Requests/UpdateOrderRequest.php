@@ -25,7 +25,9 @@ class UpdateOrderRequest extends FormRequest
      */
     public function rules()
     {
-        return Order::$rules;
+        return [
+            'status' => Order::$rules['status'],
+        ];
     }
 
     /**
@@ -35,8 +37,10 @@ class UpdateOrderRequest extends FormRequest
      */
     public function getValidatorInstance()
     {
-        $date = Carbon::createFromFormat('m/d/Y H:i', $this->request->get('date') . ' ' . $this->request->get('time'));
-        $this->request->set('reserved_at', $date);
+        if ($this->request->get('date')) {
+            $date = Carbon::createFromFormat('m/d/Y H:i', $this->request->get('date') . ' ' . $this->request->get('time'));
+            $this->request->set('reserved_at', $date);
+        }
         return parent::getValidatorInstance();
     }
 }
