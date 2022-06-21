@@ -148,4 +148,11 @@ class Datatable
             </a>
         ";
     }
+
+    public function notificationIndicator($message)
+    {
+        return $message
+            ? '<span class="badge badge-primary ml-2">' . $message . '</span>'
+            : '';
+    }
 }

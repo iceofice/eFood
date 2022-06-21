@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\OrderCreated;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -36,6 +38,20 @@ class Order extends Model
         'table_id'      => 'required|exists:tables,id',
         'user_id'       => 'exists:users,id',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($order) {
+            if (is_null($order->user_id)) {
+                $users = User::role('Waiter')->get();
+                Notification::send($users, new OrderCreated($order->id));
+            } else {
+                $order->user->notify(new OrderCreated($order->id));
+            }
+        });
+    }
 
     /**
      * The menus that belongs to the order.

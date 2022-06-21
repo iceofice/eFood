@@ -40,7 +40,9 @@ class OrderController extends Controller
                 return $query->where('user_id', Auth::user()->id)->orWhereNull('user_id');
             })
             ->get();
-        $table = new OrderDatatable($orders);
+
+        $userNotifications = Auth::user()->unreadNotifications->pluck('data.message', 'data.orderID');
+        $table = new OrderDatatable($orders, $userNotifications);
 
         return view('crud.index', compact('table'));
     }
@@ -77,6 +79,12 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $userNotifications = Auth::user()->unreadNotifications->where('data.orderID', $order->id)->first();
+
+        if ($userNotifications) {
+            $userNotifications->markAsRead();
+        }
+
         $this->authorize('handle', $order);
         $id = $order->id;
 
@@ -198,7 +206,7 @@ class OrderController extends Controller
         ])->when($request->id, function ($query) use ($request) {
             return $query->where('id', '<>', $request->id);
         })
-            ->whereDate('reserved_at', $request->time)
+            ->whereDate('reserved_at', Carbon::parse($request->time))
             ->get();
 
         //TODO: Option page to set operating hours
