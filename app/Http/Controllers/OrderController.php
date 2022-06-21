@@ -117,6 +117,13 @@ class OrderController extends Controller
         }
 
         $order->update($validatedRequest);
+
+        $userNotifications = Auth::user()->unreadNotifications->where('data.orderID', $order->id)->first();
+
+        if ($userNotifications) {
+            $userNotifications->markAsRead();
+        }
+
         return redirect()->route('orders.index')
             ->with('success_message', 'Order modified successfully');
     }

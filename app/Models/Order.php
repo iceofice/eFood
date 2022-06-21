@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Notifications\OrderCreated;
+use App\Notifications\OrderUpdated;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,6 +51,10 @@ class Order extends Model
             } else {
                 $order->user->notify(new OrderCreated($order->id));
             }
+        });
+
+        static::updated(function ($order) {
+            $order->user->notify(new OrderUpdated($order->id));
         });
     }
 
