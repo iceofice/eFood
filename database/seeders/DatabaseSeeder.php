@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AttendanceCodeSeeder::class,
             UserSeeder::class,
             RoleSeeder::class,
+            RestaurantSeeder::class
         ]);
     }
 }

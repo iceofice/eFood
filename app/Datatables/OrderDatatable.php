@@ -32,11 +32,27 @@ class OrderDatatable extends Datatable
                 Carbon::create($order->reserved_at)->format('D, d M Y, H:i'),
                 $order->statusName,
                 $order->user ? $order->waiterName : 'Not Assigned',
-                $this->buttonColumn($order->id) . $this->notificationIndicator($notificationMessage),
+                $this->buttonColumn($order->id) . $this->btnPay($order->id) . $this->notificationIndicator($notificationMessage),
             ];
         }
         $this->tableData = $tableData;
 
         parent::__construct(0);
+    }
+
+    /**
+     * Prepare the pay button.
+     * 
+     * @param integer $id The id of the model.
+     * @return string HTML of the pay button
+     */
+    private function btnPay(int $id)
+    {
+        $link = route('payments.create', ['orderID' => $id]);
+        return "
+            <a class='btn btn-xs btn-default text-dark mx-1 shadow' title='Pay' href=$link>
+                <i class='fa fa-lg fa-fw fa-money-bill'></i>
+            </a>
+        ";
     }
 }

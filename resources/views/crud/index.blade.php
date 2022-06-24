@@ -11,9 +11,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route($route . '.create') }}" class="btn btn-primary mb-4">
-                        Add New {{ $modelName }}
-                    </a>
+                    @if (empty($hideCreateButton))
+                        <a href="{{ route($route . '.create') }}" class="btn btn-primary mb-4">
+                            Add New {{ $modelName }}
+                        </a>
+                    @endif
                     @yield('filter')
                     <x-adminlte-datatable id="table2" :heads="$table->heads" head-theme="dark" :config="$table->config" striped
                         hoverable bordered />

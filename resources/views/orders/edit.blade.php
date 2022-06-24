@@ -66,10 +66,15 @@ $updateDetails = auth()
                     @endif
                     @can('manage orders details')
                         <a data-toggle='modal' data-target='#add-modal' class="btn btn-primary mb-4">
-                            Add New Items
+                            <i class="fa fa-plus mr-2"></i>Add New Items
                         </a>
-                        <a data-toggle='modal' data-target='#order-summary' class="btn btn-dark mb-4">
-                            Order Summary
+                    @endcan
+                    <a data-toggle='modal' data-target='#order-summary' class="btn btn-dark mb-4">
+                        <i class="fa fa-print mr-2"></i>Order Summary
+                    </a>
+                    @can('manage payments')
+                        <a class="btn btn-dark mb-4" href="{{ route('payments.create', ['orderID' => $order->id]) }}">
+                            <i class="fa fa-money-bill mr-2"></i>Go to Payment
                         </a>
                     @endcan
                     <x-adminlte-datatable id="table2" :heads="$table->heads" head-theme="dark" :config="$table->config" striped

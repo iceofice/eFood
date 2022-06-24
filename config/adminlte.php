@@ -292,6 +292,13 @@ return [
             'icon'      => 'fa fa-hamburger',
             'can'       => 'manage menus',
         ],
+        [
+            'text'      => 'Payments',
+            'url'       => '/admin/payments',
+            'active'    => ['/admin/payments/*'],
+            'icon'      => 'fa fa-money-bill',
+            'can'       => 'manage payments',
+        ],
     ],
 
     /*
