@@ -6,6 +6,7 @@
         </x-adminlte-select2>
 
         <x-adminlte-input id="qty" name="qty" label="Quantity" value="{{ old('qty') }}" />
+        <x-adminlte-textarea label="Note" name="note" placeholder="Special Request..." enable-old-support />
     </form>
     <x-slot name="footerSlot">
         <x-adminlte-button label="Cancel" data-dismiss="modal" />

@@ -3,6 +3,8 @@
         @csrf
         @method('put')
         <x-adminlte-input id="edit-qty" name="qty" label="Quantity" value="" />
+        <x-adminlte-textarea id="edit-note" label="Note" name="note" placeholder="Special Request..."
+            enable-old-support />
     </form>
     <x-slot name="footerSlot">
         <x-adminlte-button label="Cancel" data-dismiss="modal" />
@@ -18,6 +20,7 @@
             menuId = $(el).data('id');
             let menu = menus.find(o => o.id === menuId);
             $('#edit-qty').val(menu.pivot.qty);
+            $('#edit-note').val(menu.pivot.note);
         }
 
         function editItem(event) {

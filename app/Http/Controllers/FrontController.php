@@ -198,7 +198,7 @@ class FrontController extends Controller
         $order = Order::find(request()->orderID);
         $menu = Menu::find(request()->menuID);
 
-        $order->menus()->syncWithoutDetaching([request()->menuID => ['qty' => request()->qty, 'price' => $menu->price]]);
+        $order->menus()->syncWithoutDetaching([request()->menuID => ['qty' => request()->qty, 'price' => $menu->price, 'note' => request()->note]]);
 
         return response()->json(['success' => true]);
     }

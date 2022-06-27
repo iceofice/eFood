@@ -10,6 +10,7 @@ class MenuOrderDatatable extends Datatable
             'No',
             'Menu Name',
             'Quantity',
+            'Note',
             'Price (per item)',
             ['label' => 'Actions', 'no-export' => true],
             'Created At'
@@ -23,6 +24,7 @@ class MenuOrderDatatable extends Datatable
                 $key + 1,
                 $orderMenu->name,
                 $orderMenu->pivot->qty,
+                $orderMenu->pivot->note ?? 'No Note',
                 $orderMenu->pivot->price,
                 $this->relationButtonColumn($orderMenu->id),
                 $orderMenu->pivot->created_at->format('Y-m-d H:i:s'),
@@ -30,8 +32,8 @@ class MenuOrderDatatable extends Datatable
         }
         $this->tableData = $tableData;
 
-        parent::__construct(5);
+        parent::__construct(6);
 
-        $this->config['columns'][5] = ['visible' => false];
+        $this->config['columns'][6] = ['visible' => false];
     }
 }

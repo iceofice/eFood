@@ -42,6 +42,9 @@ class OrderController extends Controller
             ->when(Auth::user()->hasRole('Kitchen Staff'), function ($query) {
                 return $query->where('status', '<>', 5);
             })
+            ->when(Auth::user()->hasRole('Cashier'), function ($query) {
+                return $query->where('status', 4);
+            })
             ->get();
         $userNotifications = Auth::user()->unreadNotifications->pluck('data.message', 'data.orderID');
         $table = new OrderDatatable($orders, $userNotifications);
@@ -163,7 +166,7 @@ class OrderController extends Controller
         $this->authorize('handle', $order);
 
         $menuPrice = Menu::find($request->menu_id, ['price'])->price;
-        $order->menus()->attach($request->menu_id, ['qty' => $request->qty, 'price' => $menuPrice]);
+        $order->menus()->attach($request->menu_id, ['qty' => $request->qty, 'price' => $menuPrice, 'note' => $request->note]);
 
         return redirect()->route('orders.edit', $order)
             ->with('success_message', 'New item added to the order successfully');
@@ -182,7 +185,7 @@ class OrderController extends Controller
         $this->authorize('create', Order::class);
         $this->authorize('handle', $order);
 
-        $order->menus()->updateExistingPivot($menuId, ['qty' => $request->qty]);
+        $order->menus()->updateExistingPivot($menuId, ['qty' => $request->qty, 'note' => $request->note]);
 
         return redirect()->route('orders.edit', $order)
             ->with('success_message', 'Item updated successfully');

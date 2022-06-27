@@ -73,7 +73,7 @@ class Menu extends Model
     {
         return $this->belongsToMany(Order::class)
             ->using(MenuOrder::class)
-            ->withPivot('qty', 'price')
+            ->withPivot('qty', 'price', 'note')
             ->withTimestamps();
     }
 

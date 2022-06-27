@@ -57,7 +57,12 @@ class Order extends Model
         });
 
         static::updated(function ($order) {
-            $order->user->notify(new OrderUpdated($order->id));
+            if (is_null($order->user_id)) {
+                $waiters = User::role('Waiter')->get();
+                Notification::send($waiters, new OrderCreated($order->id));
+            } else {
+                $order->user->notify(new OrderUpdated($order->id));
+            }
         });
     }
 
@@ -70,7 +75,7 @@ class Order extends Model
     {
         return $this->belongsToMany(Menu::class)
             ->using(MenuOrder::class)
-            ->withPivot('qty', 'price')
+            ->withPivot('qty', 'price', 'note')
             ->withTimestamps();
     }
 

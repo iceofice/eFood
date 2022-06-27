@@ -90,40 +90,40 @@ $updateDetails = auth()
         @include('orders.add-item-modal')
         @include('orders.remove-item-modal')
         @include('orders.edit-item-modal')
-        <x-adminlte-modal id="order-summary" title="Order Summary" icon="fas fa-list">
-            @foreach ($order->menus as $item)
-                <div class="row">
-                    <div class="col-3">
-                        <figure>
-                            <img class="order-summary-image img-thumbnail"
-                                src="{{ url('storage/images/' . $item->image) }}" />
-                        </figure>
-                    </div>
-                    <div class="col-9">
-                        <span>{{ $item->pivot->qty }}x </span>
-                        {{ $item->name }}
-                        <div class="float-right">
-                            RM{{ number_format($item->pivot->price * $item->pivot->qty, 2, '.', ',') }}
-                        </div>
-                        <br />
-                        @RM{{ $item->pivot->price }}
-                    </div>
-                </div>
-            @endforeach
+    @endcan
+    <x-adminlte-modal id="order-summary" title="Order Summary" icon="fas fa-list">
+        @foreach ($order->menus as $item)
             <div class="row">
-                <div class="col-12">
+                <div class="col-3">
+                    <figure>
+                        <img class="order-summary-image img-thumbnail"
+                            src="{{ url('storage/images/' . $item->image) }}" />
+                    </figure>
+                </div>
+                <div class="col-9">
+                    <span>{{ $item->pivot->qty }}x </span>
+                    {{ $item->name }}
                     <div class="float-right">
-                        <p>Total:
-                            <span class="text-primary">RM{{ number_format($order->total, 2, '.', ',') }}</span>
-                        </p>
+                        RM{{ number_format($item->pivot->price * $item->pivot->qty, 2, '.', ',') }}
                     </div>
+                    <br />
+                    @RM{{ $item->pivot->price }}
                 </div>
             </div>
-            <x-slot name="footerSlot">
-                <x-adminlte-button label="Close" data-dismiss="modal" />
-            </x-slot>
-        </x-adminlte-modal>
-    @endcan
+        @endforeach
+        <div class="row">
+            <div class="col-12">
+                <div class="float-right">
+                    <p>Total:
+                        <span class="text-primary">RM{{ number_format($order->total, 2, '.', ',') }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <x-slot name="footerSlot">
+            <x-adminlte-button label="Close" data-dismiss="modal" />
+        </x-slot>
+    </x-adminlte-modal>
 @endsection
 
 @section('js')

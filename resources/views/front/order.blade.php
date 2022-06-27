@@ -133,6 +133,7 @@
         <br />
         <p id="modal-error" class="error"></p>
         <input id="menu-qty" class="form-control" placeholder="Quantity" name="qty" type="number" required />
+        <x-adminlte-textarea id="menu-note" name="note" placeholder="Special Request...." />
         <x-slot name="footerSlot">
             <x-adminlte-button id="remove-item-button" label="Remove" theme="danger" />
             <x-adminlte-button id="add-item-button" theme="primary" label="Add" />
@@ -195,8 +196,10 @@
             $('#menu-description').text(menu.description);
             $('#menu-price').text('RM ' + menu.price);
             item = orderItems.find(item => item.id == menu.id);
-            if (item)
+            if (item) {
                 $('#menu-qty').val(item.pivot.qty);
+                $('#menu-note').val(item.pivot.note);
+            }
         });
 
         $('#add-item-button').on('click', function() {
@@ -205,7 +208,8 @@
                     _token: '{{ csrf_token() }}',
                     orderID: '{{ $order->id }}',
                     menuID: id,
-                    qty: $('#menu-qty').val()
+                    qty: $('#menu-qty').val(),
+                    note: $('#menu-note').val()
                 }, function(data) {
                     if (data.success) {
                         location.reload();

@@ -47,9 +47,10 @@ class RoleSeeder extends Seeder
 
         // Cashier
         $cashier = Role::create(['name' => 'Cashier']);
+        User::find(5)->assignRole($cashier);
         $cashier->givePermissionTo([
             'manage orders',
-            'manage payments'
+            'manage payments',
         ]);
 
         // Kitchen Staff

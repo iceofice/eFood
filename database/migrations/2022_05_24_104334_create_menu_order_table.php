@@ -18,7 +18,7 @@ class CreateMenuOrderTable extends Migration
             $table->foreignId('order_id')->constrained();
             $table->decimal('price', 10, 2);
             $table->integer('qty');
-            //TODO: Notes
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

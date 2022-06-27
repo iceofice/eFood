@@ -86,6 +86,8 @@ class PaymentController extends Controller
         $validatedRequest['paid_at'] = Carbon::now();
         Payment::create($validatedRequest);
 
+        Order::find($request->order_id)->update(['status' => 5]);
+
         return redirect()->route('payments.index')
             ->with('success_message', 'Payment added successfully');
     }

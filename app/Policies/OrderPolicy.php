@@ -21,7 +21,8 @@ class OrderPolicy
     {
         return $user->id === $order->user_id // assigned waiter
             || $order->user_id === null // no waiter assigned
-            || $user->hasRole('Kitchen Staff'); // kitchen staff
+            || ($user->hasRole('Kitchen Staff') && $order->status != 5) // kitchen staff
+            || ($user->hasRole('Cashier') && $order->status == 4); // Cashier
     }
 
     /**
