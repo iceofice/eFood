@@ -43,7 +43,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::with('order')->get();
+        $payments = Payment::with(['order', 'order.customer', 'order.table'])->get();
         $table = new PaymentDatatable($payments);
         $hideCreateButton = true;
 

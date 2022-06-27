@@ -35,7 +35,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::with(['customer', 'table'])
+        $orders = Order::with(['customer', 'table', 'user'])
             ->when(Auth::user()->hasRole('Waiter'), function ($query) {
                 return $query->where('user_id', Auth::user()->id)->orWhereNull('user_id');
             })
