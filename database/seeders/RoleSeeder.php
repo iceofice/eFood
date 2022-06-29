@@ -28,6 +28,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'manage orders']);
         Permission::create(['name' => 'manage orders details']);
         Permission::create(['name' => 'manage payments']);
+        Permission::create(['name' => 'manage inventories']);
     }
 
     private function createRoles()
@@ -58,6 +59,7 @@ class RoleSeeder extends Seeder
         $kitchenStaff->givePermissionTo([
             'manage menus',
             'manage orders',
+            'manage inventories'
         ]);
         User::find(4)->assignRole($kitchenStaff);
 

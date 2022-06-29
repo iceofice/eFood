@@ -262,6 +262,13 @@ return [
             'can'       => 'manage orders',
         ],
         [
+            'text'      => 'Payments',
+            'url'       => '/admin/payments',
+            'active'    => ['/admin/payments/*'],
+            'icon'      => 'fa fa-money-bill',
+            'can'       => 'manage payments',
+        ],
+        [
             'text'      => 'Customers',
             'url'       => '/admin/customers',
             'active'    => ['/admin/customers/*'],
@@ -293,11 +300,11 @@ return [
             'can'       => 'manage menus',
         ],
         [
-            'text'      => 'Payments',
-            'url'       => '/admin/payments',
-            'active'    => ['/admin/payments/*'],
-            'icon'      => 'fa fa-money-bill',
-            'can'       => 'manage payments',
+            'text'      => 'Inventories',
+            'url'       => '/admin/inventories',
+            'active'    => ['/admin/inventories/*'],
+            'icon'      => 'fa fa-toolbox',
+            'can'       => 'manage inventories',
         ],
     ],
 

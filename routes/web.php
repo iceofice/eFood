@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     OrderController,
     TableController,
     PaymentController,
+    InventoryController,
     Auth\CustomerLoginController
 };
 
@@ -75,6 +76,9 @@ Route::group([
 
     // Payment
     Route::resource('payments', PaymentController::class)->except('show');
+
+    // Inventory
+    Route::resource('inventories', InventoryController::class)->except('show');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
