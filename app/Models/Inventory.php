@@ -30,4 +30,16 @@ class Inventory extends Model
         'unit'      => 'required',
         'qty'       => 'required|numeric|min:1',
     ];
+
+    /**
+     * The menu items that connected to the inventory item
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class)
+            ->withPivot('qty')
+            ->withTimestamps();
+    }
 }

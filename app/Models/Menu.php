@@ -78,6 +78,18 @@ class Menu extends Model
     }
 
     /**
+     * The inventory items that connected to the menu item
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function inventories()
+    {
+        return $this->belongsToMany(Inventory::class)
+            ->withPivot('qty')
+            ->withTimestamps();
+    }
+
+    /**
      * Array of categories ids.
      *
      * @return array<int, int>

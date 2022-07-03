@@ -53,6 +53,9 @@ Route::group([
     // Menus
     Route::resource('menus', MenuController::class)->except('show')->middleware('can:manage menus');
     Route::get('menus/check_slug', [MenuController::class, 'checkSlug'])->name('menus.checkSlug')->middleware('can:manage menus');
+    Route::post('menus/{menu}/add_inventories', [MenuController::class, 'addInventory'])->name('menus.addInventory')->middleware('can:manage menus');
+    Route::put('menus/{menu}/update_inventories/{inventory_id}', [MenuController::class, 'updateInventory'])->name('menus.updateInventory')->middleware('can:manage menus');
+    Route::post('menus/{menu}/remove_inventory/{inventory_id}', [MenuController::class, 'removeInventory'])->name('menus.removeInventory')->middleware('can:manage menus');
 
     // Customers
     Route::resource('customers', CustomerController::class)->except('show')->middleware('can:manage customers');

@@ -6,11 +6,15 @@ use View;
 use Request;
 use App\Models\Menu;
 use App\Models\Category;
+use App\Models\Inventory;
 use App\Services\ImageService;
 use App\Datatables\MenuDatatable;
 use App\Http\Requests\CheckSlugRequest;
 use App\Http\Requests\CreateMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
+use App\Datatables\InventoryMenuDatatable;
+use App\Http\Requests\AddInventoryToMenuRequest;
+use App\Http\Requests\UpdateInventoryToMenuRequest;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class MenuController extends Controller
@@ -47,7 +51,8 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('menus.create');
+        $inventories = Inventory::pluck('name', 'id')->toArray();
+        return view('menus.create', compact('inventories'));
     }
 
     /**
@@ -66,7 +71,7 @@ class MenuController extends Controller
         $menu = Menu::create($validatedRequest);
         $menu->categories()->sync($request->categories);
 
-        return redirect()->route('menus.index')
+        return redirect()->route('menus.edit', $menu)
             ->with('success_message', 'Menu added successfully');
     }
 
@@ -79,7 +84,17 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         $id = $menu->id;
-        return view('menus.edit', compact('menu', 'id'));
+
+        $inventories = Inventory::whereDoesntHave('menus', function ($query) use ($id) {
+            $query->where('id', $id);
+        })->pluck('name', 'id')->toArray();
+
+        $menu->load('inventories');
+        $menuInventories = $menu->inventories;
+
+        $table = new InventoryMenuDatatable($menuInventories);
+
+        return view('menus.edit', compact('menu', 'id', 'table', 'inventories'));
     }
 
     /**
@@ -98,6 +113,8 @@ class MenuController extends Controller
 
         $menu->update($validatedRequest);
         $menu->categories()->sync($request->categories);
+        $menu->inventories()->sync($request->inventories);
+
 
         return redirect()->route('menus.index')
             ->with('success_message', 'Menu modified successfully');
@@ -132,5 +149,31 @@ class MenuController extends Controller
     {
         $slug = SlugService::createSlug(Menu::class, 'slug', $request->name);
         return response()->json(['slug' => $slug]);
+    }
+
+    //TODO: DOCS
+    public function addInventory(AddInventoryToMenuRequest $request, Menu $menu)
+    {
+        $menu->inventories()->attach($request->inventory_id, ['qty' => $request->qty]);
+
+        return redirect()->route('menus.edit', $menu)
+            ->with('success_message', 'New item added to the menu successfully');
+    }
+    //TODO: DOCS
+    public function updateInventory(UpdateInventoryToMenuRequest $request, Menu $menu, int $inventoryId)
+    {
+        $menu->inventories()->updateExistingPivot($inventoryId, ['qty' => $request->qty]);
+
+        return redirect()->route('menus.edit', $menu)
+            ->with('success_message', 'Item updated successfully');
+    }
+
+    //TODO: DOCS
+    public function removeInventory(Menu $menu, int $inventoryId)
+    {
+        $menu->inventories()->detach($inventoryId);
+
+        return redirect()->route('menus.edit', $menu)
+            ->with('success_message', 'Item removed from the menu successfully');
     }
 }
