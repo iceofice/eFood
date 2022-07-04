@@ -98,9 +98,10 @@ class OrderController extends Controller
         $order->load('menus');
         $orderMenus = $order->menus;
 
-        $menus = Menu::whereDoesntHave('orders', function ($query) use ($id) {
-            $query->where('id', $id);
-        })->pluck('name', 'id')->toArray();
+        $menus = Menu::where('is_active', 1)
+            ->whereDoesntHave('orders', function ($query) use ($id) {
+                $query->where('id', $id);
+            })->pluck('name', 'id')->toArray();
 
         $table = new MenuOrderDatatable($orderMenus);
         return view('orders.edit', compact('order', 'id', 'table', 'menus'));

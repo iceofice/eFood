@@ -22,6 +22,7 @@ class Menu extends Model
         'image',
         'price',
         'featured',
+        'is_active'
     ];
 
     /**
@@ -38,6 +39,7 @@ class Menu extends Model
         'categories'    => 'array',
         'categories.*'  => 'exists:categories,id',
         'featured'      => 'boolean',
+        'is_active'     => 'boolean',
     ];
 
     /**

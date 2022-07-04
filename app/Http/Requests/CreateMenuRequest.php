@@ -37,6 +37,7 @@ class CreateMenuRequest extends FormRequest
     {
         $this->cleanPrice();
         $this->request->set('featured', $this->boolean('featured'));
+        $this->request->set('is_active', $this->boolean('is_active'));
         return parent::getValidatorInstance();
     }
 

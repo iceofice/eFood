@@ -21,7 +21,7 @@ class CreateMenusTable extends Migration
             $table->string('image')->nullable();
             $table->decimal('price', 10, 2);
             $table->boolean('featured')->default(false);
-            //TODO: Add bool for active or not (hiden unhiden)
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
         });
     }

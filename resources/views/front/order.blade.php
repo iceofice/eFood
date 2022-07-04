@@ -34,7 +34,8 @@
                                         <ul>
                                             @if (isset($menus[$slug][0]))
                                                 @foreach ($menus[$slug][0] as $menu)
-                                                    <li id="menu-{{ $menu->id }}">
+                                                    <li id="menu-{{ $menu->id }}"
+                                                        @if (!$menu->is_active) class="menu-disabled" @endif>
                                                         <div class="fh5co-food-desc">
                                                             <figure>
                                                                 <img src="{{ url('storage/images/' . $menu->image) }}"
@@ -53,11 +54,15 @@
                                                             RM {{ $menu->price }}
                                                         </div>
                                                         <div class="fh5co-food-pricing">
-                                                            <button class="btn btn-sm btn-primary add-button"
-                                                                data-toggle="modal" data-target="#addItemModal"
-                                                                data-model="{{ $menu }}">
-                                                                <i class="fa fa-plus"></i>
-                                                            </button>
+                                                            @if ($menu->is_active)
+                                                                <button class="btn btn-sm btn-primary add-button"
+                                                                    data-toggle="modal" data-target="#addItemModal"
+                                                                    data-model="{{ $menu }}">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            @else
+                                                                <span>is not available</span>
+                                                            @endif
                                                         </div>
                                                     </li>
                                                 @endforeach
@@ -72,7 +77,8 @@
                                         <ul>
                                             @if (isset($menus[$slug][1]))
                                                 @foreach ($menus[$slug][1] as $menu)
-                                                    <li id="menu-{{ $menu->id }}">
+                                                    <li id="menu-{{ $menu->id }}"
+                                                        @if (!$menu->is_active) class="menu-disabled" @endif>
                                                         <div class="fh5co-food-desc">
                                                             <figure>
                                                                 <img src="{{ url('storage/images/' . $menu->image) }}"
@@ -91,11 +97,15 @@
                                                             RM {{ $menu->price }}
                                                         </div>
                                                         <div class="fh5co-food-pricing">
-                                                            <button class="btn btn-sm btn-primary add-button"
-                                                                data-toggle="modal" data-target="#addItemModal"
-                                                                data-model="{{ $menu }}">
-                                                                <i class="fa fa-plus"></i>
-                                                            </button>
+                                                            @if ($menu->is_active)
+                                                                <button class="btn btn-sm btn-primary add-button"
+                                                                    data-toggle="modal" data-target="#addItemModal"
+                                                                    data-model="{{ $menu }}">
+                                                                    <i class="fa fa-plus"></i>
+                                                                </button>
+                                                            @else
+                                                                <span>is not available</span>
+                                                            @endif
                                                         </div>
                                                     </li>
                                                 @endforeach
