@@ -48,6 +48,7 @@ class OrderDatatable extends Datatable
      */
     private function btnPay(int $id)
     {
+        if (!auth()->user()->can('manage payments')) return;
         $link = route('payments.create', ['orderID' => $id]);
         return "
             <a class='btn btn-xs btn-default text-dark mx-1 shadow' title='Pay' href=$link>

@@ -33,7 +33,8 @@ class RestaurantSeeder extends Seeder
             'name' => 'Fried Chicken',
             'slug' => 'fried-chicken',
             'price' => 5,
-            'description' => 'Chicken fried with special sauce'
+            'description' => 'Chicken fried with special sauce',
+            'is_active' => 1
         ]);
 
         $order = Order::create([

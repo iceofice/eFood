@@ -78,7 +78,7 @@ Route::group([
     Route::post('staff/attendance/clockout', [AttendanceController::class, 'clockout'])->name('attendances.staff.clockout');
 
     // Payment
-    Route::resource('payments', PaymentController::class)->except('show');
+    Route::resource('payments', PaymentController::class)->except('show')->middleware('can:manage payments');
 
     // Inventory
     Route::resource('inventories', InventoryController::class)->except('show');
