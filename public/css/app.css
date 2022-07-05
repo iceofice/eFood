@@ -24,3 +24,8 @@ td.image {
     width: 100px;
     object-fit: cover;
 }
+
+.sold-button {
+    display: block;
+    height: 20px;
+}

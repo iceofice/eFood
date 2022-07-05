@@ -110,4 +110,15 @@ class Menu extends Model
     {
         return $this->categories->pluck('name')->toArray();
     }
+
+    //TODO: DOCS
+    public function getOutOfStockAttribute()
+    {
+        $stocks = $this->inventories->all();
+        foreach ($stocks as $stock) {
+            if ($stock->qty < $stock->pivot->qty)
+                return true;
+        }
+        return false;
+    }
 }

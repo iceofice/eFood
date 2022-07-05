@@ -29,7 +29,7 @@ class MenuDatatable extends Datatable
             $tableData[] = [
                 $menu->id,
                 '<img class="table-image" src=" ' . url($imagePath) . '">',
-                $menu->name,
+                $menu->name . $this->soldOutIndicator($menu),
                 number_format($menu->price, 2),
                 $menu->category_name_list ?: 'No categories',
                 $menu->description,
@@ -44,5 +44,11 @@ class MenuDatatable extends Datatable
 
         // Add class name of the image column
         $this->config['columns'][1] = ['className' => 'image'];
+    }
+
+    public function soldOutIndicator($menu)
+    {
+        if ($menu->out_of_stock)
+            return "<img class='sold-button' src=' " .  asset('images/sold-out.png') . "'>";
     }
 }
