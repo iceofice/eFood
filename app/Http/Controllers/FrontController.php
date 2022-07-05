@@ -157,7 +157,21 @@ class FrontController extends Controller
     {
         $validatedRequest = $request->validated();
         $validatedRequest['password'] = bcrypt($validatedRequest['password']);
-        Customer::create($validatedRequest);
+
+        if (isset($request->validated()['email'])) {
+            $customer = Customer::where('email', $request->validated()['email'])->first();
+        } else {
+            $customer = Customer::where('phone', $request->validated()['phone'])->first();
+        }
+
+        if (is_null($customer)) {
+            Customer::create($validatedRequest);
+        } else if ($customer->password) {
+            return redirect(route('front') . '/#profile-section')
+                ->with('error_message', 'You are already registered!');
+        } else {
+            $customer->update($validatedRequest);
+        }
 
         return redirect(route('front') . '/#profile-section')
             ->with('success_message', 'You are registered successfully');

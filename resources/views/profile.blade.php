@@ -9,30 +9,33 @@
                 <div class="col-md-12">
                     <div class="fh5co-food-menu to-animate-2">
                         <ul>
-                            @foreach ($orders as $order)
+                            @forelse ($orders as $order)
                                 <li>
                                     <div class="fh5co-food-desc">
                                         <div>
                                             <h3>{{ \Carbon\Carbon::parse($order->reserved_at)->format('D, d F Y, H:i') }}
                                             </h3>
-                                            @foreach ($order->menus as $item)
+                                            @forelse ($order->menus as $item)
                                                 <p>{{ $item->pivot->qty }}x {{ $item->name }} @
                                                     RM{{ $item->pivot->price }}</p>
-                                            @endforeach
+                                            @empty
+                                                <p>No order yet.</p>
+                                            @endforelse
                                         </div>
                                     </div>
                                     <div class="fh5co-food-pricing">
-                                        RM {{ $order->total }}
+                                        RM {{ $order->total ?? 0 }}
                                     </div>
                                 </li>
-                            @endforeach
+                            @empty
+                                <p>No order yet.</p>
+                            @endforelse
                         </ul>
                     </div>
                 </div>
             </div>
 
             <a class="btn btn-primary" href="{{ route('front.book') }}">Reserve</a>
-            <a class="btn btn-primary" href="{{ route('front.book') }}">Edit Profile</a>
         </div>
     </div>
 @endsection

@@ -24,7 +24,17 @@ class RegisterCustomerRequest extends FormRequest
      */
     public function rules()
     {
-        return Customer::$rules;
+        $rules = Customer::$rules;
+        if ($this->request->get('email') !== null) {
+            $customer = Customer::where('email', $this->request->get('email'))->first();
+        } else {
+            $customer = Customer::where('phone', $this->request->get('phone'))->first();
+        }
+        if ($customer) {
+            $rules['email'] = '';
+            $rules['phone'] = '';
+        }
+        return $rules;
     }
 
     /**

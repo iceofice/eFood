@@ -24,6 +24,7 @@
             @if (Auth::guard('customer')->check() && !Illuminate\Support\Facades\Route::is('front'))
                 <div class="logout">
                     <a class="external" href="{{ route('front.logout') }}">Logout</a>
+                    <a class="external" href="{{ route('front.profile') }}">Profile</a>
                 </div>
             @endif
 
