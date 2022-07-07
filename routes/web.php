@@ -13,6 +13,7 @@ use App\Http\Controllers\{
     TableController,
     PaymentController,
     InventoryController,
+    DiscountController,
     Auth\CustomerLoginController
 };
 
@@ -81,7 +82,10 @@ Route::group([
     Route::resource('payments', PaymentController::class)->except('show')->middleware('can:manage payments');
 
     // Inventory
-    Route::resource('inventories', InventoryController::class)->except('show');
+    Route::resource('inventories', InventoryController::class)->except('show')->middleware('can:manage inventories');
+
+    // Discount
+    Route::resource('discounts', DiscountController::class)->except('show')->middleware('can:manage discounts');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');

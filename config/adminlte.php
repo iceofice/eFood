@@ -252,6 +252,13 @@ return [
             'can'       => 'manage attendances',
         ],
         [
+            'text'      => 'Discount / Event',
+            'url'       => '/admin/discounts',
+            'active'    => ['/admin/discounts/*'],
+            'icon'      => 'fa fa-calendar-check',
+            'can'       => 'manage discounts',
+        ],
+        [
             'header'    => 'Staff',
         ],
         [

@@ -29,6 +29,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'manage orders details']);
         Permission::create(['name' => 'manage payments']);
         Permission::create(['name' => 'manage inventories']);
+        Permission::create(['name' => 'manage discounts']);
     }
 
     private function createRoles()
