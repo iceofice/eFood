@@ -13,6 +13,7 @@ class PaymentDatatable extends Datatable
             'Method',
             'Paid At',
             'Order',
+            'Total',
             ['label' => 'Actions', 'no-export' => true],
         ];
 
@@ -25,6 +26,7 @@ class PaymentDatatable extends Datatable
                 $payment->method_name,
                 Carbon::create($payment->paid_at)->format('D, d M Y, H:i'),
                 $payment->order->customer_name . ' - ' . $payment->order->table->name,
+                $payment->discount_total,
                 $this->buttonColumn($payment->id),
 
             ];

@@ -121,9 +121,28 @@ class PaymentController extends Controller
     public function edit(Payment $payment)
     {
         $id = $payment->id;
-        $order = Order::find($payment->order_id);
+        $order = Order::with('menus')->find($payment->order_id);
 
-        return view('payments.edit', compact('payment', 'order', 'id'));
+        $now = Carbon::now()->addHours(8);
+
+        $discounts = Discount::whereDate('start_date', '<=', $now)
+            ->whereDate('end_date', '>=', $now)
+            ->get()
+            ->filter(function ($value) use ($now) {
+                $start = Carbon::parse($value->start_date);
+                if ($start->isToday() && $start->gt($now))
+                    return false;
+
+                $end = Carbon::parse($value->end_date);
+                if ($end->isToday() && $end->lt($now))
+                    return false;
+
+                return true;
+            });
+        $discountsOption = $discounts->pluck('title', 'id')->toArray();
+        $discounts = $discounts->pluck('amount', 'id')->toArray();
+
+        return view('payments.edit', compact('payment', 'order', 'id', 'discounts', 'discountsOption'));
     }
 
     /**

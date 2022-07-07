@@ -100,11 +100,18 @@
             }
         });
         $('#discount_id').on('select2:select', function(e) {
-            let discounts = {!! json_encode($discounts) !!};
-            var total = (100 - parseFloat(discounts[e.params.data.id])) * {{ $order->total }} / 100;
-            $('#total').text(total);
-            $('#total-modal').text(total);
-            $('#discount').text("Discount: " + discounts[e.params.data.id] + "%");
+            if (e.params.data.id != "") {
+                let discounts = {!! json_encode($discounts) !!};
+                var total = (100 - parseFloat(discounts[e.params.data.id])) * {{ $order->total }} / 100;
+                $('#total').text(total);
+                $('#total-modal').text(total);
+                $('#discount').text("Discount: " + discounts[e.params.data.id] + "%");
+            } else {
+                var total = {{ $order->total }};
+                $('#total').text(total);
+                $('#total-modal').text(total);
+                $('#discount').text("Discount: " + discounts[e.params.data.id] + "%");
+            }
         });
     </script>
 @endsection

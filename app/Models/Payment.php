@@ -72,4 +72,12 @@ class Payment extends Model
 
         return $methods[$this->method];
     }
+
+    //TODO: Docs
+    public function getDiscountTotalAttribute()
+    {
+        if ($this->discount_id)
+            return $this->order->total * (100 - $this->discount->amount) / 100;
+        return $this->order->total;
+    }
 }
