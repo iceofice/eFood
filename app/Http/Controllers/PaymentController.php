@@ -6,6 +6,7 @@ use View;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Discount;
 use App\Datatables\PaymentDatatable;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CreatePaymentRequest;
@@ -71,7 +72,26 @@ class PaymentController extends Controller
         if (is_null($order->total))
             return redirect()->route('orders.edit', $order->id)->with('error_message', 'Please add some items');
 
-        return view('payments.create', compact('order',));
+        $now = Carbon::now()->addHours(8);
+
+        $discounts = Discount::whereDate('start_date', '<=', $now)
+            ->whereDate('end_date', '>=', $now)
+            ->get()
+            ->filter(function ($value) use ($now) {
+                $start = Carbon::parse($value->start_date);
+                if ($start->isToday() && $start->gt($now))
+                    return false;
+
+                $end = Carbon::parse($value->end_date);
+                if ($end->isToday() && $end->lt($now))
+                    return false;
+
+                return true;
+            });
+        $discountsOption = $discounts->pluck('title', 'id')->toArray();
+        $discounts = $discounts->pluck('amount', 'id')->toArray();
+
+        return view('payments.create', compact('order', 'discounts', 'discountsOption'));
     }
 
     /**
@@ -83,7 +103,7 @@ class PaymentController extends Controller
     public function store(CreatePaymentRequest $request)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['paid_at'] = Carbon::now();
+        $validatedRequest['paid_at'] = Carbon::now()->addHours(8);
         Payment::create($validatedRequest);
 
         Order::find($request->order_id)->update(['status' => 5]);

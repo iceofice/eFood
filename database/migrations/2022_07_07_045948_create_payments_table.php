@@ -19,6 +19,7 @@ class CreatePaymentsTable extends Migration
             $table->string('bank')->nullable();
             $table->dateTime('paid_at');
             $table->foreignId('order_id')->unique()->constrained();
+            $table->foreignId('discount_id')->nullable()->constrained();
             $table->timestamps();
         });
     }

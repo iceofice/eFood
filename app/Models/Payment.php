@@ -18,7 +18,8 @@ class Payment extends Model
         'order_id',
         'method',
         'bank',
-        'paid_at'
+        'paid_at',
+        'discount_id'
     ];
 
     /**
@@ -27,9 +28,10 @@ class Payment extends Model
      * @var array
      */
     public static $rules = [
-        'order_id'  => 'required|exists:orders,id|unique:payments,order_id',
-        'method'    => 'required|between:0,3',
-        'bank'      => 'required_if:method,2',
+        'order_id'      => 'required|exists:orders,id|unique:payments,order_id',
+        'discount_id'   => 'nullable|exists:discounts,id',
+        'method'        => 'required|between:0,3',
+        'bank'          => 'required_if:method,2',
     ];
 
     /**
@@ -38,6 +40,14 @@ class Payment extends Model
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    /**
+     * Get the discount that owns the paymment.
+     */
+    public function discount()
+    {
+        return $this->belongsTo(Discount::class);
     }
 
     /**
