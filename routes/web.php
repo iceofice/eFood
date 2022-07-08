@@ -90,6 +90,7 @@ Route::group([
 
     // Donation
     Route::get('donations', [DonationController::class, 'index'])->name('donations.index');
+    Route::post('out', [DonationController::class, 'out'])->name('donations.out');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
