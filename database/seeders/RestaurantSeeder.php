@@ -7,6 +7,7 @@ use App\Models\Menu;
 use App\Models\Order;
 use App\Models\Table;
 use App\Models\Customer;
+use App\Models\Donation;
 use Illuminate\Database\Seeder;
 
 class RestaurantSeeder extends Seeder
@@ -46,5 +47,7 @@ class RestaurantSeeder extends Seeder
         ]);
 
         $order->menus()->attach($menu->id, ['qty' => 10, 'price' => $menu->price]);
+
+        Donation::create(['amount' => 0]);
     }
 }

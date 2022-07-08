@@ -14,7 +14,8 @@ use App\Http\Controllers\{
     PaymentController,
     InventoryController,
     DiscountController,
-    Auth\CustomerLoginController
+    DonationController,
+    Auth\CustomerLoginController,
 };
 
 /*
@@ -86,6 +87,9 @@ Route::group([
 
     // Discount
     Route::resource('discounts', DiscountController::class)->except('show')->middleware('can:manage discounts');
+
+    // Donation
+    Route::get('donations', [DonationController::class, 'index'])->name('donations.index');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');

@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Discount;
+use App\Models\Donation;
 use App\Datatables\PaymentDatatable;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\CreatePaymentRequest;
@@ -103,10 +104,18 @@ class PaymentController extends Controller
     public function store(CreatePaymentRequest $request)
     {
         $validatedRequest = $request->validated();
+        unset($validatedRequest['donation']);
         $validatedRequest['paid_at'] = Carbon::now()->addHours(8);
         Payment::create($validatedRequest);
 
         Order::find($request->order_id)->update(['status' => 5]);
+
+        if (!is_null($request->donation)) {
+            $donation = Donation::find(1);
+            $donation->update([
+                'amount' => $donation->amount + $request->donation
+            ]);
+        }
 
         return redirect()->route('payments.index')
             ->with('success_message', 'Payment added successfully');

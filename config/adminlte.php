@@ -259,6 +259,13 @@ return [
             'can'       => 'manage discounts',
         ],
         [
+            'text'      => 'Donation',
+            'url'       => '/admin/donations',
+            'active'    => ['/admin/donations/*'],
+            'icon'      => 'fa fa-coins',
+            'can'       => 'manage donations',
+        ],
+        [
             'header'    => 'Staff',
         ],
         [

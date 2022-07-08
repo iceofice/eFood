@@ -24,6 +24,9 @@ class CreatePaymentRequest extends FormRequest
      */
     public function rules()
     {
-        return Payment::$rules;
+        $rules = Payment::$rules;
+        $rules['donation'] = 'nullable|numeric|min:0';
+
+        return $rules;
     }
 }

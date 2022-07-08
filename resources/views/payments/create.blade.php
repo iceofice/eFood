@@ -27,6 +27,9 @@
         <span style="color:#007bff">No available discount.</span>
     @endif
 
+    <x-adminlte-input id="donation" name="donation" label="Donation" value="{{ old('donation') }}" />
+
+    <br />
     <a id="ewallet-button" data-toggle='modal' data-target='#ewallet-payment' class="btn btn-primary mb-4">
         Show QR
     </a>
