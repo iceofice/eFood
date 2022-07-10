@@ -8,6 +8,12 @@
                     there live the
                     blind texts.
                 </p>
+                @if ($discount)
+                    <div class="box to-animate">
+                        <h3>{{ $discount->title }}</h3>
+                        <p>{{ $discount->subtitle }}</p>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="row row-padded">

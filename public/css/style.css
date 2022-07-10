@@ -1623,3 +1623,8 @@ p {
     border-radius: 25px;
     padding: 20px;
 }
+
+.box {
+    border: 2px solid #fb6e14;
+    border-radius: 5px;
+}

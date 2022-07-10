@@ -9,13 +9,14 @@ use App\Models\Order;
 use App\Models\Table;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Discount;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use App\Http\Requests\ReserveRequest;
 use Illuminate\Support\Facades\Session;
-use App\Http\Requests\AddCustomerRequest;
 use App\Http\Requests\CheckTableRequest;
+use App\Http\Requests\AddCustomerRequest;
 use App\Http\Requests\RegisterCustomerRequest;
-use Illuminate\Http\Request;
 
 class FrontController extends Controller
 {
@@ -35,7 +36,9 @@ class FrontController extends Controller
             $menus[$key] = array_chunk($menu->all(), ceil(count($menu) / 2));
         }
 
-        return view('index', compact('menus', 'categories', 'featured'));
+        $discount = Discount::orderBy('amount', 'DESC')->first();
+
+        return view('index', compact('menus', 'categories', 'featured', 'discount'));
     }
 
     /**
