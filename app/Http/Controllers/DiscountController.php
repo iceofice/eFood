@@ -91,6 +91,11 @@ class DiscountController extends Controller
      */
     public function destroy(Discount $discount)
     {
+        // Prevent deletion
+        if ($discount->payments->count() > 0) {
+            return redirect()->route('discounts.index')
+                ->with('error_message', 'Discount cannot be deleted because it is already used');
+        }
         $discount->delete();
         return redirect()->route('discounts.index')
             ->with('success_message', 'Discount deleted successfully');

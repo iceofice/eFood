@@ -30,4 +30,12 @@ class Table extends Model
         'min'       => 'required|integer',
         'max'       => 'required|integer',
     ];
+
+    /**
+     * Get the orders for the table.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

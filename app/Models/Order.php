@@ -104,6 +104,14 @@ class Order extends Model
     }
 
     /**
+     * Get the payment that owns the order.
+     */
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
+    /**
      * Get the status name of the order.
      */
     public function getStatusNameAttribute()

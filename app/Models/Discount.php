@@ -34,4 +34,14 @@ class Discount extends Model
         'start_date'    => 'required|date',
         'end_date'      => 'required|date',
     ];
+
+    /**
+     * The payments that belongs to the discount.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

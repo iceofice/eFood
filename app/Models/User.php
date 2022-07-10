@@ -65,10 +65,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the orders for the customer.
+     * Get the orders for the user.
      */
     public function attendances()
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    /**
+     * Get the orders for the user.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

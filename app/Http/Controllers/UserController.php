@@ -125,6 +125,15 @@ class UserController extends Controller
             return $this->superAdminRedirect();
         }
 
+        // Prevent deletion
+        if ($user->attendances->count() > 0) {
+            return redirect()->route('users.index')
+                ->with('error_message', 'User cannot be deleted because it has attendances');
+        } else if ($user->orders->count() > 0) {
+            return redirect()->route('users.index')
+                ->with('error_message', 'User cannot be deleted because it has orders');
+        }
+
         $user->delete();
         return redirect()->route('users.index')
             ->with('success_message', 'User deleted successfully');

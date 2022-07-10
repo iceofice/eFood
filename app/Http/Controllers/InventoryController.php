@@ -91,6 +91,12 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
+        // Prevent deletion
+        if ($inventory->menus->count() > 0) {
+            return redirect()->route('inventories.index')
+                ->with('error_message', 'Item cannot be deleted because it is already used');
+        }
+
         $inventory->delete();
         return redirect()->route('inventories.index')
             ->with('success_message', 'Inventory item deleted successfully');

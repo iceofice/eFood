@@ -148,6 +148,12 @@ class OrderController extends Controller
     {
         $this->authorize('handle', $order);
 
+        // Prevent deletion
+        if ($order->payment->count() > 0) {
+            return redirect()->route('orders.index')
+                ->with('error_message', 'Order cannot be deleted because it has been paid');
+        }
+
         // Remove all the menus from the order before deleting
         $order->menus()->detach();
 

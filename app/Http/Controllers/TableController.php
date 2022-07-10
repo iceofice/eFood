@@ -90,6 +90,10 @@ class TableController extends Controller
      */
     public function destroy(Table $table)
     {
+        if ($table->orders->count() > 0) {
+            return redirect()->route('tables.index')
+                ->with('error_message', 'Table cannot be deleted because it has been used');
+        }
         $table->delete();
         return redirect()->route('tables.index')
             ->with('success_message', 'Table deleted successfully');
