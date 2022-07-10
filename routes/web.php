@@ -75,6 +75,7 @@ Route::group([
     // Attendance
     Route::resource('attendances', AttendanceController::class)->except('show')->middleware('can:manage attendances');
     Route::get('attendances/code', [AttendanceController::class, 'code'])->name('attendances.code');
+    Route::get('attendances/details/{user}', [AttendanceController::class, 'details'])->name('attendances.details');
     Route::get('staff/attendance', [AttendanceController::class, 'staff'])->name('attendances.staff');
     Route::post('staff/attendance/clockin', [AttendanceController::class, 'clockin'])->name('attendances.staff.clockin');
     Route::post('staff/attendance/clockout', [AttendanceController::class, 'clockout'])->name('attendances.staff.clockout');

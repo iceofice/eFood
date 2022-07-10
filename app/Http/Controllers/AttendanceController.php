@@ -155,4 +155,35 @@ class AttendanceController extends Controller
         return redirect()->route('attendances.staff')
             ->with('success_message', 'Clock Out successful');
     }
+
+    //TODO: Docs
+    public function details(User $user)
+    {
+        $monthLabel = range(1, Carbon::now()->addHours(8)->daysInMonth);
+        $weekLabel = [
+            'Mon',
+            'Tue',
+            'Wed',
+            'Thu',
+            'Fri',
+            'Sat',
+            'Sun'
+        ];
+
+        for ($i = 0; $i < 7; $i++) {
+            $weekData[] = $user->attendances()
+                ->whereDate('clock_in', Carbon::now()->addHours(8)->startOfWeek()->addDays($i))
+                ->get()
+                ->sum(fn ($value) => Carbon::parse($value->clock_in)->diffInHours(Carbon::parse($value->clock_out)));
+        }
+
+        for ($i = 0; $i < Carbon::now()->addHours(8)->daysInMonth; $i++) {
+            $monthData[] = $user->attendances()
+                ->whereDate('clock_in', Carbon::now()->addHours(8)->startOfMonth()->addDays($i))
+                ->get()
+                ->sum(fn ($value) => Carbon::parse($value->clock_in)->diffInHours(Carbon::parse($value->clock_out)));
+        }
+
+        return view('attendances.details', compact('user', 'monthLabel', 'weekLabel', 'weekData', 'monthData'));
+    }
 }

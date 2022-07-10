@@ -23,11 +23,27 @@ class UserDatatable extends Datatable
                 $user->name,
                 $user->email,
                 $user->getRoleNames(),
-                $this->buttonColumn($user->id),
+                $this->btnDetails($user->id) . $this->buttonColumn($user->id),
             ];
         }
         $this->tableData = $tableData;
 
         parent::__construct();
+    }
+
+    /**
+     * Prepare the edit button.
+     * 
+     * @param integer $id The id of the model.
+     * @return string HTML of the edit button
+     */
+    private function btnDetails(int $id)
+    {
+        $link = route('attendances.details', $id);
+        return "
+            <a class='btn btn-xs btn-default text-dark mx-1 shadow' title='Attendance' href=$link>
+                <i class='fa fa-lg fa-fw fa-eye'></i>
+            </a>
+        ";
     }
 }

@@ -41,7 +41,7 @@ class RestaurantSeeder extends Seeder
         $order = Order::create([
             'customer_id' => $customer->id,
             'table_id'      => $table->id,
-            'reserved_at'   => Carbon::now(),
+            'reserved_at'   => Carbon::now()->addHours(8),
             'status'        => 0,
             'user_id'       => 2
         ]);

@@ -63,4 +63,12 @@ class User extends Authenticatable
     {
         return $this->hasRole('Super Admin');
     }
+
+    /**
+     * Get the orders for the customer.
+     */
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }
