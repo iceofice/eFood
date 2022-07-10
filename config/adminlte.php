@@ -266,6 +266,13 @@ return [
             'can'       => 'manage donations',
         ],
         [
+            'text'      => 'Revenue',
+            'url'       => '/admin/revenue',
+            'active'    => ['/admin/revenue/*'],
+            'icon'      => 'fa fa-receipt',
+            'can'       => 'see revenue',
+        ],
+        [
             'header'    => 'Staff',
         ],
         [

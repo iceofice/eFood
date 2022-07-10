@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', 'Attendance Code')
+@section('title', 'Revenue')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">{{ $user->name }} Attendance Record</h1>
+    <h1 class="m-0 text-dark">Revenue</h1>
 @stop
 
 @section('content')
@@ -12,10 +12,13 @@
             <div class="card">
                 <div class="card-body">
                     <div style="height: 400px">
-                        <canvas id="myChart" height="70"></canvas>
+                        <canvas id="weekChart" height="70"></canvas>
                     </div>
                     <div style="height: 400px">
-                        <canvas id="myChart2" height="70"></canvas>
+                        <canvas id="monthChart" height="70"></canvas>
+                    </div>
+                    <div style="height: 400px">
+                        <canvas id="yearChart" height="70"></canvas>
                     </div>
                 </div>
             </div>
@@ -25,13 +28,13 @@
 
 @section('js')
     <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const myChart = new Chart(ctx, {
+        const weekChartDoc = document.getElementById('weekChart').getContext('2d');
+        const weekChart = new Chart(weekChartDoc, {
             type: 'line',
             data: {
                 labels: @json($weekLabel),
                 datasets: [{
-                    label: 'This Week Working Hours',
+                    label: 'This Week Revenue',
                     data: @json($weekData),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
@@ -51,14 +54,43 @@
                 }
             }
         });
-        const ctx1 = document.getElementById('myChart2').getContext('2d');
-        const myChart1 = new Chart(ctx1, {
+        const monthChartDoc = document.getElementById('monthChart').getContext('2d');
+        const monthChart = new Chart(monthChartDoc, {
             type: 'line',
             data: {
                 labels: @json($monthLabel),
                 datasets: [{
-                    label: 'This Month Working Hours',
+                    label: 'This Month Revenue',
                     data: @json($monthData),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scaleLabel: {
+                    display: false
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    }
+                }
+            }
+        });
+        const yearChartDoc = document.getElementById('yearChart').getContext('2d');
+        const yearChart = new Chart(yearChartDoc, {
+            type: 'line',
+            data: {
+                labels: @json($yearLabel),
+                datasets: [{
+                    label: 'This Year Revenue',
+                    data: @json($yearData),
+                    backgroundColor: [
+                        'rgba(5, 152, 98, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(0, 62, 33, 1)',
+                    ],
                     borderWidth: 1
                 }]
             },

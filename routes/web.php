@@ -15,6 +15,7 @@ use App\Http\Controllers\{
     InventoryController,
     DiscountController,
     DonationController,
+    RevenueController,
     Auth\CustomerLoginController,
 };
 
@@ -92,6 +93,9 @@ Route::group([
     // Donation
     Route::get('donations', [DonationController::class, 'index'])->name('donations.index');
     Route::post('out', [DonationController::class, 'out'])->name('donations.out');
+
+    // Revevue
+    Route::get('revenue', [RevenueController::class, 'index'])->name('revenue.index');
 });
 
 Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
