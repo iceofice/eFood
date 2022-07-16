@@ -8,7 +8,7 @@
                 @endif
             </div>
             <div class="fh5co-logo">
-                <a class="external" href="{{ route('front') }}">foodee</a>
+                <a class="external" href="{{ route('front') }}">eFood</a>
             </div>
             <div class="fh5co-menu-2">
                 @if (Illuminate\Support\Facades\Route::is('front'))

@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Category extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -17,10 +16,6 @@ class Category extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
-        'description',
-        'image',
-        'type'
     ];
 
     /**
@@ -30,25 +25,7 @@ class Category extends Model
      */
     public static $rules = [
         'name'          => 'required',
-        'slug'          => 'required|alpha_dash|unique:categories,slug',
-        'description'   => '',
-        'image'         => 'image',
-        'type'          => 'required|numeric',
     ];
-
-    /**
-     * The attributes that can be converted to slug.
-     *
-     * @return array
-     */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
 
     /**
      * The menus that belongs to the category.

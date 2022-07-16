@@ -3,7 +3,7 @@
 @section('content')
     <div id="fh5co-menus" data-section="menu">
         <div class="container">
-            <h1>Profile</h1>
+            <h1>Your Orders</h1>
 
             <div class="row row-padded">
                 <div class="col-md-12">

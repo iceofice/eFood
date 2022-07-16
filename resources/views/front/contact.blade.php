@@ -16,13 +16,13 @@
                 <ul class="reserve-section-info">
                     <li class="reserve-section-address">
                         <i class="icon-home"></i>
-                        5555 Love Paradise 56 New Clity 5655, <br />Excel Tower United Kingdom
+                        125, Jalan Radin Anum 1 <br />Bandar Baru Sri Petaling <br />Kuala Lumpur
                     </li>
-                    <li><i class="icon-phone"></i> (123) 465-6789</li>
-                    <li><i class="icon-envelope"></i>info@freehtml5.co</li>
+                    <li><i class="icon-phone"></i> (+60) 11-3670-5125</li>
+                    <li><i class="icon-envelope"></i>efood@gmail.com</li>
                     <li>
                         <i class="icon-globe"></i>
-                        <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a>
+                        <a href="#">eFood Website</a>
                     </li>
                 </ul>
             </div>
@@ -34,7 +34,8 @@
                 <form action="{{ route('front.findCustomer') }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <input id="name" name="name" class="form-control" placeholder="Name" type="text" required />
+                        <input id="name" name="name" class="form-control" placeholder="Name" type="text"
+                            required />
                     </div>
                     <div class="form-group">
                         <input id="email-phone" name="email-phone" class="form-control" placeholder="Email/Phone"

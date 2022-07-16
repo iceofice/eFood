@@ -22,9 +22,9 @@ class FrontController extends Controller
 {
     public function index()
     {
-        $menus = Menu::with('categories')->get()->groupBy('categories.*.slug')->all();
+        $menus = Menu::with('categories')->get()->groupBy('categories.*.id')->all();
         $uncategorized = Menu::doesntHave('categories')->get();
-        $categories = Category::all()->pluck('name', 'slug');
+        $categories = Category::all()->pluck('name', 'id');
         $featured = Menu::where('featured', 1)->get()->take(3);
 
         if (!$uncategorized->isEmpty()) {
@@ -190,9 +190,9 @@ class FrontController extends Controller
     //TODO:DOCS
     public function order(Request $request)
     {
-        $menus = Menu::with('categories')->get()->groupBy('categories.*.slug')->all();
+        $menus = Menu::with('categories')->get()->groupBy('categories.*.id')->all();
         $uncategorized = Menu::doesntHave('categories')->get();
-        $categories = Category::all()->pluck('name', 'slug');
+        $categories = Category::all()->pluck('name', 'id');
 
         if (!$uncategorized->isEmpty()) {
             $menus['uncategorized'] = $uncategorized;

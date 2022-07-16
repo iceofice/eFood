@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="fh5co-type" style="background-image: url(images/slide_3.jpg);" data-stellar-background-ratio="0.5">
+    <div id="fh5co-type" style="background-image: url(images/slide_3.jpg); height:100vh;" data-stellar-background-ratio="0.5">
         <div class="fh5co-overlay"></div>
         <div class="container">
             <div class="row">

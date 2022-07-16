@@ -15,7 +15,8 @@
                 <h3>Reservation Form</h3>
                 <form action="{{ route('front.reserve') }}" method="POST">
                     @csrf
-                    <x-adminlte-input type="number" class="form-control" id="pax" name="pax"
+                    <x-adminlte-input type="number" class="form-control" id="pax" name="pax" maxlength="2"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                         placeholder="Number Of People" />
                     @php
                         $config = [

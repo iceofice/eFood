@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use View;
 use App\Models\Category;
-use App\Services\ImageService;
 use App\Datatables\CategoryDatatable;
-use App\Http\Requests\CheckSlugRequest;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-use Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CategoryController extends Controller
 {
@@ -55,9 +52,6 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         $validatedRequest = $request->validated();
-        if ($request->image) {
-            $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
-        }
 
         Category::create($validatedRequest);
         return redirect()->route('categories.index')
@@ -86,9 +80,6 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $validatedRequest = $request->validated();
-        if ($request->image) {
-            $validatedRequest['image'] = (new ImageService())->prepareImage($request->image);
-        }
 
         $category->update($validatedRequest);
         return redirect()->route('categories.index')
@@ -112,17 +103,5 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')
             ->with('success_message', 'Category deleted successfully');
-    }
-
-    /**
-     * Generate a slug for the given category name.
-     *
-     * @param CheckSlugRequest $request
-     * @return Response an unique slug
-     */
-    public function checkSlug(CheckSlugRequest $request)
-    {
-        $slug = SlugService::createSlug(Category::class, 'slug', $request->name);
-        return response()->json(['slug' => $slug]);
     }
 }
