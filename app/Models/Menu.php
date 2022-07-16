@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Menu extends Model
 {
-    use HasFactory, Sluggable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -17,7 +16,6 @@ class Menu extends Model
      */
     protected $fillable = [
         'name',
-        'slug',
         'description',
         'image',
         'price',
@@ -32,7 +30,6 @@ class Menu extends Model
      */
     public static $rules = [
         'name'          => 'required',
-        'slug'          => 'required|alpha_dash|unique:menus,slug',
         'description'   => '',
         'image'         => 'image',
         'price'         => 'required|numeric',
@@ -41,20 +38,6 @@ class Menu extends Model
         'featured'      => 'boolean',
         'is_active'     => 'boolean',
     ];
-
-    /**
-     * The attributes that can be converted to slug.
-     *
-     * @return array
-     */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
 
     /**
      * The categories that belongs to the menu.

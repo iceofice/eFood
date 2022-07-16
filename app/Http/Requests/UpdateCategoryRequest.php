@@ -25,7 +25,6 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         $rules = Category::$rules;
-        $rules['slug'] = 'required|alpha_dash|unique:categories,slug,' . $this->category->id;
 
         return $rules;
     }

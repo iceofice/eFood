@@ -10,7 +10,6 @@
         </div>
     </div>
     <x-adminlte-input id="name" name="name" label="Name" value="{{ $menu->name }}" />
-    <x-adminlte-input id="slug" name="slug" label="Slug" value="{{ $menu->slug }}" />
     <x-adminlte-input id="price" name="price" label="Price" value="{{ $menu->price }}" />
     <x-adminlte-textarea id="description" name="description" label="Description">
         {{ $menu->description }}

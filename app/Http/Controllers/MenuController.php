@@ -139,18 +139,6 @@ class MenuController extends Controller
             ->with('success_message', 'Menu deleted successfully');
     }
 
-    /**
-     * Generate a slug for the given menu name.
-     *
-     * @param Request $request
-     * @return Response an unique slug
-     */
-    public function checkSlug(CheckSlugRequest $request)
-    {
-        $slug = SlugService::createSlug(Menu::class, 'slug', $request->name);
-        return response()->json(['slug' => $slug]);
-    }
-
     //TODO: DOCS
     public function addInventory(AddInventoryToMenuRequest $request, Menu $menu)
     {

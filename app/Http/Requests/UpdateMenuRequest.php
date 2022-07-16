@@ -26,7 +26,6 @@ class UpdateMenuRequest extends FormRequest
     public function rules()
     {
         $rules = Menu::$rules;
-        $rules['slug'] = 'required|alpha_dash|unique:menus,slug,' . $this->menu->id;
 
         return $rules;
     }
