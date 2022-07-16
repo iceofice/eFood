@@ -25,9 +25,7 @@ class UpdateOrderRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'status' => Order::$rules['status'],
-        ];
+        return Order::$rules;
     }
 
     /**
