@@ -16,6 +16,7 @@
                 <form action="{{ route('front.reserve') }}" method="POST">
                     @csrf
                     <x-adminlte-input type="number" class="form-control" id="pax" name="pax" maxlength="2"
+                        required
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                         placeholder="Number Of People" />
                     @php
@@ -25,15 +26,16 @@
                             'maxDate' => 'js:moment().add(30, "days")',
                         ];
                     @endphp
-                    <x-adminlte-input-date name="date" placeholder="Reservation date" enable-old-support
+                    <x-adminlte-input-date name="date" placeholder="Reservation date" enable-old-support required
                         :config="$config" />
                     <span id="message">Fill both date and table to see available time.</span>
                     {{-- TODO: Fix Sizing on different windows size --}}
-                    <x-adminlte-select2 class="form-control" name="time" placeholder="Time" enable-old-support>
+                    <x-adminlte-select2 class="form-control" name="time" placeholder="Time" enable-old-support
+                        required="required">
                     </x-adminlte-select2>
                     <input type="hidden" name="table_id" id="table_id" />
                     <input type="hidden" name="customer_id" value="{{ $customerID }}" />
-                    <input class="btn btn-primary btn-outline" value="Reserve" type="submit" />
+                    <input id="reserve-btn" class="btn btn-primary btn-outline" value="Reserve" type="submit" />
                 </form>
 
             </div>
@@ -47,6 +49,7 @@
         let pax;
         let timedata;
         $('#time').prop("disabled", true);
+        $('#reserve-btn').prop("disabled", true);
 
         $("#date").on("change.datetimepicker", ({
             date,
@@ -79,9 +82,11 @@
                         $('#time').find('option').remove();
                         if (data.error) {
                             $('#time').prop("disabled", true);
+                            $('#reserve-btn').prop("disabled", true);
                             $('#message').html(data.message);
                         } else {
                             $('#time').prop("disabled", false);
+                            $('#reserve-btn').prop("disabled", false);
                             $('#message').html('Available time');
                             $.each(data.data, function(i, item) {
                                 $('#time').append($('<option>', {

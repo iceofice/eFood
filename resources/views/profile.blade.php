@@ -24,7 +24,14 @@
                                         </div>
                                     </div>
                                     <div class="fh5co-food-pricing">
-                                        RM {{ $order->total ?? 0 }}
+                                        RM
+                                        @if ($order->payment)
+                                            {{ $order->payment->discount_total }}
+                                        @elseif($order->total)
+                                            {{ $order->total }}
+                                        @else
+                                            0
+                                        @endif
                                     </div>
                                 </li>
                             @empty

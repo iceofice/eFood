@@ -24,8 +24,6 @@ $updateDetails = auth()
             @php
                 $config = [
                     'format' => 'L',
-                    'minDate' => 'js:moment()',
-                    'maxDate' => 'js:moment().add(30, "days")',
                 ];
             @endphp
             <x-adminlte-input-date name="date" label="Reservation date" enable-old-support :config="$config"
@@ -139,6 +137,7 @@ $updateDetails = auth()
             oldDate
         }) => {
             time = date.format("YYYY-MM-DD");
+            checkTime();
         });
 
         $('#table_id').on('select2:select', function(e) {

@@ -17,12 +17,14 @@
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-pills" role="tablist">
-                        @foreach ($categories as $slug => $category)
+                        @forelse ($categories as $slug => $category)
                             <li role="presentation" @once class="active" @endonce>
                                 <a href="#{{ $slug }}" aria-controls="{{ $slug }}" role="tab"
                                     data-toggle="tab">{{ $category }}</a>
                             </li>
-                        @endforeach
+                        @empty
+                            <h3>No menu available.</h3>
+                        @endforelse
                     </ul>
 
                     <!-- Tab panes -->
@@ -141,7 +143,7 @@
         </div>
         <label for="qty" class="sr-only">Quantity</label>
         <br />
-        <p id="modal-error" class="error"></p>
+        <p style="clear:both;" id="modal-error" class="error"></p>
         <input id="menu-qty" class="form-control" placeholder="Quantity" name="qty" type="number" required />
         <x-adminlte-textarea id="menu-note" name="note" placeholder="Special Request...." />
         <x-slot name="footerSlot">

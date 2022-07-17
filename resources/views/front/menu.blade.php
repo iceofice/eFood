@@ -20,12 +20,14 @@
             <div>
                 <!-- Nav tabs -->
                 <ul class="nav nav-pills" role="tablist">
-                    @foreach ($categories as $slug => $category)
+                    @forelse ($categories as $slug => $category)
                         <li role="presentation" @once class="active" @endonce>
                             <a href="#{{ $slug }}" aria-controls="{{ $slug }}" role="tab"
                                 data-toggle="tab">{{ $category }}</a>
                         </li>
-                    @endforeach
+                    @empty
+                        <h3>No menu available.</h3>
+                    @endforelse
                 </ul>
 
                 <!-- Tab panes -->

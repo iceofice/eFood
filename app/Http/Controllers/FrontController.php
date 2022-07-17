@@ -140,7 +140,7 @@ class FrontController extends Controller
     //TODO:DOCS
     public function profile()
     {
-        $orders = Order::with('menus')
+        $orders = Order::with('menus', 'payment')
             ->where('customer_id', Auth::user()->id)
             ->orderBy('reserved_at', 'desc')
             ->get();
