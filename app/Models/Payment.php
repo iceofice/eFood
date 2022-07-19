@@ -62,9 +62,13 @@ class Payment extends Model
             'eWallet'
         ];
 
-        //TODO: Add more banks
         $banks = [
-            'Maybank2U'
+            'Maybank2U',
+            'CIMB',
+            'AFFIN Bank',
+            'Public Bank',
+            'RHB',
+            'OCBC'
         ];
 
         if ($this->method == 2)
@@ -73,7 +77,6 @@ class Payment extends Model
         return $methods[$this->method];
     }
 
-    //TODO: Docs
     public function getDiscountTotalAttribute()
     {
         if ($this->discount_id)

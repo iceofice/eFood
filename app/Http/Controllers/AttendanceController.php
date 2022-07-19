@@ -105,20 +105,17 @@ class AttendanceController extends Controller
             ->with('success_message', 'Attendance deleted successfully');
     }
 
-    //TODO: Docs
     public function code()
     {
         $code = AttendanceCode::first()->attendanceCode;
         return view('attendances.code', compact('code'));
     }
 
-    //TODO: Docs
     public function staff()
     {
         return view('attendances.staff');
     }
 
-    //TODO: Docs
     public function clockin(ClockinRequest $request)
     {
         $att = Attendance::where('user_id', Auth()->user()->id)->whereNull('clock_out')->exists();
@@ -138,7 +135,6 @@ class AttendanceController extends Controller
             ->with('success_message', 'Clock In successful');
     }
 
-    //TODO: Docs
     public function clockout(ClockoutRequest $request)
     {
         $att = Attendance::where('user_id', Auth()->user()->id)->whereNull('clock_out')->first();
@@ -156,7 +152,6 @@ class AttendanceController extends Controller
             ->with('success_message', 'Clock Out successful');
     }
 
-    //TODO: Docs
     public function details(User $user)
     {
         $monthLabel = range(1, Carbon::now()->addHours(8)->daysInMonth);

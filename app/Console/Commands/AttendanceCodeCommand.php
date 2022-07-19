@@ -43,8 +43,6 @@ class AttendanceCodeCommand extends Command
             'code' => $random,
         ]);
 
-        \Log::info("Code is changed.");
-
         return 0;
     }
 }

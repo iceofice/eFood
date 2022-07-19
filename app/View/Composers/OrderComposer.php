@@ -10,7 +10,6 @@ use Illuminate\View\View;
 
 class OrderComposer
 {
-    //TODO: Make other composer
     /**
      * Bind data to the view.
      *

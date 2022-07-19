@@ -52,6 +52,4 @@ class Customer extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
-
-    //TODO: Custom messages for required_without validation rule
 }

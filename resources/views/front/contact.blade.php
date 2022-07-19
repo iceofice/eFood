@@ -31,7 +31,7 @@
                 @if ($errors->reserve && $errors->reserve->first() != '')
                     <div class="text-warning">{{ $errors->reserve->first() }}</div>
                 @endif
-                <form action="{{ route('front.findCustomer') }}" method="post">
+                <form action="{{ route('front.checkAvailability') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <input id="name" name="name" class="form-control" placeholder="Name" type="text"
@@ -42,7 +42,7 @@
                             type="text" required />
                     </div>
                     <div class="form-group">
-                        <input class="btn btn-primary btn-outline" value="Check Avaibility" type="submit" />
+                        <input class="btn btn-primary btn-outline" value="Check Availability" type="submit" />
                     </div>
                 </form>
             </div>

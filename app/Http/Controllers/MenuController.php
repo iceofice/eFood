@@ -139,7 +139,6 @@ class MenuController extends Controller
             ->with('success_message', 'Menu deleted successfully');
     }
 
-    //TODO: DOCS
     public function addInventory(AddInventoryToMenuRequest $request, Menu $menu)
     {
         $menu->inventories()->attach($request->inventory_id, ['qty' => $request->qty]);
@@ -147,7 +146,7 @@ class MenuController extends Controller
         return redirect()->route('menus.edit', $menu)
             ->with('success_message', 'New item added to the menu successfully');
     }
-    //TODO: DOCS
+
     public function updateInventory(UpdateInventoryToMenuRequest $request, Menu $menu, int $inventoryId)
     {
         $menu->inventories()->updateExistingPivot($inventoryId, ['qty' => $request->qty]);
@@ -156,7 +155,6 @@ class MenuController extends Controller
             ->with('success_message', 'Item updated successfully');
     }
 
-    //TODO: DOCS
     public function removeInventory(Menu $menu, int $inventoryId)
     {
         $menu->inventories()->detach($inventoryId);

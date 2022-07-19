@@ -26,7 +26,7 @@ class OrderDatatable extends Datatable
             $notificationMessage = $userNotifications->has($order->id) ? $userNotifications->get($order->id) : null;
             $tableData[] = [
                 $order->id,
-                $order->total ?: 'No Items', //TODO: format price
+                $order->total ?: 'No Items',
                 $order->customerName,
                 $order->table->name,
                 Carbon::create($order->reserved_at)->format('D, d M Y, H:i'),

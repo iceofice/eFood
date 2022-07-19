@@ -47,8 +47,6 @@ Route::group([
     Route::resource('users', UserController::class)->except('show')->middleware('can:manage users');
     Route::post('/users/filter', [UserController::class, 'filter'])->name('users.filter');
 
-    //TODO: Group properly
-
     // Categories
     Route::resource('categories', CategoryController::class)->except('show')->middleware('can:manage menus');
     Route::get('categories/check_slug', [CategoryController::class, 'checkSlug'])->name('categories.checkSlug')->middleware('can:manage menus');
@@ -97,7 +95,7 @@ Route::group([
     Route::get('revenue', [RevenueController::class, 'index'])->name('revenue.index');
 });
 
-Route::post('book', [FrontController::class, 'findCustomer'])->name('front.findCustomer');
+Route::post('book', [FrontController::class, 'checkAvailability'])->name('front.checkAvailability');
 Route::get('book', [FrontController::class, 'book'])->middleware('auth:customer')->name('front.book');
 Route::get('check_table', [FrontController::class, 'checkTable'])->name('front.checkTable');
 Route::post('reserve', [FrontController::class, 'reserve'])->name('front.reserve');

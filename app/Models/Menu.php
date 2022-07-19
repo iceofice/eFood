@@ -94,7 +94,6 @@ class Menu extends Model
         return $this->categories->pluck('name')->toArray();
     }
 
-    //TODO: DOCS
     public function getOutOfStockAttribute()
     {
         $stocks = $this->inventories->all();

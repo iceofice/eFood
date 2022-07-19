@@ -30,9 +30,13 @@ class PaymentController extends Controller
             'eWallet'
         ];
 
-        //TODO: Add more banks
         $banks = [
-            'Maybank2U'
+            'Maybank2U',
+            'CIMB',
+            'AFFIN Bank',
+            'Public Bank',
+            'RHB',
+            'OCBC'
         ];
 
         View::share(compact('modelName', 'route', 'methods', 'banks'));

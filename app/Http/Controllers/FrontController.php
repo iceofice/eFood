@@ -47,7 +47,7 @@ class FrontController extends Controller
      * @param  AddCustomerRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function findCustomer(AddCustomerRequest $request)
+    public function checkAvailability(AddCustomerRequest $request)
     {
         if (isset($request->validated()['email'])) {
             $customer = Customer::where('email', $request->validated()['email'])->first();
@@ -82,7 +82,10 @@ class FrontController extends Controller
         ])->pluck('id');
 
         if ($availableTable->isEmpty()) {
-            return response()->json(['error' => true, 'message' => 'No available tables for the number of people']);
+            return response()->json([
+                'error' => true,
+                'message' => 'No available tables for the number of people'
+            ]);
         }
 
         $orders = Order::whereIn('table_id', $availableTable)
@@ -118,7 +121,10 @@ class FrontController extends Controller
         }, $times);
 
         if (count($times) == 0) {
-            return response()->json(['error' => true, 'message' => "No available tables for the time"]);
+            return response()->json([
+                'error' => true,
+                'message' => "No available tables for the time"
+            ]);
         }
         return response()->json(['error' => false, 'data' => $times]);
     }
@@ -137,7 +143,6 @@ class FrontController extends Controller
         return view('thankyou', compact('customer', 'order'));
     }
 
-    //TODO:DOCS
     public function profile()
     {
         $orders = Order::with('menus', 'payment')
@@ -147,7 +152,6 @@ class FrontController extends Controller
         return view('profile', compact('orders'));
     }
 
-    //TODO:DOCS
     public function logout()
     {
         Session::flush();
@@ -155,7 +159,6 @@ class FrontController extends Controller
         return redirect()->route('front');
     }
 
-    //TODO:DOCS
     public function register(RegisterCustomerRequest $request)
     {
         $validatedRequest = $request->validated();
@@ -180,14 +183,12 @@ class FrontController extends Controller
             ->with('success_message', 'You are registered successfully');
     }
 
-    //TODO:DOCS
     public function book()
     {
         $customerID = Auth()->guard('customer')->user()->id;
         return view('order', compact('customerID'));
     }
 
-    //TODO:DOCS
     public function order(Request $request)
     {
         $menus = Menu::with('categories')->get()->groupBy('categories.*.id')->all();
@@ -209,7 +210,6 @@ class FrontController extends Controller
         return view('front.order', compact('menus', 'categories', 'order', 'items'));
     }
 
-    //TODO: DOCS
     public function addOrderItem()
     {
         $order = Order::find(request()->orderID);
@@ -220,7 +220,6 @@ class FrontController extends Controller
         return response()->json(['success' => true]);
     }
 
-    //TODO: DOCS
     public function removeOrderItem()
     {
         $order = Order::find(request()->orderID);

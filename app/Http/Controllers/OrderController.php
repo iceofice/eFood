@@ -122,10 +122,6 @@ class OrderController extends Controller
 
         $validatedRequest = $request->validated();
 
-        if (isset($validatedRequest['password'])) {
-            $validatedRequest['password'] = bcrypt($validatedRequest['password']);
-        }
-
         $order->update($validatedRequest);
 
         $userNotifications = Auth::user()->unreadNotifications->where('data.orderID', $order->id)->first();
@@ -235,7 +231,6 @@ class OrderController extends Controller
             ->whereDate('reserved_at', Carbon::parse($request->time))
             ->get();
 
-        //TODO: Option page to set operating hours
         for ($i = 9; $i <= 23; $i++) {
             $times[$i . ':00'] = $i . ':00';
             $times[$i . ':30'] = $i . ':30';

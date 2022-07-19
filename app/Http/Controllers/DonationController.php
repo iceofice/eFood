@@ -18,7 +18,6 @@ class DonationController extends Controller
         return view('donations.index', compact('donationAmount'));
     }
 
-    //TODO: Docs
     public function out(OutDonationRequest $request)
     {
         $donation = Donation::find(1);
