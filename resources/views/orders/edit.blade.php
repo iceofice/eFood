@@ -94,8 +94,7 @@ $updateDetails = auth()
             <div class="row">
                 <div class="col-3">
                     <figure>
-                        <img class="order-summary-image img-thumbnail"
-                            src="{{ url('storage/images/' . $item->image) }}" />
+                        <img class="order-summary-image img-thumbnail" src="{{ url('storage/images/' . $item->image) }}" />
                     </figure>
                 </div>
                 <div class="col-9">
@@ -126,47 +125,50 @@ $updateDetails = auth()
 
 @section('js')
     <script>
-        let time = $("#date")[0].value;
-        let table = {{ $order->table_id }};
-        let id = {{ $order->id }};
+        $(document).ready(function() {
+            let time = $("#date")[0].value;
+            let table = {{ $order->table_id }};
+            let id = {{ $order->id }};
 
-        checkTime(true);
+            checkTime(true);
 
-        $("#date").on("change.datetimepicker", ({
-            date,
-            oldDate
-        }) => {
-            time = date.format("YYYY-MM-DD");
-            checkTime();
-        });
+            $("#date").on("change.datetimepicker", ({
+                date,
+                oldDate
+            }) => {
+                time = date.format("YYYY-MM-DD");
+                checkTime();
+            });
 
-        $('#table_id').on('select2:select', function(e) {
-            table = e.params.data.id;
-            checkTime();
-        });
+            $('#table_id').on('select2:select', function(e) {
+                table = e.params.data.id;
+                checkTime();
+            });
 
-        function checkTime(first = false) {
-            if (time && table) {
-                $.get('{{ route('orders.checkTime') }}', {
-                        'time': time,
-                        'table': table,
-                        'id': id
-                    },
-                    function(data) {
-                        $('#time').find('option').remove();
-                        if (data.length == 0) {
-                            $('#time').append('<option value="">No time available</option>');
-                        } else {
-                            $.each(data, function(i, item) {
-                                $('#time').append($('<option>', {
-                                    value: i,
-                                    text: item,
-                                    selected: first && i == '{{ $order->time }}'
-                                }));
-                            });
-                        }
-                    });
+            function checkTime(first = false) {
+                console.log(first)
+                if (time && table) {
+                    $.get('{{ route('orders.checkTime') }}', {
+                            'time': time,
+                            'table': table,
+                            'id': id
+                        },
+                        function(data) {
+                            $('#time').find('option').remove();
+                            if (data.length == 0) {
+                                $('#time').append('<option value="">No time available</option>');
+                            } else {
+                                $.each(data, function(i, item) {
+                                    $('#time').append($('<option>', {
+                                        value: i,
+                                        text: item,
+                                        selected: first && i == '{{ $order->time }}'
+                                    }));
+                                });
+                            }
+                        });
+                }
             }
-        }
+        });
     </script>
 @endsection
